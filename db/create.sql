@@ -10,6 +10,8 @@ CREATE TABLE Users (
 );
 
 
+
+
 CREATE TABLE Drivers (
     driver_id INT PRIMARY KEY,
     user_id INT UNIQUE,
@@ -26,7 +28,6 @@ CREATE TABLE Passengers (
     user_id INT UNIQUE,
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
-
 
 CREATE TABLE Travels (
     travel_id INT PRIMARY KEY,
@@ -83,3 +84,4 @@ create table Cars
     constraint cars_users_user_id_pk
         foreign key (user_id) references Users (user_id)
 );
+

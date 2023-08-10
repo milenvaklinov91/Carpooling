@@ -1,16 +1,32 @@
 package com.telerikacademy.carpooling.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "travels")
 public class Travel {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "travel_id")
     private int travelId;
+    @JsonIgnore
+    @OneToMany(mappedBy = "driver_id", fetch = FetchType.EAGER)
     private int driverId;
+
+    @Column(name = "start_location")
     private String startLocation;
+    @Column(name = "end_location")
     private String endLocation;
+    @Column(name = "departure_datetime")
     private LocalDateTime departureTime;
+    @Column(name = "cost_per_person")
     private String costPerPerson;
+    @Column(name = "available_seats")
     private String availableSeats;
+    @Column(name = "description")
     private String description;
 
     public Travel() {

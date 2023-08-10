@@ -1,7 +1,13 @@
 package com.telerikacademy.carpooling.models;
 
-public class Passenger {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "passengers")
+public class Passenger {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "passengers_id")
     private int passenger;
     private int userId;
 
