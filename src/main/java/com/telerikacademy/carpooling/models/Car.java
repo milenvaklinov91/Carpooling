@@ -15,6 +15,8 @@ public class Car {
     private String brand;
     @Column(name = "car_model")
     private String model;
+    @Column(name = "car_capacity")
+    private Integer capacity;
     @Column(name = "car_color")
     private String colour;
     @Column(name = "car_year")
