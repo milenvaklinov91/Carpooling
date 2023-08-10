@@ -1,5 +1,7 @@
 package com.telerikacademy.carpooling.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,8 +11,10 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private int carId;
-    @Column(name = "user_id")
-    private int userId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userCreatedBy;
     @Column(name = "car_brand")
     private String brand;
     @Column(name = "car_model")
@@ -47,12 +51,14 @@ public class Car {
         this.carId = carId;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUserCreatedBy() {
+        return userCreatedBy;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+
+    public void setUserCreatedBy(User userCreatedBy) {
+        this.userCreatedBy = userCreatedBy;
     }
+
     public String getBrand() {
         return brand;
     }

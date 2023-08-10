@@ -12,10 +12,8 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "travel_id")
     private int travelId;
-    @JsonIgnore
-    @OneToMany(mappedBy = "driver_id", fetch = FetchType.EAGER)
+    @Column(name = "driver_id")
     private int driverId;
-
     @Column(name = "start_location")
     private String startLocation;
     @Column(name = "end_location")
