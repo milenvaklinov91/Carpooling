@@ -1,19 +1,37 @@
 package com.telerikacademy.carpooling.models;
 
-public class Car {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "cars")
+public class Car {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "car_id")
     private int carId;
+    @Column(name = "driver_id")
     private int driverId;
+    @Column(name = "car_brand")
     private String brand;
+    @Column(name = "car_model")
     private String model;
+    @Column(name = "car_color")
     private String colour;
+    @Column(name = "car_year")
     private String year;
+    @Column(name = "description")
     private String description;
+    @Column(name = "extra_storage")
     private boolean isExtraStorage;
+    @Column(name = "smoke")
     private boolean isSmoke;
+    @Column(name = "air_conditioner")
     private boolean isAirConditioner;
+    @Column(name = "pet_available")
     private boolean isPetAvailable;
+    @Column(name = "consume_food")
     private boolean isConsumeFood;
+    @Column(name = "consume_drink")
     private boolean isConsumeDrink;
 
     public Car() {
