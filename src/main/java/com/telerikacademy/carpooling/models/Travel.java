@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.models;
 
-public class Ride {
+public class Travel {
+
 
 }
