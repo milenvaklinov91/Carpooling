@@ -9,8 +9,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private int carId;
-    @Column(name = "driver_id")
-    private int driverId;
+    @Column(name = "user_id")
+    private int userId;
     @Column(name = "car_brand")
     private String brand;
     @Column(name = "car_model")
@@ -46,11 +46,11 @@ public class Car {
     }
 
     public int getDriverId() {
-        return driverId;
+        return userId;
     }
 
     public void setDriverId(int driverId) {
-        this.driverId = driverId;
+        this.userId = driverId;
     }
 
     public String getBrand() {
