@@ -47,14 +47,12 @@ public class Car {
         this.carId = carId;
     }
 
-    public int getDriverId() {
+    public int getUserId() {
         return userId;
     }
-
-    public void setDriverId(int driverId) {
-        this.userId = driverId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
-
     public String getBrand() {
         return brand;
     }
@@ -141,5 +139,12 @@ public class Car {
 
     public void setConsumeDrink(boolean consumeDrink) {
         isConsumeDrink = consumeDrink;
+    }
+
+    public Integer getCapacity() {
+        return capacity;
+    }
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 }

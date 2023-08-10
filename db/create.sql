@@ -63,13 +63,23 @@ CREATE TABLE Ratings (
                            FOREIGN KEY (ride_id) REFERENCES Travels(travel_id)
 );
 
-CREATE TABLE Cars (
-    car_id INT PRIMARY KEY ,
-    driver_id INT NOT NULL ,
-    car_brand VARCHAR (45) NOT NULL ,
-    car_model VARCHAR (45) NOT NULL ,
-    color VARCHAR (45) NOT NULL ,
-    car_year INT NOT NULL ,
-    description VARCHAR (1222) NOT NULL ,
-    FOREIGN KEY (driver_id) REFERENCES Drivers(driver_id)
+create table Cars
+(
+    car_id          int           not null
+        primary key,
+    user_id         int           not null,
+    car_brand       varchar(45)   not null,
+    car_model       varchar(45)   not null,
+    car_color       varchar(45)   not null,
+    car_year        int           not null,
+    description     varchar(1222) not null,
+    extra_storage   tinyint(1)    not null,
+    smoke           tinyint(1)    not null,
+    air_conditioner tinyint(1)    not null,
+    pet_available   tinyint(1)    not null,
+    consume_food    tinyint(1)    not null,
+    consume_drink   tinyint(1)    not null,
+    car_capacity    int           not null,
+    constraint cars_users_user_id_pk
+        foreign key (user_id) references Users (user_id)
 );

@@ -1,7 +1,14 @@
 package com.telerikacademy.carpooling.models;
 
-public class Driver {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+public class Driver {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "driver_id")
     private int driverId;
     private int userId;
     private String driverLicencePicture;
