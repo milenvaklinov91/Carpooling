@@ -17,9 +17,6 @@ CREATE TABLE Drivers (
     driver_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNIQUE,
     driver_license_picture_url VARCHAR(255),
-    car_description VARCHAR (2555),
-    car_model VARCHAR(100),
-    car_plate_number VARCHAR(20),
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 

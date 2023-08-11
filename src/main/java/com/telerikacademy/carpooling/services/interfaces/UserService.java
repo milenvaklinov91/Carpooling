@@ -18,4 +18,5 @@ public interface UserService {
      User getByFirstName(String firstName);
 
     User getByEmail(String email);
+    void create(User user);
 }

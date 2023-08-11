@@ -81,4 +81,14 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
+
+    public void create(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            session.save(user);
+
+            session.getTransaction().commit();
+        }
+    }
 }

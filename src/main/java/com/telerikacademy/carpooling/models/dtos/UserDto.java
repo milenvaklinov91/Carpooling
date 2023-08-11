@@ -26,8 +26,8 @@ import java.time.LocalDateTime;
         @NotBlank
         @Valid
         private String email;
-        private String profilePic="static/images/profile.jpg";
-        @NotEmpty
+        /*private String profilePic="static/images/profile.jpg";*/
+
         private int phone_number;
 
 
@@ -84,13 +84,13 @@ import java.time.LocalDateTime;
         }
 
 
-        public String getProfilePic() {
+/*        public String getProfilePic() {
             return profilePic;
         }
 
         public void setProfilePic(String profilePic) {
             this.profilePic = profilePic;
-        }
+        }*/
     }
 
 
