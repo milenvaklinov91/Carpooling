@@ -1,7 +1,13 @@
 package com.telerikacademy.carpooling.models;
 
-public class Driver {
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "drivers")
+public class Driver {
+    @Id
     private int driverId;
     private int userId;
     private String driverLicencePicture;

@@ -12,8 +12,10 @@ public class Travel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "travel_id")
     private int travelId;
-    @Column(name = "driver_id")
-    private int driverId;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "driver_id")
+    private Driver driver;
     @Column(name = "start_location")
     private String startLocation;
     @Column(name = "end_location")
@@ -38,12 +40,12 @@ public class Travel {
         this.travelId = travelId;
     }
 
-    public int getDriverId() {
-        return driverId;
+    public Driver getDriver() {
+        return driver;
     }
 
-    public void setDriverId(int driverId) {
-        this.driverId = driverId;
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public String getStartLocation() {
