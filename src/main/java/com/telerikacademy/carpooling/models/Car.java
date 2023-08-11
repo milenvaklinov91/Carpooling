@@ -11,6 +11,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
     private int carId;
+    @Column(name = "car_photo")
+    private String carPhoto;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -152,5 +154,13 @@ public class Car {
     }
     public void setCapacity(Integer capacity) {
         this.capacity = capacity;
+    }
+
+    public String getCarPhoto() {
+        return carPhoto;
+    }
+
+    public void setCarPhoto(String carPhoto) {
+        this.carPhoto = carPhoto;
     }
 }

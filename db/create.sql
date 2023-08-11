@@ -24,13 +24,6 @@ CREATE TABLE Drivers (
 );
 
 
-CREATE TABLE Passengers (
-    passenger_id INT PRIMARY KEY,
-    user_id INT UNIQUE,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
-);
-
-
 CREATE TABLE Travels (
     travel_id INT AUTO_INCREMENT PRIMARY KEY,
     driver_id INT,
