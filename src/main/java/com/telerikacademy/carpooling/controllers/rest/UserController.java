@@ -9,6 +9,7 @@ import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -82,5 +83,6 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
 
 }

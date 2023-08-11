@@ -3,7 +3,9 @@ package com.telerikacademy.carpooling.services;
 import com.telerikacademy.carpooling.exceptions.EmailExitsException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.InvalidPasswordException;
+import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +51,8 @@ public class UserServiceImpl implements UserService {
         isDuplicateEmail(user);
         validatePassword(user.getPassword());
         user.setRegistrationDate(LocalDateTime.now());
+        user.setIs_blocked(false);
+        user.setIs_driver(false);
         userRepository.create(user);
     }
 

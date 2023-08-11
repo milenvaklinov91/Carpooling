@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
-private final UserService userService;
+private  UserService userService;
 
     public UserMapper(UserService userService) {
         this.userService = userService;
@@ -20,6 +20,8 @@ private final UserService userService;
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPhone_number(userDto.getPhone_number());
+        user.setProfilePic("static/images/profile.jpg");
         return user;
     }
+
 }
