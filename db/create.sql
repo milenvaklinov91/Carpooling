@@ -1,19 +1,20 @@
 CREATE TABLE Users (
-    user_id INT PRIMARY KEY,
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     first_name VARCHAR(45) NOT NULL ,
     last_name VARCHAR(45) NOT NULL,
     profile_picture VARCHAR(255),
-    registration_date DATETIME
+    registration_date DATETIME,
+    phone_number int(10) NOT NULL ,
+    is_driver tinyint(1)  NOT NULL ,
+    is_blocked  tinyint(1)  NOT NULL
 );
 
 
-
-
 CREATE TABLE Drivers (
-    driver_id INT PRIMARY KEY,
+    driver_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT UNIQUE,
     driver_license_picture_url VARCHAR(255),
     car_description VARCHAR (2555),
@@ -29,8 +30,9 @@ CREATE TABLE Passengers (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
+
 CREATE TABLE Travels (
-    travel_id INT PRIMARY KEY,
+    travel_id INT AUTO_INCREMENT PRIMARY KEY,
     driver_id INT,
     start_location VARCHAR(255) NOT NULL,
     end_location VARCHAR(255) NOT NULL,
@@ -43,17 +45,17 @@ CREATE TABLE Travels (
 
 
 CREATE TABLE RideRequests (
-    request_id INT PRIMARY KEY,
+    request_id INT AUTO_INCREMENT PRIMARY KEY,
     travel_id INT,
-    passenger_id INT,
+    user_id INT,
     request_status VARCHAR(20) NOT NULL,
     FOREIGN KEY (travel_id) REFERENCES Travels(travel_id) ,
-    FOREIGN KEY (passenger_id) REFERENCES Passengers(passenger_id)
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
 
 CREATE TABLE Ratings (
-                           rating_id INT PRIMARY KEY,
+                           rating_id INT AUTO_INCREMENT PRIMARY KEY,
                            rated_user_id INT,
                            rated_by_user_id INT,
                            ride_id INT,
@@ -66,7 +68,7 @@ CREATE TABLE Ratings (
 
 create table Cars
 (
-    car_id          int           not null
+    car_id          int  AUTO_INCREMENT         not null
         primary key,
     user_id         int           not null,
     car_brand       varchar(45)   not null,
@@ -84,4 +86,3 @@ create table Cars
     constraint cars_users_user_id_pk
         foreign key (user_id) references Users (user_id)
 );
-

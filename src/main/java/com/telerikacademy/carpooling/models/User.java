@@ -1,12 +1,14 @@
 package com.telerikacademy.carpooling.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 @Entity
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int id;
     @Column(name = "username")
@@ -20,13 +22,43 @@ public class User {
     @Column(name="email")
     private String email;
     @Column(name="registration_date")
-    private LocalDateTime registrationDate;
+    private LocalDateTime registrationDate=LocalDateTime.now();
+
     @Column(name="profile_picture")
     private String profilePic;
+    @Column(name="phone_number")
+    private int phone_number;
+    @Column(name="is_driver")
+    private boolean is_driver;
+    @Column(name="is_driver")
+    private boolean is_blocked;
 
     public User() {
     }
 
+    public int getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(int phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public boolean isIs_driver() {
+        return is_driver;
+    }
+
+    public void setIs_driver(boolean is_driver) {
+        this.is_driver = is_driver;
+    }
+
+    public boolean isIs_blocked() {
+        return is_blocked;
+    }
+
+    public void setIs_blocked(boolean is_blocked) {
+        this.is_blocked = is_blocked;
+    }
 
     public int getId() {
         return id;

@@ -6,17 +6,21 @@ import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
+import java.util.List;
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final SessionFactory sessionFactory;
 
+    @Autowired
     public UserRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
     public List<User> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            Query<User> query = session.createQuery("from User", User.class);
+            Query<User> query = session.createQuery("from User ", User.class);
             return query.list();
         }
     }
@@ -56,7 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User getByFirstName(String firstName) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery(
-                    "from User user where user.firstName = :firstName", User.class);
+                    "from User user where LOWER( user.firstName) =lower(:firstName)", User.class);
             query.setParameter("firstName", firstName);
             List<User> result = query.list();
             if (result.size() == 0) {
