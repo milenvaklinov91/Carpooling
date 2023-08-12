@@ -36,11 +36,11 @@ public class UserRepositoryImpl implements UserRepository {
                 params.put("username", String.format("%%%s%%", value));
             });
             filterOptions.getFirstName().ifPresent(value -> {
-                filters.add("u.first_name like :firstName");
+                filters.add("u.firstName like :firstName");
                 params.put("firstName", String.format("%%%s%%", value));
             });
             filterOptions.getLastName().ifPresent(value -> {
-                filters.add("u.last_name like :lastName");
+                filters.add("u.lastName like :lastName");
                 params.put("lastName", String.format("%%%s%%", value));
             });
 
