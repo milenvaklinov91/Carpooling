@@ -15,15 +15,6 @@ CREATE TABLE Users
 );
 
 
-CREATE TABLE Drivers
-(
-    driver_id                  INT AUTO_INCREMENT PRIMARY KEY,
-    user_id                    INT UNIQUE,
-    driver_license_picture_url VARCHAR(255),
-    FOREIGN KEY (user_id) REFERENCES Users (user_id)
-);
-
-
 CREATE TABLE Travels
 (
     travel_id          INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,8 +24,8 @@ CREATE TABLE Travels
     departure_datetime DATETIME     NOT NULL,
     cost_per_person    VARCHAR(45)  NOT NULL,
     available_seats    INT          NOT NULL,
-    description        VARCHAR(2222),
-    FOREIGN KEY (driver_id) REFERENCES Drivers (driver_id)
+    description        VARCHAR(2222)
+
 );
 
 

@@ -14,8 +14,8 @@ public class Travel {
     private int travelId;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "driver_id")
-    private Driver driver;
+    @JoinColumn(name = "user_id")
+    private User createdBy;
     @Column(name = "start_location")
     private String startLocation;
     @Column(name = "end_location")
@@ -40,12 +40,12 @@ public class Travel {
         this.travelId = travelId;
     }
 
-    public Driver getDriver() {
-        return driver;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setDriver(Driver driver) {
-        this.driver = driver;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getStartLocation() {

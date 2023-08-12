@@ -1,8 +1,12 @@
 package com.telerikacademy.carpooling.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -31,6 +35,9 @@ public class User {
     private boolean is_driver;
     @Column(name="is_blocked")
     private boolean is_blocked;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private List<Travel> travel;
 
     public User() {
     }
@@ -121,5 +128,13 @@ public class User {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public List<Travel> getTravel() {
+        return travel;
+    }
+
+    public void setTravel(List<Travel> travels) {
+        this.travel = travels;
     }
 }
