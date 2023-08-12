@@ -1,24 +1,25 @@
 create table users
 (
-    user_id           int auto_increment
+    user_id int auto_increment
         primary key,
-    username          varchar(255) not null,
-    password          varchar(255) not null,
-    email             varchar(255) not null,
-    first_name        varchar(45)  not null,
-    last_name         varchar(45)  not null,
-    profile_picture   varchar(255) null,
-    registration_date datetime     null,
-    phone_number      varchar(10)  not null,
-    is_driver         tinyint(1)   not null,
-    is_blocked        tinyint(1)   not null
+    username varchar(255) not null,
+    password varchar(255) not null,
+    email varchar(255) not null,
+    first_name varchar(45) not null,
+    last_name varchar(45) not null,
+    profile_picture varchar(255) null,
+    registration_date datetime null,
+    phone_number varchar(10) not null,
+    is_driver tinyint(1) not null,
+    is_blocked tinyint(1) not null,
+    is_admin tinyint(1) not null
 );
 
 create table drivers
 (
-    driver_id                  int auto_increment
+    driver_id int auto_increment
         primary key,
-    user_id                    int          null,
+    user_id int null,
     driver_license_picture_url varchar(255) null,
     constraint user_id
         unique (user_id),
@@ -28,13 +29,13 @@ create table drivers
 
 create table cars
 (
-    car_id      int auto_increment
+    car_id int auto_increment
         primary key,
-    driver_id   int           not null,
-    car_brand   varchar(45)   not null,
-    car_model   varchar(45)   not null,
-    color       varchar(45)   not null,
-    car_year    int           not null,
+    driver_id int not null,
+    car_brand varchar(45) not null,
+    car_model varchar(45) not null,
+    color varchar(45) not null,
+    car_year int not null,
     description varchar(1222) not null,
     constraint cars_ibfk_1
         foreign key (driver_id) references drivers (driver_id)
@@ -45,28 +46,28 @@ create index driver_id
 
 create table travels
 (
-    travel_id          int auto_increment
+    travel_id int auto_increment
         primary key,
-    user_id            int           null,
-    start_location     varchar(255)  not null,
-    end_location       varchar(255)  not null,
-    departure_datetime datetime      not null,
-    cost_per_person    varchar(45)   not null,
-    available_seats    int           not null,
-    description        varchar(2222) null,
+    user_id int null,
+    start_location varchar(255) not null,
+    end_location varchar(255) not null,
+    departure_datetime datetime not null,
+    cost_per_person varchar(45) not null,
+    available_seats int not null,
+    description varchar(2222) null,
     constraint travels_ibfk_1
         foreign key (user_id) references users (user_id)
 );
 
 create table ratings
 (
-    rating_id        int auto_increment
+    rating_id int auto_increment
         primary key,
-    rated_user_id    int           null,
-    rated_by_user_id int           null,
-    ride_id          int           null,
-    rating_value     int           not null,
-    comment          varchar(2555) not null,
+    rated_user_id int null,
+    rated_by_user_id int null,
+    ride_id int null,
+    rating_value int not null,
+    comment varchar(2555) not null,
     constraint ratings_ibfk_1
         foreign key (rated_user_id) references users (user_id),
     constraint ratings_ibfk_2
@@ -86,10 +87,10 @@ create index ride_id
 
 create table riderequests
 (
-    request_id     int auto_increment
+    request_id int auto_increment
         primary key,
-    travel_id      int         null,
-    user_id        int         null,
+    travel_id int null,
+    user_id int null,
     request_status varchar(20) not null,
     constraint riderequests_ibfk_1
         foreign key (travel_id) references travels (travel_id),
@@ -102,5 +103,3 @@ create index travel_id
 
 create index user_id
     on riderequests (user_id);
-
-

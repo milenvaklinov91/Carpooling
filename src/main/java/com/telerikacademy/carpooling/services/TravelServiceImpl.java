@@ -4,6 +4,7 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.repositories.TravelRepositoryImpl;
+import com.telerikacademy.carpooling.repositories.UserRepositoryImpl;
 import com.telerikacademy.carpooling.services.interfaces.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 public class TravelServiceImpl implements TravelService {
 
     private TravelRepositoryImpl travelRepository;
+    private UserRepositoryImpl userRepository;
     @Autowired
     public TravelServiceImpl(TravelRepositoryImpl travelRepository) {
         this.travelRepository = travelRepository;
@@ -34,23 +36,23 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public void modify(Travel travel, User user) {
-        /*if (user.isBlocked()) {
+        /*if (user.isIs_blocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
-        } else if (!(post.getCreatedBy().getUsername().equals(user.getUsername()))) {
+        } else if (!(travel.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
-        }*/
-        travelRepository.modify(travel);
+        }
+        travelRepository.modify(travel);*/
     }
 
     @Override
     public void delete(int id, User user) {
-        Travel travel = travelRepository.getTravelById(id);
-        /*if (user.isBlocked()) {
+       /* Travel travel = travelRepository.getTravelById(id);
+        if (user.isIs_blocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         } else if (!(user.isAdmin() || travel.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
-        }*/
-        travelRepository.delete(id);
+        }
+        travelRepository.delete(id);*/
     }
 
 
