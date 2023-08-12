@@ -35,9 +35,9 @@ public class User {
     private boolean is_driver;
     @Column(name="is_blocked")
     private boolean is_blocked;
-//    @JsonIgnore
-//    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-//    private List<Travel> travel;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private List<Travel> travel;
 
     public User() {
     }
@@ -130,11 +130,11 @@ public class User {
         this.profilePic = profilePic;
     }
 
-//    public List<Travel> getTravel() {
-//        return travel;
-//    }
-//
-//    public void setTravel(List<Travel> travels) {
-//        this.travel = travels;
-//    }
+    public List<Travel> getTravel() {
+        return travel;
+    }
+
+    public void setTravel(List<Travel> travels) {
+        this.travel = travels;
+    }
 }
