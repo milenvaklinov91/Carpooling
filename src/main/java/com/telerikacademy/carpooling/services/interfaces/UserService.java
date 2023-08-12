@@ -2,11 +2,12 @@ package com.telerikacademy.carpooling.services.interfaces;
 
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
+import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAll();
+    public List<User> getAll(UserFilterOptions userFilterOptions);
 
 
     Long countAllUsers();

@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.*;
 import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getAll() {
-        return userRepository.getAll();
+    public List<User> getAll(UserFilterOptions userFilterOptions) {
+        return userRepository.getAll(userFilterOptions);
     }
 
     public Long countAllUsers() {

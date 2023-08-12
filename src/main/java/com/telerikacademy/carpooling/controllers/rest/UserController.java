@@ -7,6 +7,7 @@ import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
+import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,8 +31,13 @@ public class UserController {
         this.userMapper = userMapper;
     }
     @GetMapping
-    public List<User> getAll() {
-        return service.getAll();
+    public List<User> getAll(  @RequestParam(required = false) String username,
+                               @RequestParam(required = false) String firstName,
+                               @RequestParam(required = false) String lastName,
+                               @RequestParam(required = false) String sortBy,
+                               @RequestParam(required = false) String sortOrder) {
+        UserFilterOptions userFilterOptions=new UserFilterOptions(username,firstName,lastName,sortBy,sortOrder);
+        return service.getAll(userFilterOptions);
     }
 
     @GetMapping("/count")
