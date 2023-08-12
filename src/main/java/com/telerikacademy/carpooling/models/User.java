@@ -30,23 +30,23 @@ public class User {
     @Column(name="profile_picture")
     private String profilePic;
     @Column(name="phone_number")
-    private int phone_number;
+    private String phone_number;
     @Column(name="is_driver")
     private boolean is_driver;
     @Column(name="is_blocked")
     private boolean is_blocked;
-    @JsonIgnore
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private List<Travel> travel;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+//    private List<Travel> travel;
 
     public User() {
     }
 
-    public int getPhone_number() {
+    public String getPhone_number() {
         return phone_number;
     }
 
-    public void setPhone_number(int phone_number) {
+    public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
 
@@ -130,11 +130,11 @@ public class User {
         this.profilePic = profilePic;
     }
 
-    public List<Travel> getTravel() {
-        return travel;
-    }
-
-    public void setTravel(List<Travel> travels) {
-        this.travel = travels;
-    }
+//    public List<Travel> getTravel() {
+//        return travel;
+//    }
+//
+//    public void setTravel(List<Travel> travels) {
+//        this.travel = travels;
+//    }
 }

@@ -2,13 +2,14 @@ package com.telerikacademy.carpooling.mappers;
 
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
+import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
 private  UserService userService;
-
+private UserRepository userRepository;
     public UserMapper(UserService userService) {
         this.userService = userService;
     }
@@ -20,7 +21,17 @@ private  UserService userService;
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());
         user.setPhone_number(userDto.getPhone_number());
-        user.setProfilePic("static/images/profile.jpg");
+        if (userDto.getProfilePic() != null) {
+            user.setProfilePic(userDto.getProfilePic());
+        } else {
+            user.setProfilePic("static/images/profile.jpg");
+        }
+        return user;
+    }
+
+    public User fromUserDto(int id, UserDto userDto) {
+        User user = fromDto(userDto);
+        user.setId(id);
         return user;
     }
 

@@ -1,6 +1,7 @@
 package com.telerikacademy.carpooling.controllers.rest;
 
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
+import com.telerikacademy.carpooling.exceptions.DuplicatePasswordException;
 import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.mappers.UserMapper;
@@ -48,7 +49,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    public User getUserByUsername(@RequestHeader HttpHeaders headers, String username) {
+    public User getUserByUsername(@RequestHeader HttpHeaders headers,@RequestHeader String username) {
         try {
             return service.getByUsername(username);
         } catch (EntityNotFoundException e) {
@@ -57,16 +58,24 @@ public class UserController {
     }
 
     @GetMapping("/firstname")
-    public User getUserByFirstName(@RequestHeader HttpHeaders headers, String firstName) {
+    public User getUserByFirstName(@RequestHeader HttpHeaders headers,@RequestHeader String firstName) {
         try {
             return service.getByFirstName(firstName);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+    @GetMapping("/lastname")
+    public User getUserByLastName(@RequestHeader HttpHeaders headers,@RequestHeader String lastName) {
+        try {
+            return service.getByLastName(lastName);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
     @GetMapping("/email")
-    public User getUserByEmail(@RequestHeader HttpHeaders headers, String email) {
+    public User getUserByEmail(@RequestHeader HttpHeaders headers,@RequestHeader String email) {
         try {
             return service.getByEmail(email);
         } catch (EntityNotFoundException e) {
@@ -82,6 +91,23 @@ public class UserController {
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
+    }
+
+    @PutMapping("/{id}")
+    public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
+                         @Valid @RequestBody UserDto userDto) {
+        try {
+            User user = userMapper.fromUserDto(id,userDto);
+            service.update(user);
+            return "User was successfully updated!";
+        } catch (DuplicatePasswordException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+    @DeleteMapping("/{id}")
+    public String delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        service.delete(id);
+        return "User was successfully deleted!";
     }
 
 

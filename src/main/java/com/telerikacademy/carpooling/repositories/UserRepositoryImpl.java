@@ -55,6 +55,18 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
+    public User getByLastname(String lastName) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "from User user where lower(user.lastName) = lower(:lastName)", User.class);
+            query.setParameter("lastName", lastName);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("User", "lastname", lastName);
+            }
+            return result.get(0);
+        }
+    }
 
 
     public User getByFirstName(String firstName) {
@@ -86,6 +98,21 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(user);
+            session.getTransaction().commit();
+        }
+    }
+    public void update(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(user);
+            session.getTransaction().commit();
+        }
+    }
+    public void delete(int id) {
+        User userToDelete = getUserById(id);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(userToDelete);
             session.getTransaction().commit();
         }
     }
