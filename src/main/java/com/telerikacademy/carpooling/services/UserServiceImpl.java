@@ -1,9 +1,7 @@
 package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.*;
-import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.User;
-import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +48,8 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.getByEmail(email);
     }
+    public List<User>  getAdmins(){return userRepository.getAdmins();}
+    public List<User>  getRegularUsers(){return userRepository.getRegularUsers();}
 
     public void create(User user) {
         isDuplicateUsername(user);
@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
         validatePassword(user.getPassword());
         user.setRegistrationDate(LocalDateTime.now());
         user.setIs_blocked(false);
-        user.setIs_driver(false);
+        user.setIsDriver(false);
         user.setAdmin(false);
         userRepository.create(user);
     }
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
     public void update(User user,User logUser) {
         try {
             User existUser = userRepository.getUserById(user.getId());
-            if (logUser.isIs_blocked()) {
+            if (logUser.isBlocked()) {
                 throw new UnauthorizedOperationException("You`re blocked!!!");
             } else if (!(existUser.getUsername().equals(logUser.getUsername()))) {
                 throw new UnauthorizedOperationException("You're not authorized for this operation");
@@ -136,5 +136,53 @@ public class UserServiceImpl implements UserService {
         if (duplicatePhone) {
             throw new EntityDuplicateException("Phone number", user.getPhone_number());
         }
+    }
+    public User getUserDetails(int id) {
+        User admin = userRepository.getUserById(id);
+        if (!admin.isAdmin()) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation!");
+        }
+        return admin;
+    }
+
+
+    public User blockUser(int id, User user) {
+        User normalUser = userRepository.getUserById(id);
+        if (user.isAdmin() && !normalUser.isAdmin()) {
+            normalUser.setIs_blocked(true);
+            userRepository.update(normalUser);
+            return normalUser;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public User unBlockUser(int id, User user) {
+        User normalUser = userRepository.getUserById(id);
+        if (user.isAdmin() && !normalUser.isAdmin()) {
+            normalUser.setIs_blocked(false);
+            userRepository.update(normalUser);
+            return normalUser;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public User makeAdmin(int id, User user) {
+        User user1 = userRepository.getUserById(id);
+        if (user.isAdmin() && !user1.isAdmin()) {
+            user1.setAdmin(true);
+            userRepository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public User demoteAdmin(int id, User user) {
+        User user1 = userRepository.getUserById(id);
+        if (user.isAdmin() && user1.isAdmin()) {
+            user1.setAdmin(false);
+            userRepository.update(user1);
+            return user1;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 }

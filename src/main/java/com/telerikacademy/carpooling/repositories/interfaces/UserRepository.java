@@ -21,5 +21,7 @@ public interface UserRepository {
     void create(User user);
     void update(User user);
     void delete(int id);
+    List<User>  getAdmins();
+    List<User>  getRegularUsers();
 
 }

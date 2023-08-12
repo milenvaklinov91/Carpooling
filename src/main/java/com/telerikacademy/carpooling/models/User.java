@@ -32,7 +32,7 @@ public class User {
     @Column(name="phone_number")
     private String phone_number;
     @Column(name="is_driver")
-    private boolean is_driver;
+    private boolean isDriver;
     @Column(name="is_blocked")
     private boolean is_blocked;
     @Column(name = "is_admin")
@@ -52,15 +52,15 @@ public class User {
         this.phone_number = phone_number;
     }
 
-    public boolean isIs_driver() {
-        return is_driver;
+    public boolean isDriver() {
+        return isDriver;
     }
 
-    public void setIs_driver(boolean is_driver) {
-        this.is_driver = is_driver;
+    public void setIsDriver(boolean is_driver) {
+        this.isDriver = is_driver;
     }
 
-    public boolean isIs_blocked() {
+    public boolean isBlocked() {
         return is_blocked;
     }
 
