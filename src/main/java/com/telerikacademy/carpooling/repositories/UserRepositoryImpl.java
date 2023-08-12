@@ -93,6 +93,17 @@ public class UserRepositoryImpl implements UserRepository {
             return result.get(0);
         }
     }
+    public User getByPhoneNumber(String phoneNumber) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User where phone_number = :phoneNumber", User.class);
+            query.setParameter("phoneNumber", phoneNumber);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("User", "phone number", phoneNumber);
+            }
+            return result.get(0);
+        }
+    }
 
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {

@@ -21,6 +21,6 @@ public interface UserService {
 
     User getByEmail(String email);
     void create(User user);
-    void update(User user);
-    void delete(int id);
+    void update(User user,User logUser);
+    void delete(int id,User logUser);
 }

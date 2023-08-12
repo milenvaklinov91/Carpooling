@@ -97,8 +97,9 @@ public class UserController {
     public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
                          @Valid @RequestBody UserDto userDto) {
         try {
+            User logUser = authenticationHelper.tryGetUser(headers);
             User user = userMapper.fromUserDto(id,userDto);
-            service.update(user);
+            service.update(user,logUser);
             return "User was successfully updated!";
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
@@ -106,7 +107,8 @@ public class UserController {
     }
     @DeleteMapping("/{id}")
     public String delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
-        service.delete(id);
+        User user = authenticationHelper.tryGetUser(headers);
+        service.delete(id,user);
         return "User was successfully deleted!";
     }
 

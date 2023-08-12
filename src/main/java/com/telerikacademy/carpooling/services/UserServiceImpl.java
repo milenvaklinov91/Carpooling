@@ -1,9 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
-import com.telerikacademy.carpooling.exceptions.EmailExitsException;
-import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
-import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
-import com.telerikacademy.carpooling.exceptions.InvalidPasswordException;
+import com.telerikacademy.carpooling.exceptions.*;
 import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
@@ -57,16 +54,23 @@ public class UserServiceImpl implements UserService {
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
+        isDuplicatePhoneNumber(user);
         validatePassword(user.getPassword());
         user.setRegistrationDate(LocalDateTime.now());
         user.setIs_blocked(false);
         user.setIs_driver(false);
+        user.setAdmin(false);
         userRepository.create(user);
     }
 
-    public void update(User user) {
+    public void update(User user,User logUser) {
         try {
             User existUser = userRepository.getUserById(user.getId());
+            if (logUser.isIs_blocked()) {
+                throw new UnauthorizedOperationException("You`re blocked!!!");
+            } else if (!(existUser.getUsername().equals(logUser.getUsername()))) {
+                throw new UnauthorizedOperationException("You're not authorized for this operation");
+            }
             existUser.setUsername(user.getUsername());
             existUser.setLastName(user.getLastName());
             if (user.getProfilePic() != null) {
@@ -76,14 +80,17 @@ public class UserServiceImpl implements UserService {
             existUser.setEmail(user.getEmail());
             existUser.setPassword(user.getPassword());
             userRepository.update(existUser);
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
 
 
     }
-    public void delete(int id) {
-        User user = userRepository.getUserById(id);
+
+    public void delete(int id, User logUser) {
+        if (!(logUser.isAdmin())) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
         userRepository.delete(id);
     }
 
@@ -116,6 +123,18 @@ public class UserServiceImpl implements UserService {
         }
         if (duplicateEmail) {
             throw new EmailExitsException(user.getEmail());
+        }
+    }
+
+    private void isDuplicatePhoneNumber(User user) {
+        boolean duplicatePhone = true;
+        try {
+            userRepository.getByPhoneNumber(user.getPhone_number());
+        } catch (EntityNotFoundException e) {
+            duplicatePhone = false;
+        }
+        if (duplicatePhone) {
+            throw new EntityDuplicateException("Phone number", user.getPhone_number());
         }
     }
 }

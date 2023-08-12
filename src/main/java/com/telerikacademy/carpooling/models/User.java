@@ -35,6 +35,8 @@ public class User {
     private boolean is_driver;
     @Column(name="is_blocked")
     private boolean is_blocked;
+    @Column(name = "is_admin")
+    private boolean isAdmin;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private List<Travel> travel;
@@ -136,5 +138,13 @@ public class User {
 
     public void setTravel(List<Travel> travels) {
         this.travel = travels;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
