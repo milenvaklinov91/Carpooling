@@ -1,9 +1,8 @@
 package com.telerikacademy.carpooling.models.dtos;
 
-import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
+
 
 public class UserDto {
     @NotNull(message = "Username can't be empty")
