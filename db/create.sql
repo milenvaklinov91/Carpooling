@@ -20,7 +20,7 @@ create table drivers
     driver_id                  int auto_increment
         primary key,
     user_id                    int          null,
-    driver_license_picture_url varchar(255) null,
+    driver_license_picture varchar(255) null,
     constraint user_id
         unique (user_id),
     constraint drivers_ibfk_1
