@@ -44,7 +44,6 @@ public class UserRepositoryImpl implements UserRepository {
                 params.put("lastName", String.format("%%%s%%", value));
             });
 
-
             if (!filters.isEmpty()) {
                 hqlBuilder.append(" WHERE ");
                 hqlBuilder.append(String.join(" AND ", filters));
@@ -162,6 +161,26 @@ public class UserRepositoryImpl implements UserRepository {
             return result;
         }
     }
+    public  List<User> getDrivers(){
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User WHERE isDriver = true", User.class);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("No drivers");
+            }
+            return result;
+        }
+    }
+    public  List<User> getPassengers(){
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("from User WHERE isDriver = false", User.class);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("No passengers");
+            }
+            return result;
+        }
+    }
 
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
@@ -202,6 +221,9 @@ public class UserRepositoryImpl implements UserRepository {
                 break;
             case "lastName":
                 orderBy = "lastName";
+                break;
+            case "userTravels":
+                orderBy = "userTravels";
                 break;
             default:
                 orderBy = "u.user_id";

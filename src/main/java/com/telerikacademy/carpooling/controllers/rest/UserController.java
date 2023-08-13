@@ -5,6 +5,7 @@ import com.telerikacademy.carpooling.exceptions.DuplicatePasswordException;
 import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.mappers.UserMapper;
+import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
@@ -90,6 +91,14 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+    @GetMapping("/phone")
+    public User getUserByPhoneNum(@RequestHeader HttpHeaders headers, @RequestHeader String phoneNum) {
+        try {
+            return service.getByPhone(phoneNum);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
     @GetMapping("/admins")
     public List<User> getAdmins(@RequestHeader HttpHeaders headers) {
@@ -112,7 +121,26 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-
+    @GetMapping("/drivers")
+    public List<User> getDrivers() {
+        try {
+            return service.getDrivers();
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @GetMapping("/passengers")
+    public List<User> getPassengers() {
+        try {
+            return service.getPassengers();
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @GetMapping("/{userId}/travels")
+    public List<Travel> getUserTravels(@PathVariable int userId) {
+        return service.showTravelsByUser(userId);
+    }
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {

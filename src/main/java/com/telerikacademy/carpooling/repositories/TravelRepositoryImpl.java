@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Travel;
+import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
 import org.hibernate.Session;
@@ -95,6 +96,19 @@ public class TravelRepositoryImpl implements TravelRepository {
             session.beginTransaction();
             session.delete(travelToDelete);
             session.getTransaction().commit();
+        }
+    }
+
+    public List<Travel> findAllTravelsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "From Travel WHERE createdBy.id= :user_id", Travel.class);
+            query.setParameter("user_id", userId);
+            List<Travel> allTravels= query.list();
+            if (allTravels.size() == 0) {
+                throw new EntityNotFoundException("This passenger don't have travels yet!");
+            }
+            return allTravels;
         }
     }
 

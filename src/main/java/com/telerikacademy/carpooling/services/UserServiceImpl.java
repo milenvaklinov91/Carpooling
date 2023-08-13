@@ -1,8 +1,10 @@
 package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.*;
+import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
+import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private TravelRepository travelRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,TravelRepository travelRepository) {
         this.userRepository = userRepository;
+        this.travelRepository=travelRepository;
     }
 
     public List<User> getAll(UserFilterOptions userFilterOptions) {
@@ -49,6 +53,7 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.getByEmail(email);
     }
+    public User getByPhone(String phone){return userRepository.getByPhoneNumber(phone);}
 
     public List<User> getAdmins() {
         return userRepository.getAdmins();
@@ -56,6 +61,12 @@ public class UserServiceImpl implements UserService {
 
     public List<User> getRegularUsers() {
         return userRepository.getRegularUsers();
+    }
+    public List<User> getDrivers(){
+        return userRepository.getDrivers();
+    }
+    public List<User> getPassengers(){
+        return userRepository.getPassengers();
     }
 
     public void create(User user) {
@@ -189,5 +200,9 @@ public class UserServiceImpl implements UserService {
             return user1;
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    public List<Travel> showTravelsByUser(int id){
+        return travelRepository.findAllTravelsByUser(id);
     }
 }

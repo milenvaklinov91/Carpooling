@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.services.interfaces;
 
+import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
@@ -19,8 +20,11 @@ public interface UserService {
 
      User getByFirstName(String firstName);
     User getByLastName(String lastName);
+    User getByPhone(String phone);
     List<User>  getAdmins();
     List<User>  getRegularUsers();
+    List<User> getDrivers();
+    List<User> getPassengers();
     User getByEmail(String email);
     void create(User user);
     void update(User user,User logUser);
@@ -30,5 +34,6 @@ public interface UserService {
     User unBlockUser(int id, User user);
     User makeAdmin(int id, User user);
     User demoteAdmin(int id, User user);
+    List<Travel> showTravelsByUser(int id);
 
 }

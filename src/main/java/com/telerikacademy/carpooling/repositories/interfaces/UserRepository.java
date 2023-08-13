@@ -24,5 +24,6 @@ public interface UserRepository {
     void delete(int id);
     List<User>  getAdmins();
     List<User>  getRegularUsers();
-
+    List<User> getDrivers();
+    List<User> getPassengers();
 }
