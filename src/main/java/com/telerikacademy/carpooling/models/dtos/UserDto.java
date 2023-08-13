@@ -30,6 +30,7 @@ public class UserDto {
     private String phone_number;
 
     private String profilePic;
+    private boolean isDriver;
 
 
     public UserDto() {
@@ -89,6 +90,14 @@ public class UserDto {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
+    }
+
+    public boolean isDriver() {
+        return isDriver;
+    }
+
+    public void setDriver(boolean driver) {
+        isDriver = driver;
     }
 }
 

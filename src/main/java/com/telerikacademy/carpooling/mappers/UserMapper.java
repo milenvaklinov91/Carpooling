@@ -26,6 +26,7 @@ private UserRepository userRepository;
         } else {
             user.setProfilePic("static/images/profile.jpg");
         }
+        user.setIsDriver(userDto.isDriver());
         return user;
     }
 

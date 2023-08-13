@@ -49,8 +49,14 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.getByEmail(email);
     }
-    public List<User>  getAdmins(){return userRepository.getAdmins();}
-    public List<User>  getRegularUsers(){return userRepository.getRegularUsers();}
+
+    public List<User> getAdmins() {
+        return userRepository.getAdmins();
+    }
+
+    public List<User> getRegularUsers() {
+        return userRepository.getRegularUsers();
+    }
 
     public void create(User user) {
         isDuplicateUsername(user);
@@ -59,12 +65,11 @@ public class UserServiceImpl implements UserService {
         validatePassword(user.getPassword());
         user.setRegistrationDate(LocalDateTime.now());
         user.setIs_blocked(false);
-        user.setIsDriver(false);
         user.setAdmin(false);
         userRepository.create(user);
     }
 
-    public void update(User user,User logUser) {
+    public void update(User user, User logUser) {
         try {
             User existUser = userRepository.getUserById(user.getId());
             if (logUser.isBlocked()) {
@@ -74,9 +79,7 @@ public class UserServiceImpl implements UserService {
             }
             existUser.setUsername(user.getUsername());
             existUser.setLastName(user.getLastName());
-            if (user.getProfilePic() != null) {
-                user.setProfilePic(user.getProfilePic());
-            }
+            user.setProfilePic(user.getProfilePic());
             existUser.setPhone_number(user.getPhone_number());
             existUser.setEmail(user.getEmail());
             existUser.setPassword(user.getPassword());
@@ -138,6 +141,7 @@ public class UserServiceImpl implements UserService {
             throw new EntityDuplicateException("Phone number", user.getPhone_number());
         }
     }
+
     public User getUserDetails(int id) {
         User admin = userRepository.getUserById(id);
         if (!admin.isAdmin()) {
