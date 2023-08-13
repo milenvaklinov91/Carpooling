@@ -30,13 +30,14 @@ public class UserController {
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
     }
+
     @GetMapping
-    public List<User> getAll(  @RequestParam(required = false) String username,
-                               @RequestParam(required = false) String firstName,
-                               @RequestParam(required = false) String lastName,
-                               @RequestParam(required = false) String sortBy,
-                               @RequestParam(required = false) String sortOrder) {
-        UserFilterOptions userFilterOptions=new UserFilterOptions(username,firstName,lastName,sortBy,sortOrder);
+    public List<User> getAll(@RequestParam(required = false) String username,
+                             @RequestParam(required = false) String firstName,
+                             @RequestParam(required = false) String lastName,
+                             @RequestParam(required = false) String sortBy,
+                             @RequestParam(required = false) String sortOrder) {
+        UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName, sortBy, sortOrder);
         return service.getAll(userFilterOptions);
     }
 
@@ -55,7 +56,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    public User getUserByUsername(@RequestHeader HttpHeaders headers,@RequestHeader String username) {
+    public User getUserByUsername(@RequestHeader HttpHeaders headers, @RequestHeader String username) {
         try {
             return service.getByUsername(username);
         } catch (EntityNotFoundException e) {
@@ -64,15 +65,16 @@ public class UserController {
     }
 
     @GetMapping("/firstname")
-    public User getUserByFirstName(@RequestHeader HttpHeaders headers,@RequestHeader String firstName) {
+    public User getUserByFirstName(@RequestHeader HttpHeaders headers, @RequestHeader String firstName) {
         try {
             return service.getByFirstName(firstName);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/lastname")
-    public User getUserByLastName(@RequestHeader HttpHeaders headers,@RequestHeader String lastName) {
+    public User getUserByLastName(@RequestHeader HttpHeaders headers, @RequestHeader String lastName) {
         try {
             return service.getByLastName(lastName);
         } catch (EntityNotFoundException e) {
@@ -81,15 +83,16 @@ public class UserController {
     }
 
     @GetMapping("/email")
-    public User getUserByEmail(@RequestHeader HttpHeaders headers,@RequestHeader String email) {
+    public User getUserByEmail(@RequestHeader HttpHeaders headers, @RequestHeader String email) {
         try {
             return service.getByEmail(email);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/admins")
-    public List<User>  getAdmins(@RequestHeader HttpHeaders headers) {
+    public List<User> getAdmins(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             service.getUserDetails(user.getId());
@@ -98,8 +101,9 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/regular")
-    public List<User>  getRegularUsers(@RequestHeader HttpHeaders headers) {
+    public List<User> getRegularUsers(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             service.getUserDetails(user.getId());
@@ -108,7 +112,8 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-  @PostMapping
+
+    @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
             User user = userMapper.fromDto(userDto);
@@ -120,17 +125,18 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestHeader HttpHeaders headers,@PathVariable int id,
+    public String update(@RequestHeader HttpHeaders headers, @PathVariable int id,
                          @Valid @RequestBody UserDto userDto) {
         try {
             User logUser = authenticationHelper.tryGetUser(headers);
-            User user = userMapper.fromUserDto(id,userDto);
-            service.update(user,logUser);
+            User user = userMapper.fromUserDto(id, userDto);
+            service.update(user, logUser);
             return "User was successfully updated!";
         } catch (DuplicatePasswordException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/block")
     public User blockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -142,6 +148,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/unblock")
     public User unBlockUser(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -153,6 +160,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/make-admin")
     public User makeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -164,6 +172,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PutMapping("/{id}/unmake-admin")
     public User unMakeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
@@ -175,12 +184,12 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @DeleteMapping("/{id}")
     public String delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
-        service.delete(id,user);
+        service.delete(id, user);
         return "User was successfully deleted!";
     }
-
 
 }
