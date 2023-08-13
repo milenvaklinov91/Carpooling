@@ -14,7 +14,7 @@ public class TravelDto {
     private String endLocation;
     @NotNull(message = "DepartureTime can't be empty")
     @NotBlank
-    private LocalDateTime departureTime;
+    private String departureTime;
     @NotNull(message = "CostPerPerson can't be empty")
     @NotBlank
     private String costPerPerson;
@@ -45,11 +45,11 @@ public class TravelDto {
         this.endLocation = endLocation;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 

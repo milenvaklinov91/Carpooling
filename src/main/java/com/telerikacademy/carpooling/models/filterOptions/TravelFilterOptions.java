@@ -11,11 +11,13 @@ public class TravelFilterOptions {
     private Optional<String> sortOrder;
 
     public TravelFilterOptions() {
-        this(null, null, null,null,null,null);
+        this(null, null, null,
+                null, null, null);
     }
 
-
-    public TravelFilterOptions(String startLocation, String endLocations, String departureTime,String costPerPerson,String sortBy,String sortOrder) {
+    public TravelFilterOptions(String startLocation, String endLocations,
+                               String departureTime, String costPerPerson,
+                               String sortBy, String sortOrder) {
         this.startLocation = Optional.ofNullable(startLocation);
         this.endLocations = Optional.ofNullable(endLocations);
         this.departureTime = Optional.ofNullable(departureTime);

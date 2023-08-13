@@ -1,11 +1,12 @@
 package com.telerikacademy.carpooling.controllers.rest;
 
-import com.telerikacademy.carpooling.exceptions.DuplicatePasswordException;
-import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
+import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
+import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.mappers.TravelMapper;
 import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
-import com.telerikacademy.carpooling.models.dtos.UserDto;
+import com.telerikacademy.carpooling.models.dtos.TravelDto;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.TravelService;
 import org.springframework.http.HttpHeaders;
@@ -18,9 +19,13 @@ import java.util.List;
 
 public class TravelController {
     private final TravelService travelService;
+    private final AuthenticationHelper authenticationHelper;
+    private final TravelMapper travelMapper;
 
-    public TravelController(TravelService travelService) {
+    public TravelController(TravelService travelService, AuthenticationHelper authenticationHelper, TravelMapper travelMapper) {
         this.travelService = travelService;
+        this.authenticationHelper = authenticationHelper;
+        this.travelMapper = travelMapper;
     }
 
     @GetMapping
@@ -39,7 +44,6 @@ public class TravelController {
         return travelService.getAll(travelFilterOptions);
     }
 
-
     @GetMapping("/{id}")
     public Travel getTravelById(@PathVariable int id) {
         try {
@@ -49,38 +53,37 @@ public class TravelController {
         }
     }
 
-
     @PostMapping
-    public Travel create(@Valid @RequestBody UserDto userDto) {
-        /*try {
-            User user = userMapper.fromDto(userDto);
-            service.create(user);
-            return user;
-        } catch (EntityDuplicateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }*/
-        return null;
+    public Travel create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TravelDto travelDto) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Travel travel = travelMapper.fromTravelDto(travelDto);
+            travelService.create(travel, user);
+            return travel;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @PutMapping("/{id}")
-    public String update(@RequestHeader HttpHeaders headers, @PathVariable int id,
-                         @Valid @RequestBody UserDto userDto) {
-        /*try {
-            User logUser = authenticationHelper.tryGetUser(headers);
-            User user = userMapper.fromUserDto(id, userDto);
-            service.update(user, logUser);
-            return "User was successfully updated!";
-        } catch (DuplicatePasswordException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        }*/
-        return null;
+    public Travel modify(@RequestHeader HttpHeaders headers, @PathVariable int id,
+                         @Valid @RequestBody TravelDto travelDto) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Travel travel = travelMapper.fromDto(id, travelDto);
+            travelService.modify(travel, user);
+            return travel;
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
-        /*User user = authenticationHelper.tryGetUser(headers);
-        service.delete(id, user);*/
-        return "User was successfully deleted!";
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        User user = authenticationHelper.tryGetUser(headers);
+        travelService.delete(id, user);
     }
 
 }

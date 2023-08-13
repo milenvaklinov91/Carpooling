@@ -21,7 +21,7 @@ public class Travel {
     @Column(name = "end_location")
     private String endLocation;
     @Column(name = "departure_datetime")
-    private LocalDateTime departureTime;
+    private String departureTime;
     @Column(name = "cost_per_person")
     private String costPerPerson;
     @Column(name = "available_seats")
@@ -64,11 +64,11 @@ public class Travel {
         this.endLocation = endLocation;
     }
 
-    public LocalDateTime getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(LocalDateTime departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
