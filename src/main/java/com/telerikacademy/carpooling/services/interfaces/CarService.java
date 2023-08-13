@@ -9,4 +9,6 @@ public interface CarService {
     void update(Car car, User user);
 
     void delete(int id);
+
+    Car searchId(int id);
 }

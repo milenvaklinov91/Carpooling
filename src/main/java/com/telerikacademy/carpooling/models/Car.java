@@ -24,7 +24,7 @@ public class Car {
     @Column(name = "car_color")
     private String colour;
     @Column(name = "car_year")
-    private String year;
+    private Integer year;
     @Column(name = "description")
     private String description;
     @Column(name = "extra_storage")
@@ -83,11 +83,11 @@ public class Car {
         this.colour = colour;
     }
 
-    public String getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

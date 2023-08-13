@@ -33,7 +33,6 @@ create table Cars
 (
     car_id          int auto_increment
         primary key,
-    driver_id       int           not null,
     user_id         int           not null,
     car_brand       varchar(45)   not null,
     car_model       varchar(45)   not null,
@@ -47,15 +46,12 @@ create table Cars
     consume_food    tinyint(1)    not null,
     consume_drink   tinyint(1)    not null,
     car_capacity    int           not null,
-    constraint Cars_Drivers_driver_id_fk
-        foreign key (driver_id) references Drivers (driver_id),
+
     constraint cars_users_user_id_pk
         foreign key (user_id) references Users (user_id)
 );
 
 
-create index driver_id
-    on cars (driver_id);
 
 create table travels
 (
