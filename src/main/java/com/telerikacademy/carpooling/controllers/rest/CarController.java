@@ -43,5 +43,32 @@ public class CarController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    @GetMapping("/{id}")
+    public Car getCarById(@PathVariable int id) {
+        try {
+            return carService.getCarById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
+    public Car update(@RequestHeader HttpHeaders headers, @PathVariable int id,
+                         @Valid @RequestBody CarDto carDto) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Car car = carMapper.fromCarDtoWithId(id, carDto);
+            carService.update(car, user);
+            return car;
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        User user = authenticationHelper.tryGetUser(headers);
+        carService.delete(id, user);
+    }
 
 }

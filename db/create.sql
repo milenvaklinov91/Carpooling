@@ -29,7 +29,7 @@ create table drivers
 
 
 
-create table Cars
+create table cars
 (
     car_id          int auto_increment
         primary key,

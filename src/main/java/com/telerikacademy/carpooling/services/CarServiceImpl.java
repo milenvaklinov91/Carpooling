@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Car;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.repositories.interfaces.CarRepository;
@@ -23,18 +24,23 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void update(Car car, User user) {
-
+        if (user.isBlocked()) {
+            throw new UnauthorizedOperationException("You`re blocked!!!");
+        } else if (!(car.getUserCreatedBy().getUsername().equals(user.getUsername()))) {
+            throw new UnauthorizedOperationException("You're not authorized to perform this operation");
+        }
+        carRepository.update(car);
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id, User user) {
         Car car = carRepository.getCarById(id);
         carRepository.delete(id);
 
     }
 
     @Override
-    public Car searchId(int id) {
+    public Car getCarById(int id) {
         return carRepository.getCarById(id);
     }
 

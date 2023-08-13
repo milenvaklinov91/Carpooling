@@ -33,4 +33,12 @@ public class CarMapper {
         car.setConsumeDrink(carDto.isConsumeDrink());
         return car;
     }
+
+    public Car fromCarDtoWithId(int id, CarDto carDto){
+        Car car = fromCarDto(carDto);
+        car.setCarId(id);
+        Car carRepository = carService.getCarById(id);
+        car.setUserCreatedBy(carRepository.getUserCreatedBy());
+        return car;
+    }
 }

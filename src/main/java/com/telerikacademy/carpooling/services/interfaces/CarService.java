@@ -8,7 +8,7 @@ public interface CarService {
 
     void update(Car car, User user);
 
-    void delete(int id);
+    void delete(int id, User user);
 
-    Car searchId(int id);
+    Car getCarById(int id);
 }
