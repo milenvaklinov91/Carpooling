@@ -17,12 +17,12 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 import java.util.List;
 
-public class TravelController {
+public class TripController {
     private final TripService tripService;
     private final AuthenticationHelper authenticationHelper;
     private final TripMapper tripMapper;
 
-    public TravelController(TripService tripService, AuthenticationHelper authenticationHelper, TripMapper tripMapper) {
+    public TripController(TripService tripService, AuthenticationHelper authenticationHelper, TripMapper tripMapper) {
         this.tripService = tripService;
         this.authenticationHelper = authenticationHelper;
         this.tripMapper = tripMapper;

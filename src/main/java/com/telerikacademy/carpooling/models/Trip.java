@@ -7,11 +7,11 @@ import java.util.List;
 
 
 @Entity
-@Table(name = "travels")
+@Table(name = "trips")
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "travel_id")
+    @Column(name = "trip_id")
     private int travelId;
     @JsonIgnore
     @ManyToOne

@@ -13,19 +13,19 @@ import java.util.List;
 @Service
 public class TripServiceImpl implements TripService {
 
-    private TripRepositoryImpl travelRepository;
+    private TripRepositoryImpl tripRepository;
 
     @Autowired
-    public TripServiceImpl(TripRepositoryImpl travelRepository) {
-        this.travelRepository = travelRepository;
+    public TripServiceImpl(TripRepositoryImpl tripRepository) {
+        this.tripRepository = tripRepository;
     }
     @Override
     public Trip getTravelById(int id) {
-        return travelRepository.getTravelById(id);
+        return tripRepository.getTravelById(id);
     }
     @Override
     public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
-        return travelRepository.getAll(travelFilterOptions);
+        return tripRepository.getAll(travelFilterOptions);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TripServiceImpl implements TripService {
         } else if (trip.getCreatedBy().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
-        travelRepository.create(trip);
+        tripRepository.create(trip);
     }
 
     @Override
@@ -46,18 +46,18 @@ public class TripServiceImpl implements TripService {
         } else if (!(trip.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
-        travelRepository.modify(trip);
+        tripRepository.modify(trip);
     }
 
     @Override
     public void delete(int id, User user) {
-        Trip trip = travelRepository.getTravelById(id);
+        Trip trip = tripRepository.getTravelById(id);
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         } else if (!(user.isAdmin() || trip.getCreatedBy().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
-        travelRepository.delete(id);
+        tripRepository.delete(id);
     }
 
 }
