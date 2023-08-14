@@ -29,10 +29,9 @@ public class Trip {
     private String availableSeats;
     @Column(name = "description")
     private String description;
-
     @JsonIgnore
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private List<Trip> trip;
+    @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
+    private List<TripRequest> tripRequest;
 
     public Trip() {
     }
@@ -99,5 +98,13 @@ public class Trip {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<TripRequest> getTripRequest() {
+        return tripRequest;
+    }
+
+    public void setTripRequest(List<TripRequest> tripRequest) {
+        this.tripRequest = tripRequest;
     }
 }

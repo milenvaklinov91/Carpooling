@@ -25,8 +25,8 @@ public class TripRequestServiceImpl implements TripRequestService {
 
     @Override
     public void create(TripRequest tripRequest, Trip trip, User user) {
-        tripRequest.setCreatedBy(user);
-        if (tripRequest.getCreatedBy().isBlocked()) {
+        tripRequest.setPassenger(user);
+        if (tripRequest.getPassenger().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         }
         tripRequestRepository.create(tripRequest);
@@ -36,7 +36,7 @@ public class TripRequestServiceImpl implements TripRequestService {
     public void modify(TripRequest tripRequest, Trip trip, User user) {
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
-        } else if (!(tripRequest.getCreatedBy().getUsername().equals(user.getUsername()))) {
+        } else if (!(tripRequest.getPassenger().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
         tripRequestRepository.modify(tripRequest);
@@ -47,7 +47,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         TripRequest tripRequest = tripRequestRepository.getTripRequestById(id);
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
-        } else if (!(user.isAdmin() || tripRequest.getCreatedBy().getUsername().equals(user.getUsername()))) {
+        } else if (!(user.isAdmin() || tripRequest.getPassenger().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         tripRequestRepository.delete(id);

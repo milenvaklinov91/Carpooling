@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -38,10 +39,10 @@ public class User {
     private boolean isAdmin;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private List<Trip> trip;
+    private Set<Trip> trip;
     @JsonIgnore
-    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private List<TripRequest> tripRequest;
+    @OneToMany(mappedBy = "passenger", fetch = FetchType.EAGER)
+    private Set<TripRequest> tripRequest;
 
 
     public User() {
@@ -143,21 +144,19 @@ public class User {
         isAdmin = admin;
     }
 
-    public List<Trip> getTravel() {
+    public Set<Trip> getTrip() {
         return trip;
     }
 
-    public void setTravel(List<Trip> trips) {
-        this.trip = trips;
+    public void setTrip(Set<Trip> trip) {
+        this.trip = trip;
     }
 
-    public List<TripRequest> getRideRequest() {
+    public Set<TripRequest> getTripRequest() {
         return tripRequest;
     }
 
-    public void setRideRequest(List<TripRequest> tripRequest) {
+    public void setTripRequest(Set<TripRequest> tripRequest) {
         this.tripRequest = tripRequest;
     }
-
-
 }

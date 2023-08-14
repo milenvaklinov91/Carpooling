@@ -13,12 +13,12 @@ public class TripRequest {
     private int requestId;
     @JsonIgnore
     @ManyToOne
-    @Column(name = "travel_id")
+    @JoinColumn(name = "travel_id")
     private Trip trip;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User createdBy;
+    private User passenger;
     @Column(name = "request_status")
     private String requestStatus;
 
@@ -41,12 +41,12 @@ public class TripRequest {
         this.trip = tripId;
     }
 
-    public User getCreatedBy() {
-        return createdBy;
+    public User getPassenger() {
+        return passenger;
     }
 
-    public void setCreatedBy(User userCreatedBy) {
-        this.createdBy = userCreatedBy;
+    public void setPassenger(User userCreatedBy) {
+        this.passenger = userCreatedBy;
     }
 
     public String getRequestStatus() {
