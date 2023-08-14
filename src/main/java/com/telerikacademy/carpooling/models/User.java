@@ -41,9 +41,6 @@ public class User {
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private List<Travel> travel;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "user_id",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    private Driver driver;
 
     public User() {
     }

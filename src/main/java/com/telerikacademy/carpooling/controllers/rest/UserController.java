@@ -91,6 +91,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/phone")
     public User getUserByPhoneNum(@RequestHeader HttpHeaders headers, @RequestHeader String phoneNum) {
         try {
@@ -121,6 +122,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/drivers")
     public List<User> getDrivers() {
         try {
@@ -129,6 +131,15 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+@GetMapping("/drivers/{username}")
+    public User getDriverByUsername(@RequestHeader String username) {
+        try {
+            return  service.getDriverByUsername(username);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
     @GetMapping("/passengers")
     public List<User> getPassengers() {
         try {
@@ -137,10 +148,12 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("/{userId}/travels")
     public List<Travel> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
     }
+
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {

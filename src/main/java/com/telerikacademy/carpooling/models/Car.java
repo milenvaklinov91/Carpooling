@@ -15,6 +15,9 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userCreatedBy;
+
+    @Column(name="driver_license_picture")
+    private String driver_license;
     @Column(name = "car_brand")
     private String brand;
     @Column(name = "car_model")
@@ -155,4 +158,11 @@ public class Car {
         this.capacity = capacity;
     }
 
+    public String getDriver_license() {
+        return driver_license;
+    }
+
+    public void setDriver_license(String driver_license) {
+        this.driver_license = driver_license;
+    }
 }

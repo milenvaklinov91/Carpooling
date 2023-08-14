@@ -68,6 +68,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getPassengers(){
         return userRepository.getPassengers();
     }
+    public User getDriverByUsername(String username){return userRepository.getDriverByUsername(username);}
 
     public void create(User user) {
         isDuplicateUsername(user);
@@ -205,4 +206,6 @@ public class UserServiceImpl implements UserService {
     public List<Travel> showTravelsByUser(int id){
         return travelRepository.findAllTravelsByUser(id);
     }
+
+
 }

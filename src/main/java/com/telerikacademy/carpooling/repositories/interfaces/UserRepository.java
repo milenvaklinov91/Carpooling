@@ -25,5 +25,6 @@ public interface UserRepository {
     List<User>  getAdmins();
     List<User>  getRegularUsers();
     List<User> getDrivers();
+    User getDriverByUsername(String username);
     List<User> getPassengers();
 }

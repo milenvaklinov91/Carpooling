@@ -171,6 +171,20 @@ public class UserRepositoryImpl implements UserRepository {
             return result;
         }
     }
+    public User getDriverByUsername(String username) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("SELECT u FROM User u where " +
+                            "u.isDriver=true and u.username = :username",
+                           User.class   );
+            query.setParameter("username", username);
+
+            User driver = query.uniqueResult();
+            if (driver == null) {
+                throw new EntityNotFoundException("Driver", "username", username);
+            }
+            return driver;
+        }
+    }
     public  List<User> getPassengers(){
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User WHERE isDriver = false", User.class);

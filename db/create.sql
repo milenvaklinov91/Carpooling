@@ -15,25 +15,13 @@ create table users
     is_admin          tinyint(1)   not null
 );
 
-create table drivers
-(
-    driver_id                  int auto_increment
-        primary key,
-    user_id                    int          null,
-    driver_license_picture varchar(255) null,
-    constraint user_id
-        unique (user_id),
-    constraint drivers_ibfk_1
-        foreign key (user_id) references users (user_id)
-);
-
-
 
 create table cars
 (
     car_id          int auto_increment
         primary key,
     user_id         int           not null,
+    driver_license_picture varchar(255) null,
     car_brand       varchar(45)   not null,
     car_model       varchar(45)   not null,
     car_color       varchar(45)   not null,
