@@ -4,7 +4,7 @@ import com.telerikacademy.carpooling.exceptions.*;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
-import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
+import com.telerikacademy.carpooling.repositories.interfaces.TripRepository;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-    private TravelRepository travelRepository;
+    private TripRepository tripRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,TravelRepository travelRepository) {
+    public UserServiceImpl(UserRepository userRepository, TripRepository tripRepository) {
         this.userRepository = userRepository;
-        this.travelRepository=travelRepository;
+        this.tripRepository = tripRepository;
     }
 
     public List<User> getAll(UserFilterOptions userFilterOptions) {
@@ -204,7 +204,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<Trip> showTravelsByUser(int id){
-        return travelRepository.findAllTravelsByUser(id);
+        return tripRepository.findAllTravelsByUser(id);
     }
 
 

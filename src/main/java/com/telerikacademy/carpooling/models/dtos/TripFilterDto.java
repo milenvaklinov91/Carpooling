@@ -1,6 +1,6 @@
 package com.telerikacademy.carpooling.models.dtos;
 
-public class TravelFilterDto {
+public class TripFilterDto {
     private String startLocation;
     private String endLocation;
     private String departureTime;
@@ -8,7 +8,7 @@ public class TravelFilterDto {
     private String sortBy;
     private String sortOrder;
 
-    public TravelFilterDto() {
+    public TripFilterDto() {
     }
 
     public String getStartLocation() {

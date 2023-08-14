@@ -3,7 +3,7 @@ package com.telerikacademy.carpooling.repositories;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
-import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
+import com.telerikacademy.carpooling.repositories.interfaces.TripRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,11 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class TravelRepositoryImpl implements TravelRepository {
+public class TripRepositoryImpl implements TripRepository {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public TravelRepositoryImpl(SessionFactory sessionFactory) {
+    public TripRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 

@@ -4,19 +4,19 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
-import com.telerikacademy.carpooling.repositories.TravelRepositoryImpl;
-import com.telerikacademy.carpooling.services.interfaces.TravelService;
+import com.telerikacademy.carpooling.repositories.TripRepositoryImpl;
+import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
-public class TravelServiceImpl implements TravelService {
+public class TripServiceImpl implements TripService {
 
-    private TravelRepositoryImpl travelRepository;
+    private TripRepositoryImpl travelRepository;
 
     @Autowired
-    public TravelServiceImpl(TravelRepositoryImpl travelRepository) {
+    public TripServiceImpl(TripRepositoryImpl travelRepository) {
         this.travelRepository = travelRepository;
     }
     @Override

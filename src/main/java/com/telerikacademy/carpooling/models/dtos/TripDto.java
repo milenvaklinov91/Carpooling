@@ -2,9 +2,8 @@ package com.telerikacademy.carpooling.models.dtos;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
-public class TravelDto {
+public class TripDto {
 
     @NotNull(message = "StartLocation can't be empty")
     @NotBlank
@@ -26,7 +25,7 @@ public class TravelDto {
     @NotBlank
     private String description;
 
-    public TravelDto() {
+    public TripDto() {
     }
 
     public String getStartLocation() {
