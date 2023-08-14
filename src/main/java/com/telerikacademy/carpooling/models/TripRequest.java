@@ -13,7 +13,7 @@ public class TripRequest {
     private int requestId;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "travel_id")
+    @JoinColumn(name = "trip_id")
     private Trip trip;
     @JsonIgnore
     @ManyToOne

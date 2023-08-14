@@ -3,6 +3,7 @@ package com.telerikacademy.carpooling.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "cars")
@@ -41,6 +42,18 @@ public class Car {
     private boolean isConsumeFood;
     @Column(name = "consume_drink")
     private boolean isConsumeDrink;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "carId", fetch = FetchType.EAGER)
+    private List<Car> cars;
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
 
     public Car() {
     }

@@ -67,8 +67,6 @@ create table ratings
     comment          varchar(2555) not null,
     constraint ratings_ibfk_1
         foreign key (rated_user_id) references users (user_id),
-    constraint ratings_ibfk_2
-        foreign key (rated_by_user_id) references users (user_id),
     constraint ratings_ibfk_3
         foreign key (trip_id) references trips (trip_id)
 );
@@ -78,9 +76,6 @@ create index rated_by_user_id
 
 create index rated_user_id
     on ratings (rated_user_id);
-
-create index ride_id
-    on ratings (ride_id);
 
 create table trip_requests
 (
@@ -100,5 +95,4 @@ create index travel_id
 
 create index user_id
     on trip_requests (user_id);
-
 

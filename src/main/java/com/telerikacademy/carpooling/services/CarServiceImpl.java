@@ -22,8 +22,14 @@ public class CarServiceImpl implements CarService {
         if (car.getUserCreatedBy().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!");
         }
+        if(!(user.isDriver())){
+            throw new UnauthorizedOperationException("You are not authorized to perform this operation");
+        }
         carRepository.create(car);
     }
+//TODO 1) да го свържа с driver
+//todo 2) дали потребителя е и driver
+    // todo 3) админа да може да вижда driving licnse 
 
     @Override
     public void update(Car car, User user) {
