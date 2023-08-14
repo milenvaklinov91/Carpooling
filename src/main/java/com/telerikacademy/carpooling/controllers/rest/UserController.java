@@ -5,14 +5,13 @@ import com.telerikacademy.carpooling.exceptions.DuplicatePasswordException;
 import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.mappers.UserMapper;
-import com.telerikacademy.carpooling.models.Travel;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -150,7 +149,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}/travels")
-    public List<Travel> getUserTravels(@PathVariable int userId) {
+    public List<Trip> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
     }
 

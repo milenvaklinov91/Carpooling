@@ -2,7 +2,6 @@ package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Car;
-import com.telerikacademy.carpooling.models.Travel;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.repositories.interfaces.CarRepository;
 import com.telerikacademy.carpooling.services.interfaces.CarService;

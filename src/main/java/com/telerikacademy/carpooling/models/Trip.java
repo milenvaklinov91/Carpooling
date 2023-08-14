@@ -3,11 +3,12 @@ package com.telerikacademy.carpooling.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.List;
+
 
 @Entity
 @Table(name = "travels")
-public class Travel {
+public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "travel_id")
@@ -29,7 +30,11 @@ public class Travel {
     @Column(name = "description")
     private String description;
 
-    public Travel() {
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private List<Trip> trip;
+
+    public Trip() {
     }
 
     public int getTravelId() {

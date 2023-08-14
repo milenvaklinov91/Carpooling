@@ -15,7 +15,6 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userCreatedBy;
-
     @Column(name="driver_license_picture")
     private String driver_license;
     @Column(name = "car_brand")

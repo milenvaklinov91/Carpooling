@@ -1,8 +1,7 @@
 package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
-import com.telerikacademy.carpooling.models.Travel;
-import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
 import org.hibernate.Session;
@@ -26,18 +25,18 @@ public class TravelRepositoryImpl implements TravelRepository {
     }
 
     @Override
-    public Travel getTravelById(int id) {
+    public Trip getTravelById(int id) {
         try (Session session = sessionFactory.openSession()) {
-            Travel travel = session.get(Travel.class, id);
-            if (travel == null) {
+            Trip trip = session.get(Trip.class, id);
+            if (trip == null) {
                 throw new EntityNotFoundException("Travel", id);
             }
-            return travel;
+            return trip;
         }
     }
 
     @Override
-    public List<Travel> getAll(TravelFilterOptions travelFilterOptions) {
+    public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
         try (Session session = sessionFactory.openSession()) {
             StringBuilder hqlBuilder = new StringBuilder("SELECT DISTINCT p FROM Travel p");
             List<String> filters = new ArrayList<>();
@@ -65,50 +64,50 @@ public class TravelRepositoryImpl implements TravelRepository {
 
             hqlBuilder.append(generateOrderBy(travelFilterOptions));
 
-            Query<Travel> query = session.createQuery(hqlBuilder.toString(), Travel.class);
+            Query<Trip> query = session.createQuery(hqlBuilder.toString(), Trip.class);
             query.setProperties(params);
             return query.list();
         }
     }
 
     @Override
-    public void create(Travel travel) {
+    public void create(Trip trip) {
         try (Session session = sessionFactory.openSession()) {
             /*session.beginTransaction();*/
-            session.save(travel);
+            session.save(trip);
             /*session.getTransaction().commit();*/
         }
     }
 
     @Override
-    public void modify(Travel travel) {
+    public void modify(Trip trip) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(travel);
+            session.update(trip);
             session.getTransaction().commit();
         }
     }
 
     @Override
     public void delete(int id) {
-        Travel travelToDelete = getTravelById(id);
+        Trip tripToDelete = getTravelById(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.delete(travelToDelete);
+            session.delete(tripToDelete);
             session.getTransaction().commit();
         }
     }
 
-    public List<Travel> findAllTravelsByUser(int userId) {
+    public List<Trip> findAllTravelsByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
-                    "From Travel WHERE createdBy.id= :user_id", Travel.class);
+                    "From Trip WHERE createdBy.id= :user_id", Trip.class);
             query.setParameter("user_id", userId);
-            List<Travel> allTravels= query.list();
-            if (allTravels.size() == 0) {
+            List<Trip> allTrips = query.list();
+            if (allTrips.size() == 0) {
                 throw new EntityNotFoundException("This passenger don't have travels yet!");
             }
-            return allTravels;
+            return allTrips;
         }
     }
 

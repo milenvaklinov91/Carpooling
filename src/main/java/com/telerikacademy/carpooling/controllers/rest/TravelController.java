@@ -4,7 +4,7 @@ import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.mappers.TravelMapper;
-import com.telerikacademy.carpooling.models.Travel;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.TravelDto;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
@@ -29,12 +29,12 @@ public class TravelController {
     }
 
     @GetMapping
-    public List<Travel> getAll(@RequestParam(required = false) String startLocation,
-                               @RequestParam(required = false) String endLocation,
-                               @RequestParam(required = false) String departureTime,
-                               @RequestParam(required = false) String costPerPerson,
-                               @RequestParam(required = false) String sortBy,
-                               @RequestParam(required = false) String sortOrder) {
+    public List<Trip> getAll(@RequestParam(required = false) String startLocation,
+                             @RequestParam(required = false) String endLocation,
+                             @RequestParam(required = false) String departureTime,
+                             @RequestParam(required = false) String costPerPerson,
+                             @RequestParam(required = false) String sortBy,
+                             @RequestParam(required = false) String sortOrder) {
         TravelFilterOptions travelFilterOptions = new TravelFilterOptions(startLocation,
                 endLocation,
                 departureTime,
@@ -45,7 +45,7 @@ public class TravelController {
     }
 
     @GetMapping("/{id}")
-    public Travel getTravelById(@PathVariable int id) {
+    public Trip getTravelById(@PathVariable int id) {
         try {
             return travelService.getTravelById(id);
         } catch (EntityNotFoundException e) {
@@ -54,12 +54,12 @@ public class TravelController {
     }
 
     @PostMapping
-    public Travel create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TravelDto travelDto) {
+    public Trip create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TravelDto travelDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Travel travel = travelMapper.fromTravelDto(travelDto);
-            travelService.create(travel, user);
-            return travel;
+            Trip trip = travelMapper.fromTravelDto(travelDto);
+            travelService.create(trip, user);
+            return trip;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
         } catch (AuthorizationException e) {
@@ -68,13 +68,13 @@ public class TravelController {
     }
 
     @PutMapping("/{id}")
-    public Travel modify(@RequestHeader HttpHeaders headers, @PathVariable int id,
-                         @Valid @RequestBody TravelDto travelDto) {
+    public Trip modify(@RequestHeader HttpHeaders headers, @PathVariable int id,
+                       @Valid @RequestBody TravelDto travelDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Travel travel = travelMapper.fromDto(id, travelDto);
-            travelService.modify(travel, user);
-            return travel;
+            Trip trip = travelMapper.fromDto(id, travelDto);
+            travelService.modify(trip, user);
+            return trip;
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

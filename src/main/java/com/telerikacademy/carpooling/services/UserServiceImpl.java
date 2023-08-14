@@ -1,7 +1,7 @@
 package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.*;
-import com.telerikacademy.carpooling.models.Travel;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.TravelRepository;
@@ -203,7 +203,7 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public List<Travel> showTravelsByUser(int id){
+    public List<Trip> showTravelsByUser(int id){
         return travelRepository.findAllTravelsByUser(id);
     }
 

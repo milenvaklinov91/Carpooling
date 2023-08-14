@@ -41,9 +41,9 @@ create table cars
 
 
 
-create table travels
+create table trips
 (
-    travel_id          int auto_increment
+    trip_id          int auto_increment
         primary key,
     user_id            int           null,
     start_location     varchar(255)  not null,
@@ -52,7 +52,7 @@ create table travels
     cost_per_person    varchar(45)   not null,
     available_seats    int           not null,
     description        varchar(2222) null,
-    constraint travels_ibfk_1
+    constraint trips_ibfk_1
         foreign key (user_id) references users (user_id)
 );
 
@@ -62,7 +62,7 @@ create table ratings
         primary key,
     rated_user_id    int           null,
     rated_by_user_id int           null,
-    ride_id          int           null,
+    trip_id          int           null,
     rating_value     int           not null,
     comment          varchar(2555) not null,
     constraint ratings_ibfk_1
@@ -70,7 +70,7 @@ create table ratings
     constraint ratings_ibfk_2
         foreign key (rated_by_user_id) references users (user_id),
     constraint ratings_ibfk_3
-        foreign key (ride_id) references travels (travel_id)
+        foreign key (trip_id) references trips (trip_id)
 );
 
 create index rated_by_user_id
@@ -82,23 +82,23 @@ create index rated_user_id
 create index ride_id
     on ratings (ride_id);
 
-create table riderequests
+create table trip_requests
 (
     request_id     int auto_increment
         primary key,
-    travel_id      int         null,
+    trip_id      int         null,
     user_id        int         null,
     request_status varchar(20) not null,
-    constraint riderequests_ibfk_1
-        foreign key (travel_id) references travels (travel_id),
-    constraint riderequests_ibfk_2
+    constraint trip_requests_ibfk_1
+        foreign key (trip_id) references trips (trip_id),
+    constraint trip_requests_ibfk_2
         foreign key (user_id) references users (user_id)
 );
 
 create index travel_id
-    on riderequests (travel_id);
+    on trip_requests (trip_id);
 
 create index user_id
-    on riderequests (user_id);
+    on trip_requests (user_id);
 
 

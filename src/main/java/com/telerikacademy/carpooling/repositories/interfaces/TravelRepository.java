@@ -1,16 +1,15 @@
 package com.telerikacademy.carpooling.repositories.interfaces;
 
-import com.telerikacademy.carpooling.models.Travel;
-import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 
 import java.util.List;
 
 public interface TravelRepository {
-    Travel getTravelById(int id);
-    List<Travel> getAll(TravelFilterOptions travelFilterOptions);
-    void create(Travel travel);
-    void modify(Travel travel);
+    Trip getTravelById(int id);
+    List<Trip> getAll(TravelFilterOptions travelFilterOptions);
+    void create(Trip trip);
+    void modify(Trip trip);
     void delete(int id);
-    List<Travel> findAllTravelsByUser(int userId);
+    List<Trip> findAllTravelsByUser(int userId);
 }

@@ -20,26 +20,28 @@ public class User {
     private String password;
     @Column(name = "first_name")
     private String firstName;
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String lastName;
-    @Column(name="email")
+    @Column(name = "email")
     private String email;
-    @Column(name="registration_date")
+    @Column(name = "registration_date")
     private LocalDateTime registrationDate;
-
-    @Column(name="profile_picture")
+    @Column(name = "profile_picture")
     private String profilePic;
-    @Column(name="phone_number")
+    @Column(name = "phone_number")
     private String phone_number;
-    @Column(name="is_driver")
+    @Column(name = "is_driver")
     private boolean isDriver;
-    @Column(name="is_blocked")
+    @Column(name = "is_blocked")
     private boolean is_blocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
-    private List<Travel> travel;
+    private List<Trip> trip;
+    @JsonIgnore
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private List<TripRequest> tripRequest;
 
 
     public User() {
@@ -133,14 +135,6 @@ public class User {
         this.profilePic = profilePic;
     }
 
-    public List<Travel> getTravel() {
-        return travel;
-    }
-
-    public void setTravel(List<Travel> travels) {
-        this.travel = travels;
-    }
-
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -148,4 +142,22 @@ public class User {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+    public List<Trip> getTravel() {
+        return trip;
+    }
+
+    public void setTravel(List<Trip> trips) {
+        this.trip = trips;
+    }
+
+    public List<TripRequest> getRideRequest() {
+        return tripRequest;
+    }
+
+    public void setRideRequest(List<TripRequest> tripRequest) {
+        this.tripRequest = tripRequest;
+    }
+
+
 }

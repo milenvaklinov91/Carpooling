@@ -1,8 +1,7 @@
 package com.telerikacademy.carpooling.services.interfaces;
 
-import com.telerikacademy.carpooling.models.Travel;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
-import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 
 import java.util.List;
@@ -35,6 +34,6 @@ public interface UserService {
     User unBlockUser(int id, User user);
     User makeAdmin(int id, User user);
     User demoteAdmin(int id, User user);
-    List<Travel> showTravelsByUser(int id);
+    List<Trip> showTravelsByUser(int id);
 
 }
