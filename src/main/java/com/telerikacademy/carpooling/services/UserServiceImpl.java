@@ -95,6 +95,7 @@ public class UserServiceImpl implements UserService {
             existUser.setPhone_number(user.getPhone_number());
             existUser.setEmail(user.getEmail());
             existUser.setPassword(user.getPassword());
+            existUser.setIsDriver(user.isDriver());
             userRepository.update(existUser);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -110,7 +111,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(id);
     }
 
-    private void validatePassword(String password) throws InvalidPasswordException {
+    public void validatePassword(String password) throws InvalidPasswordException {
         String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
         if (!password.matches(regex)) {
@@ -118,7 +119,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void isDuplicateUsername(User user) {
+    public void isDuplicateUsername(User user) {
         boolean duplicateExists = true;
         try {
             userRepository.getByUsername(user.getUsername());
@@ -130,7 +131,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private void isDuplicateEmail(User user) {
+    public void isDuplicateEmail(User user) {
         boolean duplicateEmail = true;
         try {
             userRepository.getByEmail(user.getEmail());
