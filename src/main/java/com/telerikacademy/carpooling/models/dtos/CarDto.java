@@ -3,7 +3,8 @@ package com.telerikacademy.carpooling.models.dtos;
 import javax.validation.constraints.*;
 
 public class CarDto {
-//    private String carPhoto;
+    @NotNull(message = "Driver's License must be uploaded")
+    private String driver_license;
     @NotNull(message = "Brand can't be empty")
     @Size(min = 2, max = 20, message = "Username should be between 2 and 20 symbols")
     @NotBlank
@@ -127,5 +128,13 @@ public class CarDto {
 
     public void setConsumeDrink(boolean consumeDrink) {
         isConsumeDrink = consumeDrink;
+    }
+
+    public String getDriver_license() {
+        return driver_license;
+    }
+
+    public void setDriver_license(String driver_license) {
+        this.driver_license = driver_license;
     }
 }

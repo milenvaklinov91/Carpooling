@@ -27,9 +27,6 @@ public class CarServiceImpl implements CarService {
         }
         carRepository.create(car);
     }
-//TODO 1) да го свържа с driver
-//todo 2) дали потребителя е и driver
-    // todo 3) админа да може да вижда driving licnse 
 
     @Override
     public void update(Car car, User user) {

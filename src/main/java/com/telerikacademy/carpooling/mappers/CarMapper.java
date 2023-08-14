@@ -19,6 +19,7 @@ public class CarMapper {
 
     public Car fromCarDto(CarDto carDto){
         Car car = new Car();
+        car.setDriver_license(carDto.getDriver_license());
         car.setBrand(carDto.getBrand());
         car.setModel(carDto.getModel());
         car.setCapacity(carDto.getCapacity());

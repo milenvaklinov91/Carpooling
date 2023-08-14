@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "cars")
@@ -16,6 +17,7 @@ public class Car {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User userCreatedBy;
+    @JsonIgnore
     @Column(name="driver_license_picture")
     private String driver_license;
     @Column(name = "car_brand")
@@ -42,20 +44,17 @@ public class Car {
     private boolean isConsumeFood;
     @Column(name = "consume_drink")
     private boolean isConsumeDrink;
-
     @JsonIgnore
     @OneToMany(mappedBy = "carId", fetch = FetchType.EAGER)
-    private List<Car> cars;
-
-    public List<Car> getCars() {
+    private Set<Car> cars;
+    public Car() {
+    }
+    public Set<Car> getCars() {
         return cars;
     }
 
-    public void setCars(List<Car> cars) {
+    public void setCars(Set<Car> cars) {
         this.cars = cars;
-    }
-
-    public Car() {
     }
 
     public int getCarId() {
