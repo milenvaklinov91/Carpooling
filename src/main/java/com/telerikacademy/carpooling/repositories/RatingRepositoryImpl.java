@@ -26,4 +26,11 @@ public class RatingRepositoryImpl implements RatingRepository {
             return query.getResultList();
         }
     }
+
+    @Override
+    public void create(Rating rating) {
+        try (Session session = sessionFactory.openSession()) {
+            session.save(rating);
+        }
+    }
 }
