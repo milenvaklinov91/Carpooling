@@ -9,19 +9,21 @@ import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.TripDto;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-
+@Controller
+@RequestMapping("/api/trips")
 public class TripController {
     private final TripService tripService;
     private final AuthenticationHelper authenticationHelper;
     private final TripMapper tripMapper;
-
     public TripController(TripService tripService, AuthenticationHelper authenticationHelper, TripMapper tripMapper) {
         this.tripService = tripService;
         this.authenticationHelper = authenticationHelper;

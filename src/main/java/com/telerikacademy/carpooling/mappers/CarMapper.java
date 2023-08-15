@@ -4,6 +4,7 @@ import com.telerikacademy.carpooling.models.Car;
 import com.telerikacademy.carpooling.models.dtos.CarDto;
 import com.telerikacademy.carpooling.repositories.interfaces.CarRepository;
 import com.telerikacademy.carpooling.services.interfaces.CarService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
