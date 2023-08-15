@@ -90,7 +90,7 @@ create table trip_requests
         foreign key (user_id) references users (user_id)
 );
 
-create index travel_id
+create index trip_id
     on trip_requests (trip_id);
 
 create index user_id

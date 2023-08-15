@@ -13,5 +13,9 @@ public interface TripRequestService {
 
     void modify(TripRequest tripRequest, Trip trip, User user);
 
-    void delete(int id,User user);
+    void delete(int id, User user);
+
+    void approveTripRequest(TripRequest tripRequest);
+
+    void rejectTripRequest(TripRequest tripRequest);
 }

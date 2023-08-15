@@ -1,6 +1,7 @@
 package com.telerikacademy.carpooling.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.telerikacademy.carpooling.models.enums.RequestStatus;
 
 import javax.persistence.*;
 
@@ -19,8 +20,11 @@ public class TripRequest {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User passenger;
-    @Column(name = "request_status")
-    private String requestStatus;
+
+    @Column(name = "request_status", columnDefinition = "varchar(255) default 'PENDING'")
+    @Enumerated(EnumType.STRING)
+    private RequestStatus requestStatus;
+
 
     public TripRequest() {
     }
@@ -33,12 +37,12 @@ public class TripRequest {
         this.requestId = requestId;
     }
 
-    public Trip getTravel() {
+    public Trip getTrip() {
         return trip;
     }
 
-    public void setTravel(Trip tripId) {
-        this.trip = tripId;
+    public void setTrip(Trip trip) {
+        this.trip = trip;
     }
 
     public User getPassenger() {
@@ -49,11 +53,12 @@ public class TripRequest {
         this.passenger = userCreatedBy;
     }
 
-    public String getRequestStatus() {
+    public RequestStatus getRequestStatus() {
         return requestStatus;
     }
 
-    public void setRequestStatus(String requestStatus) {
+    public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
+
 }
