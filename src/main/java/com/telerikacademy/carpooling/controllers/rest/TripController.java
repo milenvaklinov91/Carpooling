@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.util.List;
-@Controller
+@RestController
 @RequestMapping("/api/trips")
 public class TripController {
     private final TripService tripService;

@@ -20,7 +20,6 @@ public class TripDto {
     @NotNull(message = "AvailableSeats can't be empty")
     @NotBlank
     private String availableSeats;
-
     @NotNull(message = "Description can't be empty")
     @NotBlank
     private String description;

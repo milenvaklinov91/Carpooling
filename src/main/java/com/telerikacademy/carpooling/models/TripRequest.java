@@ -11,7 +11,7 @@ public class TripRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "request_id")
-    private int requestId;
+    private int tripId;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "trip_id")
@@ -29,12 +29,12 @@ public class TripRequest {
     public TripRequest() {
     }
 
-    public int getRequestId() {
-        return requestId;
+    public int getTripId() {
+        return tripId;
     }
 
-    public void setRequestId(int requestId) {
-        this.requestId = requestId;
+    public void setTripId(int requestId) {
+        this.tripId = requestId;
     }
 
     public Trip getTrip() {
