@@ -3,14 +3,15 @@ package com.telerikacademy.carpooling.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-
+@Entity
+@Table(name = "ratings")
 public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rating_id")
     private int ratingId;
-    @Column(name = "trip")
+    @Column(name = "trip_id")
     private int tripId;
     @Column(name = "rating_value")
     private int ratingValue;
