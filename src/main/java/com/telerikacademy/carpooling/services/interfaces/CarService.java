@@ -12,15 +12,15 @@ public interface CarService {
 
     Car getCarById(int id);
 
-    Car extraStorage(int id, User user);
-
     Car notExtraStorage(int id, User user);
 
-    boolean hasAirConditioner(Car car);
+    Car noSmoke(int id, User user);
 
-    boolean isPetAvailable(Car car);
+    Car noAirConditioner(int id, User user);
 
-    boolean canConsumeFood(Car car);
+    Car noPetAvailable(int id, User user);
 
-    boolean canConsumeDrink(Car car);
+    Car noConsumeFood(int id, User user);
+
+    Car noConsumeDrink(int id, User user);
 }
