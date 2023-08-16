@@ -76,27 +76,53 @@ public class CarServiceImpl implements CarService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    //TODO  По същия начин правиш логиката в останалите методи
-
-    public boolean isSmokeAllowed(Car car) {
-        return car.isSmoke();
+    public Car noSmoke(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setSmoke(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public boolean hasAirConditioner(Car car) {
-        return car.isAirConditioner();
+    public Car noAirConditioner(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setAirConditioner(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public boolean isPetAvailable(Car car) {
-        return car.isPetAvailable();
+    public Car noPetAvailable(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setPetAvailable(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public boolean canConsumeFood(Car car) {
-        return car.isConsumeFood();
+    public Car noConsumeFood(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setConsumeFood(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public boolean canConsumeDrink(Car car) {
-        return car.isConsumeDrink();
+    public Car noConsumeDrink(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setConsumeDrink(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-
 }

@@ -17,6 +17,7 @@ public class Rating {
     private int ratingValue;
     @Column(name = "comment")
     private String comment;
+    //todo нека да може да се рейтва без да има null в коментара
     @ManyToOne
     @JoinColumn(name = "rated_user_id")
     private User ratedUser;

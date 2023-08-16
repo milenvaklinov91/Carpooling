@@ -28,6 +28,38 @@ public class CarController {
         this.authenticationHelper = authenticationHelper;
         this.carMapper = carMapper;
     }
+    @GetMapping("/check-options")
+    public String checkOptions(
+            @RequestParam(required = false) Boolean isExtraStorage,
+            @RequestParam(required = false) Boolean isSmoke,
+            @RequestParam(required = false) Boolean isAirConditioner,
+            @RequestParam(required = false) Boolean isPetAvailable,
+            @RequestParam(required = false) Boolean canConsumeFood,
+            @RequestParam(required = false) Boolean canConsumeDrink
+    ) {
+        String result = "Options:";
+
+        if (isExtraStorage != null) {
+            result += " isExtraStorage=" + isExtraStorage;
+        }
+        if (isSmoke != null) {
+            result += " isSmoke=" + isSmoke;
+        }
+        if (isAirConditioner != null) {
+            result += " isAirConditioner=" + isAirConditioner;
+        }
+        if (isPetAvailable != null) {
+            result += " isPetAvailable=" + isPetAvailable;
+        }
+        if (canConsumeFood != null) {
+            result += " canConsumeFood=" + canConsumeFood;
+        }
+        if (canConsumeDrink != null) {
+            result += " canConsumeDrink=" + canConsumeDrink;
+        }
+
+        return result;
+    }
     @PostMapping
     public Car create(@RequestHeader HttpHeaders headers, @Valid @RequestBody CarDto carDto) {
         try {
