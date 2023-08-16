@@ -33,6 +33,12 @@ public class Trip {
     @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
     private List<TripRequest> tripRequest;
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "trip_status_id")
+    private TripStatus tripStatus;
+
+
     public Trip() {
     }
 

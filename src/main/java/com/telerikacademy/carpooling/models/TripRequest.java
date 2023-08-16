@@ -21,10 +21,14 @@ public class TripRequest {
     @JoinColumn(name = "user_id")
     private User passenger;
 
-    @Column(name = "request_status", columnDefinition = "varchar(255) default 'PENDING'")
+    /*@Column(name = "request_status", columnDefinition = "varchar(255) default 'PENDING'")
     @Enumerated(EnumType.STRING)
-    private RequestStatus requestStatus;
+    private RequestStatus requestStatus;*/
 
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "trip_request_status_id")
+    private TripRequestStatus tripRequestStatus;
 
     public TripRequest() {
     }
@@ -53,12 +57,12 @@ public class TripRequest {
         this.passenger = userCreatedBy;
     }
 
-    public RequestStatus getRequestStatus() {
+    /*public RequestStatus getRequestStatus() {
         return requestStatus;
     }
 
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
-    }
+    }*/
 
 }

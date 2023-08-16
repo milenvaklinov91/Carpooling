@@ -1,10 +1,8 @@
 package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.User;
-import com.telerikacademy.carpooling.models.enums.RequestStatus;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRequestRepository;
 import com.telerikacademy.carpooling.services.interfaces.TripRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +44,7 @@ public class TripRequestServiceImpl implements TripRequestService {
     }*/
 
     @Override
-    public void delete(int id,User user) {
+    public void delete(int id, User user) {
         TripRequest tripRequest = tripRequestRepository.getTripRequestById(id);
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
@@ -56,7 +54,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         tripRequestRepository.delete(id);
     }
 
-    public void approveTripRequest(TripRequest tripRequest, User user) {
+   /* public void approveTripRequest(TripRequest tripRequest, User user) {
         if (tripRequest.getTrip().getCreatedBy().equals(user)) {
             tripRequest.setRequestStatus(RequestStatus.APPROVED);
             tripRequestRepository.modify(tripRequest);
@@ -72,5 +70,5 @@ public class TripRequestServiceImpl implements TripRequestService {
         } else {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
-    }
+    }*/
 }
