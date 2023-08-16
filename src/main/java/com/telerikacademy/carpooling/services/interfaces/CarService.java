@@ -11,4 +11,16 @@ public interface CarService {
     void delete(int id, User user);
 
     Car getCarById(int id);
+
+    boolean hasExtraStorage(Car car);
+
+    boolean isSmokeAllowed(Car car);
+
+    boolean hasAirConditioner(Car car);
+
+    boolean isPetAvailable(Car car);
+
+    boolean canConsumeFood(Car car);
+
+    boolean canConsumeDrink(Car car);
 }

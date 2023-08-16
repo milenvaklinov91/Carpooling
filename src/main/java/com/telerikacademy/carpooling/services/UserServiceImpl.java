@@ -70,6 +70,8 @@ public class UserServiceImpl implements UserService {
     }
     public User getDriverByUsername(String username){return userRepository.getDriverByUsername(username);}
 
+
+
     public void create(User user) {
         isDuplicateUsername(user);
         isDuplicateEmail(user);
