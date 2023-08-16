@@ -56,9 +56,27 @@ public class CarServiceImpl implements CarService {
         return carRepository.getCarById(id);
     }
 
-    public boolean hasExtraStorage(Car car) {
-        return car.isExtraStorage();
+    public Car extraStorage(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername()) ) {
+            car.setExtraStorage(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
+
+    public Car notExtraStorage(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername()) ) {
+            car.setExtraStorage(false);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+
+    //TODO  По същия начин правиш логиката в останалите методи
 
     public boolean isSmokeAllowed(Car car) {
         return car.isSmoke();

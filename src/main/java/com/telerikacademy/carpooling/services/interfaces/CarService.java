@@ -12,9 +12,9 @@ public interface CarService {
 
     Car getCarById(int id);
 
-    boolean hasExtraStorage(Car car);
+    Car extraStorage(int id, User user);
 
-    boolean isSmokeAllowed(Car car);
+    Car notExtraStorage(int id, User user);
 
     boolean hasAirConditioner(Car car);
 

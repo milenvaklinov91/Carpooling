@@ -35,7 +35,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         tripRequestRepository.create(tripRequest);
     }
 
-    @Override
+    /*@Override
     public void modify(TripRequest tripRequest, User user) {
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
@@ -43,7 +43,7 @@ public class TripRequestServiceImpl implements TripRequestService {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
         tripRequestRepository.modify(tripRequest);
-    }
+    }*/
 
     @Override
     public void delete(int id,User user) {

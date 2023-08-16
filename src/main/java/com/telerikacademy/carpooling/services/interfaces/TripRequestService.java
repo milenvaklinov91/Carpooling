@@ -11,7 +11,7 @@ public interface TripRequestService {
 
     void create(TripRequest tripRequest,  User user);
 
-    void modify(TripRequest tripRequest,  User user);
+    /*void modify(TripRequest tripRequest,  User user);*/
 
     void delete(int id, User user);
 
