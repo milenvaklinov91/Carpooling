@@ -1,6 +1,7 @@
 package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.models.Rating;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
@@ -185,6 +186,7 @@ public class UserRepositoryImpl implements UserRepository {
             return driver;
         }
     }
+
     public  List<User> getPassengers(){
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("from User WHERE isDriver = false", User.class);
