@@ -25,7 +25,7 @@ public class RatingMapper {
         Rating rating = new Rating();
         rating.setRatingValue(ratingDto.getRatingValue());
         rating.setComment(ratingDto.getComment());
-        rating.setTripId(tripService.getTravelById(ratingDto.getTripId()).getTravelId());
+        rating.setTripId(tripService.getTripById(ratingDto.getTripId()).getTravelId());
         return rating;
     }
 }

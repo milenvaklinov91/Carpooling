@@ -29,7 +29,7 @@ public class TripMapper {
     public Trip fromDto(int id, TripDto tripDto) {
         Trip trip = fromTravelDto(tripDto);
         trip.setTravelId(id);
-        Trip creator = tripService.getTravelById(id);
+        Trip creator = tripService.getTripById(id);
         trip.setCreatedBy(creator.getCreatedBy());
         return trip;
     }

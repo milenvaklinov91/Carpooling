@@ -6,7 +6,7 @@ import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import java.util.List;
 
 public interface TripRepository {
-    Trip getTravelById(int id);
+    Trip getTripById(int id);
     List<Trip> getAll(TravelFilterOptions travelFilterOptions);
     void create(Trip trip);
     void modify(Trip trip);

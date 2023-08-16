@@ -20,8 +20,8 @@ public class TripServiceImpl implements TripService {
         this.tripRepository = tripRepository;
     }
     @Override
-    public Trip getTravelById(int id) {
-        return tripRepository.getTravelById(id);
+    public Trip getTripById(int id) {
+        return tripRepository.getTripById(id);
     }
     @Override
     public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
@@ -51,7 +51,7 @@ public class TripServiceImpl implements TripService {
 
     @Override
     public void delete(int id, User user) {
-        Trip trip = tripRepository.getTravelById(id);
+        Trip trip = tripRepository.getTripById(id);
         if (user.isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
         } else if (!(user.isAdmin() || trip.getCreatedBy().getUsername().equals(user.getUsername()))) {

@@ -25,7 +25,7 @@ public class TripRepositoryImpl implements TripRepository {
     }
 
     @Override
-    public Trip getTravelById(int id) {
+    public Trip getTripById(int id) {
         try (Session session = sessionFactory.openSession()) {
             Trip trip = session.get(Trip.class, id);
             if (trip == null) {
@@ -90,7 +90,7 @@ public class TripRepositoryImpl implements TripRepository {
 
     @Override
     public void delete(int id) {
-        Trip tripToDelete = getTravelById(id);
+        Trip tripToDelete = getTripById(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.delete(tripToDelete);

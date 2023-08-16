@@ -9,9 +9,9 @@ public interface TripRequestService {
 
     TripRequest getTripRequestById(int id);
 
-    void create(TripRequest tripRequest, Trip trip, User user);
+    void create(TripRequest tripRequest,  User user);
 
-    void modify(TripRequest tripRequest, Trip trip, User user);
+    void modify(TripRequest tripRequest,  User user);
 
     void delete(int id, User user);
 
