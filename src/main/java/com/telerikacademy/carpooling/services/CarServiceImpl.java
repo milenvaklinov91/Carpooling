@@ -1,5 +1,7 @@
 package com.telerikacademy.carpooling.services;
 
+import com.telerikacademy.carpooling.exceptions.EmailExitsException;
+import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Car;
 import com.telerikacademy.carpooling.models.User;
@@ -52,6 +54,30 @@ public class CarServiceImpl implements CarService {
     @Override
     public Car getCarById(int id) {
         return carRepository.getCarById(id);
+    }
+
+    public boolean hasExtraStorage(Car car) {
+        return car.isExtraStorage();
+    }
+
+    public boolean isSmokeAllowed(Car car) {
+        return car.isSmoke();
+    }
+
+    public boolean hasAirConditioner(Car car) {
+        return car.isAirConditioner();
+    }
+
+    public boolean isPetAvailable(Car car) {
+        return car.isPetAvailable();
+    }
+
+    public boolean canConsumeFood(Car car) {
+        return car.isConsumeFood();
+    }
+
+    public boolean canConsumeDrink(Car car) {
+        return car.isConsumeDrink();
     }
 
 

@@ -48,8 +48,11 @@ public class CarRepositoryImpl implements CarRepository {
         try (Session session = sessionFactory.openSession()) {
             Car car = session.get(Car.class, id);
             if (car == null) {
-                throw new EntityNotFoundException("Car", id);}
+                throw new EntityNotFoundException("Car", id);
+            }
             return car;
         }
-        }
     }
+
+
+}
