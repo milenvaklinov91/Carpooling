@@ -15,7 +15,7 @@ public interface TripRequestService {
 
     void delete(int id, User user);
 
-   /* void approveTripRequest(TripRequest tripRequest, User user);
+    void approveTripRequest(TripRequest tripRequest, User user);
 
-    void rejectTripRequest(TripRequest tripRequest, User user);*/
+    void rejectTripRequest(TripRequest tripRequest, User user);
 }

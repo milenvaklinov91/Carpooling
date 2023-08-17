@@ -16,4 +16,6 @@ public interface TripService {
     void modify(Trip trip, User user);
 
     void delete(int id,User user);
+    void inProgressTripStatus(Trip trip, User user);
+    void finishedTripStatus(Trip trip, User user);
 }

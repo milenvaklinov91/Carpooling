@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.mappers;
 
 import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.dtos.TripRequestDto;
+import com.telerikacademy.carpooling.models.enums.TripRequestStatus;
 import com.telerikacademy.carpooling.services.interfaces.TripRequestService;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class TripRequestMapper {
     public TripRequest fromTripRequestDto(TripRequestDto tripRequestDto) {
         TripRequest tripRequest = new TripRequest();
         tripRequest.setTrip(tripService.getTripById(tripRequestDto.getTripId()));
+        tripRequest.setTripRequestStatus(TripRequestStatus.PENDING);
         return tripRequest;
     }
 }
