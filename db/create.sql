@@ -48,7 +48,8 @@ create table trips
     departure_datetime datetime      not null,
     cost_per_person    varchar(45)   not null,
     available_seats    int           not null,
-    description        varchar(2222) null,
+    status     smallint not null,
+    description         varchar(45)   not null,
     constraint trips_ibfk_1
         foreign key (user_id) references users (user_id)
 );
@@ -75,7 +76,7 @@ create index rated_user_id
 
 create table feedback_comments
 (
-    feedback_comment_id int           not null
+    feedback_comment_id int auto_increment   not null
         primary key,
     comment             varchar(2000) not null,
     feedback_id         int           not null,
@@ -89,7 +90,7 @@ create table trip_requests
         primary key,
     trip_id        int         null,
     user_id        int         null,
-    request_status varchar(20) not null,
+    status     smallint not null,
     constraint trip_requests_ibfk_1
         foreign key (trip_id) references trips (trip_id),
     constraint trip_requests_ibfk_2

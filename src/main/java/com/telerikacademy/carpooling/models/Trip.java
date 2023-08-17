@@ -1,7 +1,6 @@
 package com.telerikacademy.carpooling.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.telerikacademy.carpooling.models.enums.TripRequestStatus;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
 
 import javax.persistence.*;
@@ -36,6 +35,7 @@ public class Trip {
     private List<TripRequest> tripRequest;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private TripStatus tripStatus;
 
 

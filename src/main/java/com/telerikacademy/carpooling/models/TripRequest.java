@@ -22,6 +22,7 @@ public class TripRequest {
     private User passenger;
 
     @Enumerated(EnumType.ORDINAL)
+    @Column(name = "status")
     private TripRequestStatus tripRequestStatus;
 
 

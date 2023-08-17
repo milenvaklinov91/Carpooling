@@ -2,9 +2,7 @@ package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
-import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.User;
-import com.telerikacademy.carpooling.models.enums.TripRequestStatus;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.repositories.TripRepositoryImpl;

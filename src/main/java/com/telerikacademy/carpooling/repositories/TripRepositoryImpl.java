@@ -38,7 +38,7 @@ public class TripRepositoryImpl implements TripRepository {
     @Override
     public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
         try (Session session = sessionFactory.openSession()) {
-            StringBuilder hqlBuilder = new StringBuilder("SELECT DISTINCT p FROM Travel p");
+            StringBuilder hqlBuilder = new StringBuilder("SELECT DISTINCT p FROM Trip p");
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
