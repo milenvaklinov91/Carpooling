@@ -56,26 +56,25 @@ create table trips
         foreign key (user_id) references users (user_id)
 );
 
-create table ratings
+create table feedbacks
 (
-    rating_id        int auto_increment
+    feedback_id        int auto_increment
         primary key,
     rated_user_id    int           null,
     rated_by_user_id int           null,
     trip_id          int           null,
     rating_value     int           not null,
-    comment          varchar(2555) not null,
-    constraint ratings_ibfk_1
+    constraint feedbacks_ibfk_1
         foreign key (rated_user_id) references users (user_id),
-    constraint ratings_ibfk_3
+    constraint feedbacks_ibfk_3
         foreign key (trip_id) references trips (trip_id)
 );
 
 create index rated_by_user_id
-    on ratings (rated_by_user_id);
+    on feedbacks (rated_by_user_id);
 
 create index rated_user_id
-    on ratings (rated_user_id);
+    on feedbacks (rated_user_id);
 
 create table trip_requests
 (

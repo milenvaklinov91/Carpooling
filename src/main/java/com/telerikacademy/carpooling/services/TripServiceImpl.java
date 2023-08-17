@@ -2,7 +2,10 @@ package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
+import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.enums.TripRequestStatus;
+import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
 import com.telerikacademy.carpooling.repositories.TripRepositoryImpl;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
@@ -58,6 +61,24 @@ public class TripServiceImpl implements TripService {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         tripRepository.delete(id);
+    }
+
+    public void inProgressTripStatus(Trip trip, User user) {
+        if (trip.getCreatedBy().equals(user)) {
+            trip.setTripStatus(TripStatus.INPROGRESS);
+            tripRepository.modify(trip);
+        } else {
+            throw new UnauthorizedOperationException("You're not authorized for this operation!");
+        }
+    }
+
+    public void finishedTripStatus(Trip trip, User user) {
+        if (trip.getCreatedBy().equals(user)) {
+            trip.setTripStatus(TripStatus.FINISHED);
+            tripRepository.modify(trip);
+        } else {
+            throw new UnauthorizedOperationException("You're not authorized for this operation!");
+        }
     }
 
 }

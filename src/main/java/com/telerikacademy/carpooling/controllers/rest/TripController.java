@@ -3,6 +3,7 @@ package com.telerikacademy.carpooling.controllers.rest;
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.mappers.TripMapper;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
@@ -84,6 +85,32 @@ public class TripController {
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
         tripService.delete(id, user);
+    }
+
+    @PutMapping("/{id}/inprogress")
+    public void approveTripRequest(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Trip trip = tripService.getTripById(id);
+            tripService.inProgressTripStatus(trip, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}/finished")
+    public void rejectTripRequest(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            Trip trip = tripService.getTripById(id);
+            tripService.finishedTripStatus(trip, user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (UnauthorizedOperationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
 }

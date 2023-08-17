@@ -1,5 +1,5 @@
 package com.telerikacademy.carpooling.models.enums;
 
-public enum RequestStatus {
+public enum TripRequestStatus {
     PENDING, APPROVED, REJECTED
 }

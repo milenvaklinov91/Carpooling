@@ -1,7 +1,7 @@
 package com.telerikacademy.carpooling.repositories;
 
-import com.telerikacademy.carpooling.models.Rating;
-import com.telerikacademy.carpooling.repositories.interfaces.RatingRepository;
+import com.telerikacademy.carpooling.models.Feedback;
+import com.telerikacademy.carpooling.repositories.interfaces.FeedbackRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -9,28 +9,28 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.TypedQuery;
 import java.util.List;
 @Repository
-public class RatingRepositoryImpl implements RatingRepository {
+public class FeedbackRepositoryImpl implements FeedbackRepository {
 
     private final SessionFactory sessionFactory;
 
-    public RatingRepositoryImpl(SessionFactory sessionFactory) {
+    public FeedbackRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Override
-    public List<Rating> getRatingByUser(int userId) {
+    public List<Feedback> getRatingByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            TypedQuery<Rating> query = session.createQuery(
-                    "SELECT r FROM Rating r WHERE r.ratedUser.id = :userId", Rating.class);
+            TypedQuery<Feedback> query = session.createQuery(
+                    "SELECT r FROM Feedback r WHERE r.ratedUser.id = :userId", Feedback.class);
             query.setParameter("userId", userId);
             return query.getResultList();
         }
     }
 
     @Override
-    public void create(Rating rating) {
+    public void create(Feedback feedback) {
         try (Session session = sessionFactory.openSession()) {
-            session.save(rating);
+            session.save(feedback);
         }
     }
 }

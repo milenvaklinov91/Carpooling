@@ -1,23 +1,18 @@
 package com.telerikacademy.carpooling.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 @Entity
-@Table(name = "ratings")
-public class Rating {
+@Table(name = "Feedbacks")
+public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rating_id")
-    private int ratingId;
+    @Column(name = "feedback_id")
+    private int feedbackId;
     @Column(name = "trip_id")
     private int tripId;
     @Column(name = "rating_value")
     private int ratingValue;
-    @Column(name = "comment")
-    private String comment;
-    //todo нека да може да се рейтва без да има null в коментара
     @ManyToOne
     @JoinColumn(name = "rated_user_id")
     private User ratedUser;
@@ -25,15 +20,19 @@ public class Rating {
     @JoinColumn(name = "rated_by_user_id")
     private User userByCreatedBy;
 
-    public Rating() {
+  /*  @JsonIgnore
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
+    private List<Comment> comments;*/
+
+    public Feedback() {
     }
 
-    public int getRatingId() {
-        return ratingId;
+    public int getFeedbackId() {
+        return feedbackId;
     }
 
-    public void setRatingId(int ratingId) {
-        this.ratingId = ratingId;
+    public void setFeedbackId(int feedbackId) {
+        this.feedbackId = feedbackId;
     }
 
     public int getTripId() {
@@ -52,13 +51,6 @@ public class Rating {
         this.ratingValue = ratingValue;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public User getRatedUser() {
         return ratedUser;

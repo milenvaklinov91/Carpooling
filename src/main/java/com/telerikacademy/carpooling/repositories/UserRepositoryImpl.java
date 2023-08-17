@@ -1,7 +1,6 @@
 package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
-import com.telerikacademy.carpooling.models.Rating;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
