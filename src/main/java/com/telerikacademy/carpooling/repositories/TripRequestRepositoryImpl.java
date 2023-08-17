@@ -24,7 +24,7 @@ public class TripRequestRepositoryImpl implements TripRequestRepository {
         try (Session session = sessionFactory.openSession()) {
             TripRequest tripRequest = session.get(TripRequest.class, id);
             if (tripRequest == null) {
-                throw new EntityNotFoundException("Travel", id);
+                throw new EntityNotFoundException("TripRequest", id);
             }
             return tripRequest;
         }

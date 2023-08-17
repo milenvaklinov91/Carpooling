@@ -1,6 +1,8 @@
 package com.telerikacademy.carpooling.repositories;
 
+import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Feedback;
+import com.telerikacademy.carpooling.models.FeedbackComment;
 import com.telerikacademy.carpooling.repositories.interfaces.FeedbackRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -15,6 +17,17 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
 
     public FeedbackRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    @Override
+    public Feedback getFeedbackById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            Feedback feedback = session.get(Feedback.class, id);
+            if (feedback == null) {
+                throw new EntityNotFoundException("Feedback", id);
+            }
+            return feedback;
+        }
     }
 
     @Override

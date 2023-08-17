@@ -1,13 +1,13 @@
 package com.telerikacademy.carpooling.models.dtos;
 
-public class RatingDto {
+public class FeedbackDto {
 
     private int tripId;
     private int ratingValue;
     private String comment;
 
 
-    public RatingDto() {
+    public FeedbackDto() {
     }
 
     public int getTripId() {

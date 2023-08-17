@@ -7,6 +7,7 @@ import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
 
@@ -16,6 +17,10 @@ public class FeedbackServiceImpl implements FeedbackService {
         this.feedbackRepository = feedbackRepository;
     }
 
+    @Override
+    public Feedback getFeedbackById(int id) {
+        return feedbackRepository.getFeedbackById(id);
+    }
 
     @Override
     public List<Feedback> getRatingByUser(int userId) {

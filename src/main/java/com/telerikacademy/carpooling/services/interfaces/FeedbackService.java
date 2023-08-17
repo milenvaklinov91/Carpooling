@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface FeedbackService {
 
+    Feedback getFeedbackById(int id);
     List<Feedback> getRatingByUser(int userId);
 
     void create(Feedback feedback, User user);
