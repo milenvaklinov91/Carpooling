@@ -67,7 +67,7 @@ public class TripRequestServiceImpl implements TripRequestService {
     public void approveTripRequest(TripRequest tripRequest, User user) {
         setStatus(tripRequest, user, TripRequestStatus.APPROVED);
     }
-
+//todo passengers should be able to cancel the travel as well up to 1 hour before the departure time. Driver should be able reject as well
     @Override
     public void rejectTripRequest(TripRequest tripRequest, User user) {
         setStatus(tripRequest, user, TripRequestStatus.REJECTED);

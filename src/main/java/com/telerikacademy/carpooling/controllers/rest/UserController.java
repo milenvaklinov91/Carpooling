@@ -152,7 +152,8 @@ public class UserController {
     public List<Trip> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
     }
-
+//todo Each user must be able to view all his travels (with option to filter and sort them), all his feedback and all \
+// feedback for any other user. List with travels/feedback should support pagination.
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
