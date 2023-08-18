@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -158,4 +159,18 @@ public class User {
     public void setTripRequest(Set<TripRequest> tripRequest) {
         this.tripRequest = tripRequest;
     }
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, firstName, lastName, email,
+                registrationDate, profilePic, phone_number, isDriver, is_blocked, isAdmin, trip, tripRequest);
+    }*/
 }

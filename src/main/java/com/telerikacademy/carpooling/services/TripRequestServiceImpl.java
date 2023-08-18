@@ -17,7 +17,6 @@ public class TripRequestServiceImpl implements TripRequestService {
     @Autowired
     public TripRequestServiceImpl(TripRequestRepository tripRequestRepository) {
         this.tripRequestRepository = tripRequestRepository;
-
     }
 
     @Override
@@ -55,21 +54,22 @@ public class TripRequestServiceImpl implements TripRequestService {
         tripRequestRepository.delete(id);
     }
 
-   public void approveTripRequest(TripRequest tripRequest, User user) {
-        if (tripRequest.getTrip().getCreatedBy().equals(user)) {
-            tripRequest.setTripRequestStatus(TripRequestStatus.APPROVED);
+    private void setStatus(TripRequest tripRequest, User user, TripRequestStatus status) {
+        if (tripRequest.getTrip().getCreatedBy().getId() == user.getId()) {
+            tripRequest.setTripRequestStatus(status);
             tripRequestRepository.modify(tripRequest);
         } else {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
     }
 
+    @Override
+    public void approveTripRequest(TripRequest tripRequest, User user) {
+        setStatus(tripRequest, user, TripRequestStatus.APPROVED);
+    }
+
+    @Override
     public void rejectTripRequest(TripRequest tripRequest, User user) {
-        if (tripRequest.getTrip().getCreatedBy().equals(user)) {
-            tripRequest.setTripRequestStatus(TripRequestStatus.REJECTED);
-            tripRequestRepository.modify(tripRequest);
-        } else {
-            throw new UnauthorizedOperationException("You're not authorized for this operation!");
-        }
+        setStatus(tripRequest, user, TripRequestStatus.REJECTED);
     }
 }

@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.controllers;
 
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class AuthenticationHelper {
 
         try {
             String userInfo = headers.getFirst(AUTHORIZATION_HEADER_NAME);
-            assert userInfo != null;
+            /*assert userInfo != null;*/
+            validateUserInfoIsNotNull(userInfo);
             String username = getUsername(userInfo);
             String password = getPassword(userInfo);
             User user = userService.getByUsername(username);
@@ -41,6 +43,13 @@ public class AuthenticationHelper {
             throw new AuthorizationException(INVALID_AUTHENTICATION_ERROR);
         }
     }
+
+    private static void validateUserInfoIsNotNull(String userInfo){
+        if(userInfo == null){
+            throw new UnauthorizedOperationException("error");
+        }
+    }
+
 
     public User tryGetCurrentUser(HttpSession session) {
         String currentUsername = (String) session.getAttribute("currentUser");

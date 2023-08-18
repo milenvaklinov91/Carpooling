@@ -14,8 +14,9 @@ public class TripRequestMapper {
     private TripRequestService tripRequestService;
     private TripService tripService;
     @Autowired
-    public TripRequestMapper(TripRequestService tripRequestService) {
+    public TripRequestMapper(TripRequestService tripRequestService, TripService tripService) {
         this.tripRequestService = tripRequestService;
+        this.tripService = tripService;
     }
 
     public TripRequest fromTripRequestDto(TripRequestDto tripRequestDto) {
