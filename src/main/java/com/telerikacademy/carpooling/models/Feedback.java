@@ -1,6 +1,10 @@
 package com.telerikacademy.carpooling.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "Feedbacks")
 public class Feedback {
@@ -19,10 +23,9 @@ public class Feedback {
     @ManyToOne
     @JoinColumn(name = "rated_by_user_id")
     private User userByCreatedBy;
-
-  /*  @JsonIgnore
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private List<Comment> comments;*/
+    @JsonIgnore
+    @OneToMany(mappedBy = "feedback", fetch = FetchType.EAGER)
+    private List<FeedbackComment> comments;
 
     public Feedback() {
     }
@@ -66,6 +69,14 @@ public class Feedback {
 
     public void setUserByCreatedBy(User userByCreatedBy) {
         this.userByCreatedBy = userByCreatedBy;
+    }
+
+    public List<FeedbackComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<FeedbackComment> comments) {
+        this.comments = comments;
     }
 }
 

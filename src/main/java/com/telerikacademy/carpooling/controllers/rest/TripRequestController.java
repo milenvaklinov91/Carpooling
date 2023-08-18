@@ -55,19 +55,6 @@ public class TripRequestController {
         }
     }
 
-    /*@PutMapping("/{id}")
-    public TripRequest modify(@RequestHeader HttpHeaders headers, @PathVariable int id,
-                       @Valid @RequestBody TripRequestDto tripRequestDto) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            TripRequest tripRequest = tripRequestMapper.fromTripRequestDto(tripRequestDto);
-            tripRequestService.modify(tripRequest, user);
-            return tripRequest;
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }*/
-
     @DeleteMapping("/{id}")
     public void delete(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);

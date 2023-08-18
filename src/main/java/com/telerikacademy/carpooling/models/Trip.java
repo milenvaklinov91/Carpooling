@@ -33,7 +33,6 @@ public class Trip {
     @JsonIgnore
     @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
     private List<TripRequest> tripRequest;
-
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private TripStatus tripStatus;

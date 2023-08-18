@@ -3,13 +3,13 @@ package com.telerikacademy.carpooling.models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Feedback_comments")
+@Table(name = "feedback_comments")
 public class FeedbackComment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feedback_comment_id")
-    private int feedbackId;
+    private int feedbackCommentId;
     @ManyToOne
     @JoinColumn(name = "feedback_id")
     private Feedback feedback;
@@ -19,12 +19,12 @@ public class FeedbackComment {
     public FeedbackComment() {
     }
 
-    public int getFeedbackId() {
-        return feedbackId;
+    public int getFeedbackCommentId() {
+        return feedbackCommentId;
     }
 
-    public void setFeedbackId(int feedbackId) {
-        this.feedbackId = feedbackId;
+    public void setFeedbackCommentId(int feedbackCommentId) {
+        this.feedbackCommentId = feedbackCommentId;
     }
 
     public Feedback getFeedback() {
