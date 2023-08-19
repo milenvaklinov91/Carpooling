@@ -77,4 +77,13 @@ public class FeedbackController {
         }
     }
 
+    @GetMapping("/feedback-comments/{id}")
+    public FeedbackComment getFeedbackCommentById(@PathVariable int id) {
+        try {
+            return feedbackCommentService.getFeedbackCommentById(id);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+
 }

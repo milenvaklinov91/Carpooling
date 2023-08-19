@@ -30,7 +30,14 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         return feedbackCommentRepository.getFeedbackCommentById(id);
     }
 
-    @Override
+    public void addCommentToFeedback(Feedback feedback, String commentText) {
+        FeedbackComment feedbackComment = new FeedbackComment();
+        /*feedbackComment.setFeedbackId(feedback.getFeedbackId());*/
+        feedbackComment.setComment(commentText);
+        feedbackCommentRepository.create(feedbackComment);
+    } //todo да се провери дали човека който добавя коментар е пасажер!!! И е шофьор!
+
+        @Override
     public void create(FeedbackComment feedbackComment,User user) {
         Trip trip = tripRepository.getTripById(feedbackComment.getFeedback().getTripId());
         /*if (trip.ge)*/
