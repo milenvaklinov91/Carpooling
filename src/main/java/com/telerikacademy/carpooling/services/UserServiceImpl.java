@@ -53,7 +53,10 @@ public class UserServiceImpl implements UserService {
     public User getByEmail(String email) {
         return userRepository.getByEmail(email);
     }
-    public User getByPhone(String phone){return userRepository.getByPhoneNumber(phone);}
+
+    public User getByPhone(String phone) {
+        return userRepository.getByPhoneNumber(phone);
+    }
 
     public List<User> getAdmins() {
         return userRepository.getAdmins();
@@ -62,14 +65,18 @@ public class UserServiceImpl implements UserService {
     public List<User> getRegularUsers() {
         return userRepository.getRegularUsers();
     }
-    public List<User> getDrivers(){
+
+    public List<User> getDrivers() {
         return userRepository.getDrivers();
     }
-    public List<User> getPassengers(){
+
+    public List<User> getPassengers() {
         return userRepository.getPassengers();
     }
-    public User getDriverByUsername(String username){return userRepository.getDriverByUsername(username);}
 
+    public User getDriverByUsername(String username) {
+        return userRepository.getDriverByUsername(username);
+    }
 
 
     public void create(User user) {
@@ -88,17 +95,20 @@ public class UserServiceImpl implements UserService {
             User existUser = userRepository.getUserById(user.getId());
             if (logUser.isBlocked()) {
                 throw new UnauthorizedOperationException("You`re blocked!!!");
-            } else if (!(existUser.getUsername().equals(logUser.getUsername()))) {
+            }
+            if (logUser.isAdmin() || existUser.getUsername().equals(logUser.getUsername())) {
+                existUser.setUsername(user.getUsername());
+                existUser.setLastName(user.getLastName());
+                user.setProfilePic(user.getProfilePic());
+                existUser.setPhone_number(user.getPhone_number());
+                existUser.setEmail(user.getEmail());
+                existUser.setPassword(user.getPassword());
+                existUser.setIsDriver(user.isDriver());
+                existUser.setStatus(user.getStatus());
+                userRepository.update(existUser);
+            } else  {
                 throw new UnauthorizedOperationException("You're not authorized for this operation");
             }
-            existUser.setUsername(user.getUsername());
-            existUser.setLastName(user.getLastName());
-            user.setProfilePic(user.getProfilePic());
-            existUser.setPhone_number(user.getPhone_number());
-            existUser.setEmail(user.getEmail());
-            existUser.setPassword(user.getPassword());
-            existUser.setIsDriver(user.isDriver());
-            userRepository.update(existUser);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -206,7 +216,7 @@ public class UserServiceImpl implements UserService {
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
 
-    public List<Trip> showTravelsByUser(int id){
+    public List<Trip> showTravelsByUser(int id) {
         return tripRepository.findAllTravelsByUser(id);
     }
 
