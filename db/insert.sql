@@ -1,3 +1,6 @@
+INSERT INTO carpooling.status (status_id, status) VALUES (1, 'pending');
+INSERT INTO carpooling.status (status_id, status) VALUES (2, 'confirmed');
+
 insert into users(username, password, email, first_name, last_name, profile_picture, registration_date, phone_number, is_driver, is_blocked, is_admin)
 values
     ('ledka', 'ledak123', 'ledka@gmail.com', 'Leda', 'Yovkova', 'url:pic', '2023-08-10 22:24:24', '031312312', 0, 0, 1),
@@ -5,6 +8,7 @@ values
     ('kalata', 'kaloyan91', 'kaloyan@gmail.com', 'Kaloyan', 'Stanev', 'url:pic', '2023-08-08 15:30:45', '0777123456', 0, 0, 0),
     ('petra', 'petra92', 'petra@gmail.com', 'Petra', 'Kovacheva', 'url:pic', '2023-08-07 18:12:59', '0899112233', 1, 0, 0),
     ('gosho', 'gosho93', 'gosho@gmail.com', 'Georgi', 'Marinov', 'url:pic', '2023-08-06 09:30:15', '0555123456', 0, 1, 0);
+
 
 
 insert into cars(user_id, driver_license_picture, car_brand, car_model, car_color, car_year, description, extra_storage, smoke, air_conditioner, pet_available, consume_food, consume_drink, car_capacity)

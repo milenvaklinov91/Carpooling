@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.mappers;
 
+import com.telerikacademy.carpooling.models.ConfirmationCodeGenerator;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
@@ -27,6 +28,9 @@ private UserRepository userRepository;
             user.setProfilePic("static/images/profile.jpg");
         }
         user.setIsDriver(userDto.isDriver());
+        String confirmationCode = ConfirmationCodeGenerator.generateCode();
+        user.setConfirmationCode(confirmationCode);
+        user.setStatus(1);
         return user;
     }
 

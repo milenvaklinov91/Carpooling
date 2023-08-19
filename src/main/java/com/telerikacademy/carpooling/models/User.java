@@ -23,7 +23,7 @@ public class User {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
@@ -37,12 +37,17 @@ public class User {
     private boolean is_blocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @Column(name="conf_code")
+    private String confirmationCode;
+    @Column(name="status")
+    private int status;
     @JsonIgnore
     @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
     private Set<Trip> trip;
     @JsonIgnore
     @OneToMany(mappedBy = "passenger", fetch = FetchType.EAGER)
     private Set<TripRequest> tripRequest;
+
 
 
     public User() {
@@ -142,6 +147,22 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getConfirmationCode() {
+        return confirmationCode;
+    }
+
+    public void setConfirmationCode(String confirmationCode) {
+        this.confirmationCode = confirmationCode;
     }
 
     public Set<Trip> getTrip() {
