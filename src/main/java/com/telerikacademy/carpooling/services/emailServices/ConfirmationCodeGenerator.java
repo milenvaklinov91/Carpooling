@@ -1,4 +1,4 @@
-package com.telerikacademy.carpooling.models;
+package com.telerikacademy.carpooling.services.emailServices;
 import java.util.UUID;
 
 public class ConfirmationCodeGenerator {

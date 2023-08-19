@@ -9,9 +9,11 @@ import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
+import com.telerikacademy.carpooling.services.emailServices.EmailService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,11 +26,13 @@ public class UserController {
     private final UserService service;
     private final AuthenticationHelper authenticationHelper;
     private final UserMapper userMapper;
+    private final EmailService emailService;
 
-    public UserController(UserService service, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
+    public UserController(UserService service, AuthenticationHelper authenticationHelper, UserMapper userMapper, EmailService emailService) {
         this.service = service;
         this.authenticationHelper = authenticationHelper;
         this.userMapper = userMapper;
+        this.emailService = emailService;
     }
 
     @GetMapping
@@ -152,16 +156,27 @@ public class UserController {
     public List<Trip> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
     }
-//todo Each user must be able to view all his travels (with option to filter and sort them), all his feedback and all \
-// feedback for any other user. List with travels/feedback should support pagination.
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
             User user = userMapper.fromDto(userDto);
+            emailService.sendConfirmationEmail(user.getEmail(), user.getConfirmationCode());
             service.create(user);
             return user;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
+    @PostMapping("/confirm")
+    public ResponseEntity<?> confirmUser(@RequestHeader HttpHeaders headers,@RequestParam String email, @RequestParam String confirmationCode) {
+        User user = service.getByEmail(email);
+        User logUser = authenticationHelper.tryGetUser(headers);
+        if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
+            user.setStatus(2);
+           service.update(user,logUser);
+            return ResponseEntity.ok("User confirmed successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid confirmation code or email.");
         }
     }
 

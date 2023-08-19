@@ -1,6 +1,6 @@
 package com.telerikacademy.carpooling.mappers;
 
-import com.telerikacademy.carpooling.models.ConfirmationCodeGenerator;
+import com.telerikacademy.carpooling.services.emailServices.ConfirmationCodeGenerator;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
