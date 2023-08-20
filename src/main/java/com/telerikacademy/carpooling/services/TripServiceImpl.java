@@ -80,5 +80,3 @@ public class TripServiceImpl implements TripService {
     }
 
 }
-
-//todo driver must be able to cancel trip at any time

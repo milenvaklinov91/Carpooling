@@ -1,7 +1,10 @@
 package com.telerikacademy.carpooling.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.Set;
 
 
 @Entity
@@ -22,9 +25,9 @@ public class Feedback {
     @ManyToOne
     @JoinColumn(name = "rated_by_user_id")
     private User userByCreatedBy;
-    /*@JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "feedback", fetch = FetchType.EAGER)
-    private List<FeedbackComment> comments;*/
+    private Set<FeedbackComment> comments;
 
     public Feedback() {
     }
