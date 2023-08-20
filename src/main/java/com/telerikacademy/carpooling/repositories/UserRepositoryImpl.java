@@ -43,17 +43,19 @@ public class UserRepositoryImpl implements UserRepository {
                 filters.add("u.lastName like :lastName");
                 params.put("lastName", String.format("%%%s%%", value));
             });
-
+            System.out.println(hqlBuilder);
             if (!filters.isEmpty()) {
                 hqlBuilder.append(" WHERE ");
                 hqlBuilder.append(String.join(" AND ", filters));
             }
-
+            // todo email & phone
 
             hqlBuilder.append(generateOrderBy(filterOptions));
-
+            System.out.println(hqlBuilder);
             Query<User> query = session.createQuery(hqlBuilder.toString(), User.class);
+            System.out.println(hqlBuilder);
             query.setProperties(params);
+            System.out.println(hqlBuilder);
             return query.list();
         }
     }

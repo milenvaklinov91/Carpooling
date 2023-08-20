@@ -1,11 +1,14 @@
 package com.telerikacademy.carpooling.mappers;
 
+import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.dtos.TripDto;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.xml.stream.Location;
 
 @Component
 public class TripMapper {
