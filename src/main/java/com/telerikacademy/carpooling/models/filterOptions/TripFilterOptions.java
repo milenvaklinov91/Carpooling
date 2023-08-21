@@ -7,21 +7,24 @@ public class TripFilterOptions {
     private Optional<String> endLocation;
     private Optional<String> departureTime;
     private Optional<String> costPerPerson;
+    private Optional<String> username;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
     public TripFilterOptions() {
         this(null, null, null,
-                null, null, null);
+                null,null, null, null);
     }
 
     public TripFilterOptions(String startLocation, String endLocation,
                              String departureTime, String costPerPerson,
+                             String username,
                              String sortBy, String sortOrder) {
         this.startLocation = Optional.ofNullable(startLocation);
         this.endLocation = Optional.ofNullable(endLocation);
         this.departureTime = Optional.ofNullable(departureTime);
         this.costPerPerson = Optional.ofNullable(costPerPerson);
+        this.username = Optional.ofNullable(username);
         this.sortBy = Optional.ofNullable(sortBy);
         this.sortOrder = Optional.ofNullable(sortOrder);
     }
@@ -42,6 +45,10 @@ public class TripFilterOptions {
         return costPerPerson;
     }
 
+    public Optional<String> getUsername() {
+        return username;
+    }
+
     public Optional<String> getSortBy() {
         return sortBy;
     }
@@ -49,6 +56,7 @@ public class TripFilterOptions {
     public Optional<String> getSortOrder() {
         return sortOrder;
     }
+
 }
 
 

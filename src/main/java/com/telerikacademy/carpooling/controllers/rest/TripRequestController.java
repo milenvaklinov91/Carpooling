@@ -3,6 +3,7 @@ package com.telerikacademy.carpooling.controllers.rest;
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.SeatException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.mappers.TripRequestMapper;
 import com.telerikacademy.carpooling.models.TripRequest;
@@ -22,8 +23,8 @@ import java.util.List;
 public class TripRequestController {
     private final TripRequestService tripRequestService;
     private final AuthenticationHelper authenticationHelper;
-
     private final TripRequestMapper tripRequestMapper;
+
     public TripRequestController(TripRequestService tripRequestService,
                                  AuthenticationHelper authenticationHelper,
                                  TripRequestMapper tripRequestMapper) {
@@ -77,6 +78,8 @@ public class TripRequestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (SeatException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 
@@ -90,6 +93,8 @@ public class TripRequestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (UnauthorizedOperationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        } catch (SeatException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
 

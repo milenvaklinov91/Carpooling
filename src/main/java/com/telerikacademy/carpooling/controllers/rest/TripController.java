@@ -34,12 +34,14 @@ public class TripController {
                              @RequestParam(required = false) String endLocation,
                              @RequestParam(required = false) String departureTime,
                              @RequestParam(required = false) String costPerPerson,
+                             @RequestParam(required = false) String username,
                              @RequestParam(required = false) String sortBy,
                              @RequestParam(required = false) String sortOrder) {
         TripFilterOptions tripFilterOptions = new TripFilterOptions(startLocation,
                 endLocation,
                 departureTime,
                 costPerPerson,
+                username,
                 sortBy,
                 sortOrder);
         return tripService.getAll(tripFilterOptions);
@@ -52,6 +54,11 @@ public class TripController {
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @GetMapping("/completed")
+    public List<Trip> getAllCompletedTrips() {
+        return tripService.getAllCompletedTrips();
     }
 
     @PostMapping

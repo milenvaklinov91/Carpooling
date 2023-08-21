@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
+import com.telerikacademy.carpooling.exceptions.SeatException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
@@ -20,7 +21,7 @@ public class TripRequestServiceImpl implements TripRequestService {
     private TripRepositoryImpl tripRepository;
 
     @Autowired
-    public TripRequestServiceImpl(TripRequestRepository tripRequestRepository,TripRepositoryImpl tripRepository) {
+    public TripRequestServiceImpl(TripRequestRepository tripRequestRepository, TripRepositoryImpl tripRepository) {
         this.tripRequestRepository = tripRequestRepository;
         this.tripRepository = tripRepository;
 
@@ -67,8 +68,8 @@ public class TripRequestServiceImpl implements TripRequestService {
 
     @Override
     public void approveTripRequest(TripRequest tripRequest, User user) {
-        setStatus(tripRequest, user, TripRequestStatus.APPROVED);
         reduceAvailableSeats(tripRequest.getTrip());
+        setStatus(tripRequest, user, TripRequestStatus.APPROVED);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class TripRequestServiceImpl implements TripRequestService {
             trip.setAvailableSeats(currentAvailableSeats - 1);
             tripRepository.modify(trip);
         } else {
-            throw new IllegalArgumentException("No available seats left.");
+            throw new SeatException("No available seats left.");
 
         }
     }
@@ -98,7 +99,7 @@ public class TripRequestServiceImpl implements TripRequestService {
             trip.setAvailableSeats(currentAvailableSeats + 1);
             tripRepository.modify(trip);
         } else {
-            throw new IllegalArgumentException("Maximum capacity reached.");
+            throw new SeatException("Maximum capacity reached.");
         }
     }
 

@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
+import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRepository;
 import org.hibernate.Session;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.telerikacademy.carpooling.models.enums.TripStatus.FINISHED;
 
 @Repository
 public class TripRepositoryImpl implements TripRepository {
@@ -61,6 +64,10 @@ public class TripRepositoryImpl implements TripRepository {
                 filters.add("p.costPerPerson LIKE :costPerPerson");
                 params.put("costPerPerson", String.format("%%%s%%", value));
             });
+            tripFilterOptions.getUsername().ifPresent(value -> {
+                filters.add("p.createdBy.username = :username");
+                params.put("username", value);
+            });
 
             if (!filters.isEmpty()) {
                 hqlBuilder.append(" WHERE ");
@@ -71,6 +78,16 @@ public class TripRepositoryImpl implements TripRepository {
             Query<Trip> query = session.createQuery(hqlBuilder.toString(), Trip.class);
             query.setProperties(params);
             return query.list();
+        }
+    }
+
+    @Override
+    public List<Trip> getAllCompletedTrips() {
+        String query = "from Trip where tripStatus = :tripStatus";
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(query, Trip.class)
+                    .setParameter("tripStatus", FINISHED)
+                    .list();
         }
     }
 

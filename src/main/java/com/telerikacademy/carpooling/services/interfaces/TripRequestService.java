@@ -1,11 +1,9 @@
 package com.telerikacademy.carpooling.services.interfaces;
 
-import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.User;
 
 import java.util.List;
-
 
 public interface TripRequestService {
 
@@ -13,8 +11,7 @@ public interface TripRequestService {
 
     List<TripRequest> getAll();
 
-    void create(TripRequest tripRequest,  User user);
-
+    void create(TripRequest tripRequest, User user);
 
     void delete(int id, User user);
 
