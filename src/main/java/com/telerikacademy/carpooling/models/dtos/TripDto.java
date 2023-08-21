@@ -18,8 +18,8 @@ public class TripDto {
     @NotBlank
     private String costPerPerson;
     @NotNull(message = "AvailableSeats can't be empty")
-    @NotBlank
-    private String availableSeats;
+    /*@NotBlank*/
+    private int availableSeats;
     @NotNull(message = "Description can't be empty")
     @NotBlank
     private String description;
@@ -59,11 +59,11 @@ public class TripDto {
         this.costPerPerson = costPerPerson;
     }
 
-    public String getAvailableSeats() {
+    public int getAvailableSeats() {
         return availableSeats;
     }
 
-    public void setAvailableSeats(String availableSeats) {
+    public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
 

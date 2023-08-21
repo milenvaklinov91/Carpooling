@@ -2,24 +2,24 @@ package com.telerikacademy.carpooling.models.filterOptions;
 
 import java.util.Optional;
 
-public class TravelFilterOptions {
+public class TripFilterOptions {
     private Optional<String> startLocation;
-    private Optional<String> endLocations;
+    private Optional<String> endLocation;
     private Optional<String> departureTime;
     private Optional<String> costPerPerson;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
-    public TravelFilterOptions() {
+    public TripFilterOptions() {
         this(null, null, null,
                 null, null, null);
     }
 
-    public TravelFilterOptions(String startLocation, String endLocations,
-                               String departureTime, String costPerPerson,
-                               String sortBy, String sortOrder) {
+    public TripFilterOptions(String startLocation, String endLocation,
+                             String departureTime, String costPerPerson,
+                             String sortBy, String sortOrder) {
         this.startLocation = Optional.ofNullable(startLocation);
-        this.endLocations = Optional.ofNullable(endLocations);
+        this.endLocation = Optional.ofNullable(endLocation);
         this.departureTime = Optional.ofNullable(departureTime);
         this.costPerPerson = Optional.ofNullable(costPerPerson);
         this.sortBy = Optional.ofNullable(sortBy);
@@ -30,8 +30,8 @@ public class TravelFilterOptions {
         return startLocation;
     }
 
-    public Optional<String> getEndLocations() {
-        return endLocations;
+    public Optional<String> getEndLocation() {
+        return endLocation;
     }
 
     public Optional<String> getDepartureTime() {

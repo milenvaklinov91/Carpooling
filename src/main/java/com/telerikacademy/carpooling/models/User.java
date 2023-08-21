@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -34,7 +33,7 @@ public class User {
     @Column(name = "is_driver")
     private boolean isDriver;
     @Column(name = "is_blocked")
-    private boolean is_blocked;
+    private boolean isBlocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
     @Column(name="conf_code")
@@ -47,8 +46,9 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "passenger", fetch = FetchType.EAGER)
     private Set<TripRequest> tripRequest;
-
-
+    @JsonIgnore
+    @OneToOne(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    private Car car;
 
     public User() {
     }
@@ -65,16 +65,16 @@ public class User {
         return isDriver;
     }
 
-    public void setIsDriver(boolean is_driver) {
-        this.isDriver = is_driver;
+    public void setIsDriver(boolean isDriver) {
+        this.isDriver = isDriver;
     }
 
     public boolean isBlocked() {
-        return is_blocked;
+        return isBlocked;
     }
 
-    public void setIs_blocked(boolean is_blocked) {
-        this.is_blocked = is_blocked;
+    public void setIsBlocked(boolean isBlocked) {
+        this.isBlocked = isBlocked;
     }
 
     public int getId() {
@@ -179,6 +179,14 @@ public class User {
 
     public void setTripRequest(Set<TripRequest> tripRequest) {
         this.tripRequest = tripRequest;
+    }
+
+    public Car getCar() {
+        return car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
     }
 
     /*@Override

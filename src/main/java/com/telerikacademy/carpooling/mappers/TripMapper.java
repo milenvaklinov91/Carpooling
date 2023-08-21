@@ -27,7 +27,7 @@ public class TripMapper {
         trip.setDepartureTime(tripDto.getDepartureTime());
         trip.setCostPerPerson(tripDto.getCostPerPerson());
         trip.setAvailableSeats(tripDto.getAvailableSeats());
-        trip.setDescription(tripDto.getDescription());// todo трябва да е optional
+        trip.setDescription(tripDto.getDescription());
         trip.setTripStatus(TripStatus.AWAITING);
 
         /*try {

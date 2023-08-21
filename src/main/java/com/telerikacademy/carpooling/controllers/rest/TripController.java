@@ -8,7 +8,7 @@ import com.telerikacademy.carpooling.mappers.TripMapper;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.TripDto;
-import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
+import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,13 +36,13 @@ public class TripController {
                              @RequestParam(required = false) String costPerPerson,
                              @RequestParam(required = false) String sortBy,
                              @RequestParam(required = false) String sortOrder) {
-        TravelFilterOptions travelFilterOptions = new TravelFilterOptions(startLocation,
+        TripFilterOptions tripFilterOptions = new TripFilterOptions(startLocation,
                 endLocation,
                 departureTime,
                 costPerPerson,
                 sortBy,
                 sortOrder);
-        return tripService.getAll(travelFilterOptions);
+        return tripService.getAll(tripFilterOptions);
     }
 
     @GetMapping("/{id}")

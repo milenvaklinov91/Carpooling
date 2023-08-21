@@ -21,7 +21,7 @@ public class Helper {
         mockUser.setPhone_number("0888888888");
         mockUser.setIsDriver(true);
         mockUser.setAdmin(true);
-        mockUser.setIs_blocked(true);
+        mockUser.setIsBlocked(true);
         mockUser.setIsDriver(true);
         return mockUser;
     }

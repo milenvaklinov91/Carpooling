@@ -4,7 +4,7 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
-import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
+import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.repositories.TripRepositoryImpl;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +25,8 @@ public class TripServiceImpl implements TripService {
         return tripRepository.getTripById(id);
     }
     @Override
-    public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
-        return tripRepository.getAll(travelFilterOptions);
+    public List<Trip> getAll(TripFilterOptions tripFilterOptions) {
+        return tripRepository.getAll(tripFilterOptions);
     }
 
     @Override
