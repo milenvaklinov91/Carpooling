@@ -73,9 +73,8 @@ public class TripRepositoryImpl implements TripRepository {
     @Override
     public void create(Trip trip) {
         try (Session session = sessionFactory.openSession()) {
-            /*session.beginTransaction();*/
+
             session.save(trip);
-            /*session.getTransaction().commit();*/
         }
     }
 
