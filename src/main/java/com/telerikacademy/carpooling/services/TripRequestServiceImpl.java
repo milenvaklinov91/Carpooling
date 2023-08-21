@@ -11,6 +11,8 @@ import com.telerikacademy.carpooling.services.interfaces.TripRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TripRequestServiceImpl implements TripRequestService {
 
@@ -27,6 +29,11 @@ public class TripRequestServiceImpl implements TripRequestService {
     @Override
     public TripRequest getTripRequestById(int id) {
         return tripRequestRepository.getTripRequestById(id);
+    }
+
+    @Override
+    public List<TripRequest> getAll() {
+        return tripRequestRepository.getAll();
     }
 
     @Override

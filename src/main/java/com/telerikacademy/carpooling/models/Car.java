@@ -15,7 +15,7 @@ public class Car {
     private int carId;
     @JsonIgnore
     @OneToOne
-    @JoinColumn(name = "user_id")     //todo one to one
+    @JoinColumn(name = "user_id")
     private User userCreatedBy;
     @JsonIgnore
     @Column(name="driver_license_picture")

@@ -47,7 +47,7 @@ public class User {
     @OneToMany(mappedBy = "passenger", fetch = FetchType.EAGER)
     private Set<TripRequest> tripRequest;
     @JsonIgnore
-    @OneToOne(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "userCreatedBy", fetch = FetchType.EAGER)
     private Car car;
 
     public User() {

@@ -6,8 +6,11 @@ import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRequestRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class TripRequestRepositoryImpl implements TripRequestRepository {
@@ -27,6 +30,14 @@ public class TripRequestRepositoryImpl implements TripRequestRepository {
                 throw new EntityNotFoundException("TripRequest", id);
             }
             return tripRequest;
+        }
+    }
+
+    @Override
+    public List<TripRequest> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<TripRequest> query = session.createQuery("from TripRequest ", TripRequest.class);
+            return query.list();
         }
     }
 
