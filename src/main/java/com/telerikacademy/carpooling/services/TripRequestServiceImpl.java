@@ -54,6 +54,10 @@ public class TripRequestServiceImpl implements TripRequestService {
         } else if (!(user.isAdmin() || tripRequest.getPassenger().getUsername().equals(user.getUsername()))) {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
+        if (tripRequest.getTripRequestStatus() == TripRequestStatus.APPROVED) {
+            Trip trip = tripRequest.getTrip();
+            increaseAvailableSeats(trip);
+        }
         tripRequestRepository.delete(id);
     }
 
