@@ -7,6 +7,7 @@ import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.repositories.interfaces.FeedbackCommentRepository;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRepository;
 import com.telerikacademy.carpooling.services.interfaces.FeedbackCommentService;
+import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,12 +17,15 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
     private FeedbackCommentRepository feedbackCommentRepository;
 
     private TripRepository tripRepository;
+    private TripService tripService;
+
 
     @Autowired
     public FeedbackCommentServiceImpl(FeedbackCommentRepository feedbackCommentRepository,
-                                      TripRepository tripRepository) {
+                                      TripRepository tripRepository, TripService tripService) {
         this.feedbackCommentRepository = feedbackCommentRepository;
         this.tripRepository = tripRepository;
+        this.tripService = tripService;
     }
 
     @Override
@@ -36,11 +40,11 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         feedbackCommentRepository.create(feedbackComment);
     } //todo да се провери дали човека който добавя коментар е пасажер!!! И е шофьор!
 
-    @Override
-    public void create(FeedbackComment feedbackComment, User user) {
-        Trip trip = tripRepository.getTripById(feedbackComment.getFeedback().getTripId());
-        /*if (trip.ge)*/
+        @Override
+    public void create(FeedbackComment feedbackComment,User user) {
         feedbackCommentRepository.create(feedbackComment);
     }
+
+
 
 }

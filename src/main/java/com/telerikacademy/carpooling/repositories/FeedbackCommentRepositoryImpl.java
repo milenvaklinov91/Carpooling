@@ -33,7 +33,6 @@ public class FeedbackCommentRepositoryImpl implements FeedbackCommentRepository 
     @Override
     public void create(FeedbackComment feedbackComment) {
         try (Session session = sessionFactory.openSession()) {
-
             session.save(feedbackComment);
 
         }

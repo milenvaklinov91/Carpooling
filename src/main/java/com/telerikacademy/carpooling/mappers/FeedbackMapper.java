@@ -25,10 +25,10 @@ public class FeedbackMapper {
         return feedback;
     }
 
-    public FeedbackComment fromFeedbackCommentDto (FeedbackCommentDto feedbackCommentDto,Feedback feedback){
-        FeedbackComment feedbackComment = new FeedbackComment();
-        feedbackComment.setFeedback(feedback);
-        feedbackComment.setComment(feedbackCommentDto.getFeedbackComment());
-        return feedbackComment;
-    }
+//    public FeedbackComment fromFeedbackCommentDto (FeedbackCommentDto feedbackCommentDto,Feedback feedback){
+//        FeedbackComment feedbackComment = new FeedbackComment();
+//        feedbackComment.setFeedback(feedback);
+//        feedbackComment.setComment(feedbackCommentDto.getFeedbackComment());
+//        return feedbackComment;
+//    }
 }

@@ -25,6 +25,7 @@ public class Feedback {
     @ManyToOne
     @JoinColumn(name = "rated_by_user_id")
     private User userByCreatedBy;
+
     @JsonIgnore
     @OneToMany(mappedBy = "feedback", fetch = FetchType.EAGER)
     private Set<FeedbackComment> comments;

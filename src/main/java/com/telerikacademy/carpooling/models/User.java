@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -49,6 +50,10 @@ public class User {
     @JsonIgnore
     @OneToOne(mappedBy = "userCreatedBy", fetch = FetchType.EAGER)
     private Car car;
+    @JsonIgnore
+    @OneToMany(mappedBy = "ratedUser", fetch = FetchType.EAGER)
+    private Set<Feedback> feedbackSet;
+
 
     public User() {
     }
@@ -65,8 +70,8 @@ public class User {
         return isDriver;
     }
 
-    public void setIsDriver(boolean isDriver) {
-        this.isDriver = isDriver;
+    public void setIsDriver(boolean is_driver) {
+        this.isDriver = is_driver;
     }
 
     public boolean isBlocked() {
@@ -202,4 +207,12 @@ public class User {
         return Objects.hash(id, username, password, firstName, lastName, email,
                 registrationDate, profilePic, phone_number, isDriver, is_blocked, isAdmin, trip, tripRequest);
     }*/
+
+    public Set<Feedback> getFeedbackSet() {
+        return feedbackSet;
+    }
+
+    public void setFeedbackSet(Set<Feedback> feedbackSet) {
+        this.feedbackSet = feedbackSet;
+    }
 }

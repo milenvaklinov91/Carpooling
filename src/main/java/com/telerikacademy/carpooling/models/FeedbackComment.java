@@ -1,5 +1,7 @@
 package com.telerikacademy.carpooling.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class FeedbackComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "feedback_comment_id")
     private int feedbackCommentId;
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "feedback_id")
     private Feedback feedback;
