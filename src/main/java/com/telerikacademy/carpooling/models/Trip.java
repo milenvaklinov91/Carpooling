@@ -13,7 +13,7 @@ public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "trip_id")
-    private int travelId;
+    private int tripId;
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -41,12 +41,12 @@ public class Trip {
     public Trip() {
     }
 
-    public int getTravelId() {
-        return travelId;
+    public int getTripId() {
+        return tripId;
     }
 
-    public void setTravelId(int travelId) {
-        this.travelId = travelId;
+    public void setTripId(int tripId) {
+        this.tripId = tripId;
     }
 
     public User getCreatedBy() {

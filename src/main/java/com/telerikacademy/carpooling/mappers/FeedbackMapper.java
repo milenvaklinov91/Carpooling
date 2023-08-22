@@ -1,8 +1,6 @@
 package com.telerikacademy.carpooling.mappers;
 
 import com.telerikacademy.carpooling.models.Feedback;
-import com.telerikacademy.carpooling.models.FeedbackComment;
-import com.telerikacademy.carpooling.models.dtos.FeedbackCommentDto;
 import com.telerikacademy.carpooling.models.dtos.FeedbackDto;
 
 import com.telerikacademy.carpooling.services.interfaces.TripService;
@@ -21,7 +19,7 @@ public class FeedbackMapper {
     public Feedback fromFeedbackDto(FeedbackDto feedbackDto) {
         Feedback feedback = new Feedback();
         feedback.setRatingValue(feedbackDto.getRatingValue());
-        feedback.setTripId(tripService.getTripById(feedbackDto.getTripId()).getTravelId());
+        feedback.setTripId(tripService.getTripById(feedbackDto.getTripId()).getTripId());
         return feedback;
     }
 

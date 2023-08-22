@@ -80,7 +80,8 @@ public class TripController {
                        @Valid @RequestBody TripDto tripDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Trip trip = tripMapper.fromDto(id, tripDto);
+            Trip trip = tripService.getTripById(id);
+            trip = tripMapper.fromTripDtoUpdate(trip,tripDto);
             tripService.modify(trip, user);
             return trip;
         } catch (AuthorizationException e) {

@@ -18,7 +18,6 @@ public class TripDto {
     @NotBlank
     private String costPerPerson;
     @NotNull(message = "AvailableSeats can't be empty")
-    /*@NotBlank*/
     private int availableSeats;
     @NotNull(message = "Description can't be empty")
     @NotBlank
