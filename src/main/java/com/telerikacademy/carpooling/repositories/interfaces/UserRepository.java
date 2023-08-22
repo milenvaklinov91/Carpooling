@@ -27,4 +27,5 @@ public interface UserRepository {
     List<User> getDrivers();
     User getDriverByUsername(String username);
     List<User> getPassengers();
+    List<User> getAllPassengersbyTripId(int id);
 }

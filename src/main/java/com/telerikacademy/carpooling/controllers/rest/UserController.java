@@ -1,9 +1,7 @@
 package com.telerikacademy.carpooling.controllers.rest;
 
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
-import com.telerikacademy.carpooling.exceptions.DuplicatePasswordException;
-import com.telerikacademy.carpooling.exceptions.EntityDuplicateException;
-import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.*;
 import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
@@ -156,6 +154,11 @@ public class UserController {
     @GetMapping("/{userId}/travels")
     public List<Trip> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
+    }
+
+    @GetMapping("/{tripId}/passengers")
+    public List<User> getAllPassengersByTrip(@PathVariable int tripId) {
+        return service.showAllPassengersInTrip(tripId);
     }
 
     @PostMapping

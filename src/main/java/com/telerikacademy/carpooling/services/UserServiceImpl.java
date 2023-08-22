@@ -17,8 +17,8 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
-    private TripRepository tripRepository;
+    private final UserRepository userRepository;
+    private final TripRepository tripRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, TripRepository tripRepository) {
@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.countAllUsers();
     }
 
-    public User getById(int id) {   //admin or ownuser
+    public User getById(int id) {
         return userRepository.getUserById(id);
     }
 
@@ -120,7 +120,9 @@ public class UserServiceImpl implements UserService {
         if (!(logUser.isAdmin())) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
-        userRepository.delete(id);
+        User deletedUser=userRepository.getUserById(id);
+        deletedUser.setStatus(3);
+        userRepository.update(deletedUser);
     }
 
     public void validatePassword(String password) throws InvalidPasswordException {
@@ -218,6 +220,10 @@ public class UserServiceImpl implements UserService {
 
     public List<Trip> showTravelsByUser(int id) {
         return tripRepository.findAllTravelsByUser(id);
+    }
+
+    public List<User> showAllPassengersInTrip(int id){
+        return userRepository.getAllPassengersbyTripId(id);
     }
 
 

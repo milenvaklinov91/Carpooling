@@ -35,5 +35,6 @@ public interface UserService {
     User makeAdmin(int id, User user);
     User demoteAdmin(int id, User user);
     List<Trip> showTravelsByUser(int id);
+    List<User> showAllPassengersInTrip(int id);
 
 }
