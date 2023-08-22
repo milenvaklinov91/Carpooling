@@ -86,6 +86,5 @@ public class TripServiceImpl implements TripService {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
     }
-//TODO Трява да имаме спосък с всички пътувания, които са се осъществили/finished
 
 }
