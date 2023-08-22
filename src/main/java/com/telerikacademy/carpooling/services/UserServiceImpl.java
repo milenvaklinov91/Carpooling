@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
         isDuplicatePhoneNumber(user);
         validatePassword(user.getPassword());
         user.setRegistrationDate(LocalDateTime.now());
-        user.setIs_blocked(false);
+        user.setIsBlocked(false);
         user.setAdmin(false);
         userRepository.create(user);
     }
@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
     public User blockUser(int id, User user) {
         User normalUser = userRepository.getUserById(id);
         if (user.isAdmin() && !normalUser.isAdmin()) {
-            normalUser.setIs_blocked(true);
+            normalUser.setIsBlocked(true);
             userRepository.update(normalUser);
             return normalUser;
         }
@@ -189,7 +189,7 @@ public class UserServiceImpl implements UserService {
     public User unBlockUser(int id, User user) {
         User normalUser = userRepository.getUserById(id);
         if (user.isAdmin() && !normalUser.isAdmin()) {
-            normalUser.setIs_blocked(false);
+            normalUser.setIsBlocked(false);
             userRepository.update(normalUser);
             return normalUser;
         }

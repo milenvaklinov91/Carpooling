@@ -1,11 +1,14 @@
 package com.telerikacademy.carpooling.mappers;
 
+import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.dtos.TripDto;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.xml.stream.Location;
 
 @Component
 public class TripMapper {
@@ -24,7 +27,7 @@ public class TripMapper {
         trip.setDepartureTime(tripDto.getDepartureTime());
         trip.setCostPerPerson(tripDto.getCostPerPerson());
         trip.setAvailableSeats(tripDto.getAvailableSeats());
-        trip.setDescription(tripDto.getDescription());// todo трябва да е optional
+        trip.setDescription(tripDto.getDescription());
         trip.setTripStatus(TripStatus.AWAITING);
 
         /*try {

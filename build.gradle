@@ -24,7 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
-    /*implementation 'org.json:json:20210307'*/
+    implementation 'org.json:json:20210307'
 }
 
 tasks.named('test') {

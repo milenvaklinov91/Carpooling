@@ -14,7 +14,7 @@ public class Car {
     @Column(name = "car_id")
     private int carId;
     @JsonIgnore
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User userCreatedBy;
     @JsonIgnore

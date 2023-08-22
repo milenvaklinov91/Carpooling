@@ -10,6 +10,7 @@ import java.util.List;
 public interface FeedbackService {
 
     Feedback getFeedbackById(int id);
+
     List<Feedback> getRatingByUser(int userId);
 
     void createFeedbackForDriver(Feedback feedback, Trip trip, User user);

@@ -27,7 +27,7 @@ public class Trip {
     @Column(name = "cost_per_person")
     private String costPerPerson;
     @Column(name = "available_seats")
-    private String availableSeats;
+    private int availableSeats;
     @Column(name = "description")
     private String description;
     @JsonIgnore
@@ -89,11 +89,11 @@ public class Trip {
         this.costPerPerson = costPerPerson;
     }
 
-    public String getAvailableSeats() {
+    public int getAvailableSeats() {
         return availableSeats;
     }
 
-    public void setAvailableSeats(String availableSeats) {
+    public void setAvailableSeats(int availableSeats) {
         this.availableSeats = availableSeats;
     }
 

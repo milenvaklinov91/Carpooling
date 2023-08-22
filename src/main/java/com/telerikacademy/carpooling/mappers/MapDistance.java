@@ -1,20 +1,24 @@
-/*
+
 package com.telerikacademy.carpooling.mappers;
+
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 
 public class MapDistance {
 
     String startLocation = "Sofia";
     String endLocation = "Plovdiv";
 
-    String time = getDurationInSec(startLocation,endLocation);
-    String distance = getDistanceString(startLocation,endLocation);
+   /* String time = getDuration(startLocation, endLocation);
+    String distance = getDistance(startLocation, endLocation);*/
 
-    System.out.println(time);
-    System.out.println(distance);
-
-
-
-    public static JSONObject getJSONResponseFromLink(String link) {
+    public static JSONObject getJSON(String link) {
         JSONObject jsonResponse = new JSONObject();
         try {
             URL url = new URL(link);
@@ -44,62 +48,75 @@ public class MapDistance {
         return jsonResponse;
     }
 
-    public static String getLocationCoords (String LocationName) {
+
+    public static String getLocation(String LocationName) throws IOException {
         String apikey = "AjuJ7-9jHmxn-xi-VksWt8jASF05tjX8bpeWwjMDAhX6XWq6SrBMIvG877iYP_EK";
-        String apiurl = http://dev.virtualearth.net/REST/v1/Locations/BG/;
+        String linkUrl = "http://dev.virtualearth.net/REST/v1/Locations/BG/";
 
-        String link = apiUrl + LocationName "?key=" + apikey;
+        String address = linkUrl + LocationName + "?key=" + apikey;
 
-        JSONObject jsonResponse = getJSONResponseFromLink(link);
+        URL url = new URL(address);
 
-        JSONArray coordsJSON = jsonResponse
+        HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+
+        huc.setRequestMethod("GET");
+
+        System.out.println(huc.getInputStream());
+
+
+
+         JSONObject jsonResponse = getJSON(address);
+
+        /*/JSONArray coordsJSON = jsonResponse
                 .getJSONArray(key:"resourceSets").getJSONObject(index:0)
                 .getJSONArray(key:"resources").getJSONObject(index:0)
-                .getJSONArray(key:"result").getJSONObject(index:0)
+                .getJSONArray(key:"result").getJSONObject(index:0)*/
 
-        return results;
+        return null;
     }
 
-    public static String getDistanceString(String startLocation, String endLocation) {
+
+
+    /*public static String getDistanceString(String startLocation, String endLocation) {
         int distance = getDistanceInKm(startLocation, endLocation);
         return distance + " km";
-    }
+    }*/
 
-    public static int getDurationInSec(String startLocation, String endLocation) {
-        JSONObject results = getResultsFromLocationNames(startLocation, endLocation);
-        int seconds results.getInt(key:"travelDuration");
+    /*public static int getDurationInSec(String startLocation, String endLocation) {
+        JSONObject results = getResults(startLocation, endLocation);
+        int seconds = results.getInt(key:"travelDuration");
 
         return seconds;
     }
 
     public static int getDistanceInKm(String startLocation, String endLocation) {
-        JSONObject results = getResultsFromLocationNames(startLocation, endLocation);
+        JSONObject results = getResults(startLocation, endLocation);
         int distance = results.getInt(key:"travelDistance");
-    }
+    }*/
 
-    public static JSONObject getResultsFromLocationNames(String startLocation, String endLocation) {
-        String startLocationCoords = getLocationCoords(startLocation);
-        String endLocationCoords = getLocationCoords(endLocation);
+    public static JSONObject getResults(String startLocation, String endLocation) {
+        /*String startLocationCoords = getLocationCoords(startLocation);
+        String endLocationCoords = getLocationCoords(endLocation);*/
 
         String apikey = "AjuJ7-9jHmxn-xi-VksWt8jASF05tjX8bpeWwjMDAhX6XWq6SrBMIvG877iYP_EK";
-        String apiurl = "http://dev.virtualearth.net/REST/v1/Routes/DistanceMatrix";
+        String linkUrl = "http://dev.virtualearth.net/REST/v1/Locations/BG/";
 
         JSONObject results;
         String link = "";
-        try {
-            link = apiurl + "?origins=" + URLEncoder.encode(startLocationCoords, enc:"UTF-8")
-            +"&destinations=" + URLEncoder.encode(endLocationCoords, enc:"UTF-8")
-            +"&timeUnit-second&travelMode=driving&key=" + apikey;
+        /*try {
+            link = linkUrl + "?origins=" + URLEncoder.encode(startLocationCoords, enc:"UTF-8")
+            + "&destinations=" + URLEncoder.encode(endLocationCoords, enc:"UTF-8")
+            + "&timeUnit-second&travelMode=driving&key=" + apikey;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        JSONObject jsonResponse = getJSONResponseFromLink(link);
-        results = jsonResponse
-                .getJSONArray(key:"resourceSets").getJSONObject(index:0)
-                .getJSONArray(key:"resources").getJSONObject(index:0)
-                .getJSONArray(key:"result").getJSONObject(index:0)
 
         return results;
+    }*/
+
+    /*private static String getLocationCoords(String startLocation) {
+    }*/
+        return null;
     }
-}*/
+}

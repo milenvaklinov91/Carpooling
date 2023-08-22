@@ -134,10 +134,11 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-@GetMapping("/drivers/{username}")
+
+    @GetMapping("/drivers/{username}")
     public User getDriverByUsername(@RequestHeader String username) {
         try {
-            return  service.getDriverByUsername(username);
+            return service.getDriverByUsername(username);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -156,6 +157,7 @@ public class UserController {
     public List<Trip> getUserTravels(@PathVariable int userId) {
         return service.showTravelsByUser(userId);
     }
+
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
@@ -167,13 +169,14 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
         }
     }
+
     @PostMapping("/confirm")
-    public ResponseEntity<?> confirmUser(@RequestHeader HttpHeaders headers,@RequestParam String email, @RequestParam String confirmationCode) {
+    public ResponseEntity<?> confirmUser(@RequestHeader HttpHeaders headers, @RequestParam String email, @RequestParam String confirmationCode) {
         User user = service.getByEmail(email);
         User logUser = authenticationHelper.tryGetUser(headers);
         if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
             user.setStatus(2);
-           service.update(user,logUser);
+            service.update(user, logUser);
             return ResponseEntity.ok("User confirmed successfully.");
         } else {
             return ResponseEntity.badRequest().body("Invalid confirmation code or email.");

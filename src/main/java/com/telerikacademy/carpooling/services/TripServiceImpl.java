@@ -4,13 +4,14 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
-import com.telerikacademy.carpooling.models.filterOptions.TravelFilterOptions;
+import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.repositories.TripRepositoryImpl;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class TripServiceImpl implements TripService {
 
@@ -20,19 +21,26 @@ public class TripServiceImpl implements TripService {
     public TripServiceImpl(TripRepositoryImpl tripRepository) {
         this.tripRepository = tripRepository;
     }
+
     @Override
     public Trip getTripById(int id) {
         return tripRepository.getTripById(id);
     }
+
     @Override
-    public List<Trip> getAll(TravelFilterOptions travelFilterOptions) {
-        return tripRepository.getAll(travelFilterOptions);
+    public List<Trip> getAll(TripFilterOptions tripFilterOptions) {
+        return tripRepository.getAll(tripFilterOptions);
+    }
+
+    @Override
+    public List<Trip> getAllCompletedTrips() {
+        return tripRepository.getAllCompletedTrips();
     }
 
     @Override
     public void create(Trip trip, User user) {
         trip.setCreatedBy(user);
-        if (!trip.getCreatedBy().isDriver()){
+        if (!trip.getCreatedBy().isDriver()) {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         } else if (trip.getCreatedBy().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!!!");
