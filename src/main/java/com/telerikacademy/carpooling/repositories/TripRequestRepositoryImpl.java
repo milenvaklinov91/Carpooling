@@ -3,6 +3,7 @@ package com.telerikacademy.carpooling.repositories;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
+import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRequestRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

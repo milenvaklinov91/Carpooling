@@ -16,6 +16,11 @@ public class FeedbackComment {
     @ManyToOne
     @JoinColumn(name = "feedback_id")
     private Feedback feedback;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userCreatedBy;
+
     @Column(name = "comment")
     private String comment;
 
@@ -44,5 +49,13 @@ public class FeedbackComment {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public User getUserCreatedBy() {
+        return userCreatedBy;
+    }
+
+    public void setUserCreatedBy(User userCreatedBy) {
+        this.userCreatedBy = userCreatedBy;
     }
 }

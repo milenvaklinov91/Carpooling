@@ -2,6 +2,7 @@ package com.telerikacademy.carpooling.repositories.interfaces;
 
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
+import com.telerikacademy.carpooling.models.User;
 
 import java.util.List;
 

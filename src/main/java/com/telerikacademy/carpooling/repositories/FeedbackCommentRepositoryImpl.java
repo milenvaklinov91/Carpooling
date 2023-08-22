@@ -38,4 +38,22 @@ public class FeedbackCommentRepositoryImpl implements FeedbackCommentRepository 
         }
     }
 
+    @Override
+    public void modify(FeedbackComment feedbackComment) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.update(feedbackComment);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+        FeedbackComment feedbackToDelete = getFeedbackCommentById(id);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.delete(feedbackToDelete);
+            session.getTransaction().commit();
+        }
+    }
 }

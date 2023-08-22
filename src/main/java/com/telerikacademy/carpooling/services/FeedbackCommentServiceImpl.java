@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Feedback;
 import com.telerikacademy.carpooling.models.FeedbackComment;
 import com.telerikacademy.carpooling.models.Trip;
@@ -45,6 +46,21 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         feedbackCommentRepository.create(feedbackComment);
     }
 
+    @Override
+    public void modify(FeedbackComment feedbackComment, User user) {
+        if (!(feedbackComment.getUserCreatedBy().getUsername().equals(user.getUsername()))) {
+            throw new UnauthorizedOperationException("You're not authorized to perform this operation as your are not the owner of this comment");
+        }
+        else if(feedbackComment.getUserCreatedBy().isBlocked()){
+            throw new UnauthorizedOperationException("You`re blocked!");
+        }
+        feedbackCommentRepository.modify(feedbackComment);
+    }
+
+    @Override
+    public void delete(int id, User user) {
+
+    }
 
 
 }

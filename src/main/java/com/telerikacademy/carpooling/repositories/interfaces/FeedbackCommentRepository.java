@@ -6,4 +6,6 @@ public interface FeedbackCommentRepository {
     FeedbackComment getFeedbackCommentById(int id);
 
     void create(FeedbackComment feedbackComment);
+    void modify(FeedbackComment feedbackComment);
+    void delete(int id);
 }

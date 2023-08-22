@@ -7,6 +7,7 @@ import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.FeedbackFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.FeedbackRepository;
 import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
+import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 import com.telerikacademy.carpooling.models.TripRequest;
 
@@ -17,9 +18,12 @@ import java.util.List;
 public class FeedbackServiceImpl implements FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
+    private final UserService userService;
 
-    public FeedbackServiceImpl(FeedbackRepository feedbackRepository) {
+
+    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserService userService) {
         this.feedbackRepository = feedbackRepository;
+        this.userService = userService;
     }
 
     @Override
@@ -80,16 +84,30 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public void createFeedbackForDriver(Feedback feedback, Trip trip, User votingUser) {
         User ratedUser = trip.getCreatedBy();
-        int feedbackRating = feedback.getRatingValue();
-        if (feedbackRating < 0 || feedbackRating > 5) {
-            throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
+        List<User> passengersInTrip = userService.showAllPassengersInTrip(trip.getTravelId());
+        boolean isVotingUserInPassengers = false;
+        for (User passenger : passengersInTrip) {
+            if (votingUser.equals(passenger)) {
+                isVotingUserInPassengers = true;
+                break;
+            } throw new UnauthorizedOperationException("You cannot vote as you have not participated in this rating");
         }
-        if (votingUser.equals(ratedUser)) {
-            throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
-        } else {
-            feedback.setUserByCreatedBy(votingUser);
-            feedback.setRatedUser(ratedUser);
-            feedbackRepository.create(feedback);
+
+        if (isVotingUserInPassengers) {
+            if (!(trip.getTripStatus().equals("FINISHED"))) {
+                throw new UnauthorizedOperationException("This trip has not finished yet.");
+            }
+            int feedbackRating = feedback.getRatingValue();
+            if (feedbackRating < 0 || feedbackRating > 5) {
+                throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
+            }
+            if (votingUser.equals(ratedUser)) {
+                throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
+            } else {
+                feedback.setUserByCreatedBy(votingUser);
+                feedback.setRatedUser(ratedUser);
+                feedbackRepository.create(feedback);
+            }
         }
     }
 
@@ -109,7 +127,6 @@ public class FeedbackServiceImpl implements FeedbackService {
             feedbackRepository.create(feedback);
         }
     }
-
     //todo да може да се дава само един рейтиинг на ID
     //todo да проверява дали този който дава рейтиг участва в трипа
 }
