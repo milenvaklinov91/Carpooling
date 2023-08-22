@@ -31,6 +31,22 @@ public class Helper {
         return mockUser;
     }
 
+    public static User createSecondMockUser() {
+        var mockUser = new User();
+        mockUser.setId(1);
+        mockUser.setUsername("Username");
+        mockUser.setPassword("Password");
+        mockUser.setLastName("LastName");
+        mockUser.setFirstName("FirstName");
+        mockUser.setEmail("mock2@user.com");
+        mockUser.setPhone_number("0888888887");
+        mockUser.setIsDriver(false);
+        mockUser.setAdmin(false);
+        mockUser.setIsBlocked(false);
+        mockUser.setIsDriver(false);
+        return mockUser;
+    }
+
     public static UserFilterOptions createMockFilterOptions() {
         return new UserFilterOptions("username",
                 "firstName",
@@ -71,6 +87,23 @@ public class Helper {
         mockTripRequest.setTripRequestId(1);
         mockTripRequest.setTrip(createMockTrip());
         mockTripRequest.setTripRequestStatus(TripRequestStatus.PENDING);
+
+        return mockTripRequest;
+    }
+    public static TripRequest secondCreateMockTripRequest() {
+        var mockTripRequest = new TripRequest();
+        mockTripRequest.setTripRequestId(1);
+        mockTripRequest.setTrip(createMockTrip());
+        mockTripRequest.setTripRequestStatus(TripRequestStatus.APPROVED);
+
+        return mockTripRequest;
+    }
+
+    public static TripRequest thirdCreateMockTripRequest() {
+        var mockTripRequest = new TripRequest();
+        mockTripRequest.setTripRequestId(1);
+        mockTripRequest.setTrip(createMockTrip());
+        mockTripRequest.setTripRequestStatus(TripRequestStatus.REJECTED);
 
         return mockTripRequest;
     }

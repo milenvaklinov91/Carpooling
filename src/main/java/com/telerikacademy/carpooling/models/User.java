@@ -70,8 +70,8 @@ public class User {
         return isDriver;
     }
 
-    public void setIsDriver(boolean is_driver) {
-        this.isDriver = is_driver;
+    public void setIsDriver(boolean isDriver) {
+        this.isDriver = isDriver;
     }
 
     public boolean isBlocked() {
