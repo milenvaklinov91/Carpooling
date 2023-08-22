@@ -222,5 +222,9 @@ public class UserServiceImpl implements UserService {
         return tripRepository.findAllTravelsByUser(id);
     }
 
+    public List<User> showAllPassengersInTrip(int id){
+        return userRepository.getAllPassengersbyTripId(id);
+    }
+
 
 }

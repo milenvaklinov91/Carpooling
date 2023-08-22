@@ -156,6 +156,11 @@ public class UserController {
         return service.showTravelsByUser(userId);
     }
 
+    @GetMapping("/{tripId}/passengers")
+    public List<User> getAllPassengersByTrip(@PathVariable int tripId) {
+        return service.showAllPassengersInTrip(tripId);
+    }
+
     @PostMapping
     public User create(@Valid @RequestBody UserDto userDto) {
         try {

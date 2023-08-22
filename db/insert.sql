@@ -1,5 +1,6 @@
 INSERT INTO carpooling.status (status_id, status) VALUES (1, 'pending');
 INSERT INTO carpooling.status (status_id, status) VALUES (2, 'confirmed');
+INSERT INTO carpooling.status (status_id, status) VALUES (3, 'deleted');
 
 insert into users(username, password, email, first_name, last_name, profile_picture, registration_date, phone_number, is_driver, is_blocked, is_admin,conf_code, status)
 values
