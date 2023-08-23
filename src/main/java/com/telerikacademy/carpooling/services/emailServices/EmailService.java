@@ -16,6 +16,7 @@ public class EmailService {
 
     public void sendConfirmationEmail(String toEmail, String confirmationCode) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("carpoolingteam11@zohomail.eu");
         mailMessage.setTo(toEmail);
         mailMessage.setSubject("Account Confirmation");
         mailMessage.setText("Your confirmation code is: " + confirmationCode);

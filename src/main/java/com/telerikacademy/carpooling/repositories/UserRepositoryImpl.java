@@ -218,7 +218,7 @@ public class UserRepositoryImpl implements UserRepository {
             query.setParameter("id", id);
             List<User> result = query.list();
             if (result.size() == 0) {
-                throw new EntityNotFoundException("No passengers");
+                throw new EntityNotFoundException("No passengers in this trip");
             }
             return result;
         }

@@ -1,6 +1,7 @@
 package com.telerikacademy.carpooling.services;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.UserRepositoryImpl;
@@ -11,12 +12,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -241,4 +244,52 @@ public class UserServiceImplTests {
         Mockito.verify(userRepository, times(1)).create(mockUser);
         assertEquals(LocalDateTime.now().getDayOfYear(), mockUser.getRegistrationDate().getDayOfYear());
     }
+
+    @Test
+    void updateUser_Should_UpdateUser_When_UserUpdatedByAdmin() {
+        User existingUser = Helper.createMockUser();
+        User loggedInUser = Helper.createMockUser();
+        User updatedUser = Helper.createMockUser();
+
+        when(userRepository.getUserById(updatedUser.getId())).thenReturn(existingUser);
+        when(userRepository.getByUsername(loggedInUser.getUsername())).thenReturn(loggedInUser);
+
+        userService.update(updatedUser, loggedInUser);
+
+        verify(userRepository, times(1)).update(existingUser);
+
+
+        assertEquals(updatedUser.getUsername(), existingUser.getUsername());
+        assertEquals(updatedUser.getLastName(), existingUser.getLastName());
+
+    }
+
+    @Test
+    void updateUser_Should_ThrowException_When_UserNotAuthorized() {
+        User existingUser = Helper.createMockUser();
+        User loggedInUser =Helper.createMockUser();
+        User updatedUser = Helper.createMockUser();
+
+        loggedInUser.setIsBlocked(true);
+        loggedInUser.setAdmin(false);
+
+        when(userRepository.getUserById(updatedUser.getId())).thenReturn(existingUser);
+        when(userRepository.getByUsername(loggedInUser.getUsername())).thenReturn(loggedInUser);
+
+        assertThrows(UnauthorizedOperationException.class,
+                () -> userService.update(updatedUser, loggedInUser));
+    }
+
+/*    @Test
+    void updateUser_Should_ThrowException_When_UserNotFound() {
+        User loggedInUser = new
+        User updatedUser = new User(*//* Initialize with updated values *//*);
+
+        when(userRepository.getUserById(updatedUser.getId())).thenThrow(EntityNotFoundException.class);
+        when(userRepository.getByUsername(loggedInUser.getUsername())).thenReturn(loggedInUser);
+
+        assertThrows(ResponseStatusException.class,
+                () -> userService.update(updatedUser, loggedInUser));
+    }
+}*/
 }
