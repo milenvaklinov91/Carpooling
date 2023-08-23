@@ -43,7 +43,8 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
 
         @Override
     public void create(FeedbackComment feedbackComment,User user) {
-        feedbackCommentRepository.create(feedbackComment);
+            feedbackComment.setUserCreatedBy(user);
+            feedbackCommentRepository.create(feedbackComment);
     }
 
     @Override
@@ -59,7 +60,13 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
 
     @Override
     public void delete(int id, User user) {
-
+        FeedbackComment feedbackComment = feedbackCommentRepository.getFeedbackCommentById(id);
+        if (feedbackComment.getUserCreatedBy().isBlocked()) {
+            throw new UnauthorizedOperationException("You`re blocked!!!");
+        } else if (!(user.isAdmin() || feedbackComment.getUserCreatedBy().getUsername().equals(user.getUsername()))) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
+        feedbackCommentRepository.delete(id);
     }
 
 

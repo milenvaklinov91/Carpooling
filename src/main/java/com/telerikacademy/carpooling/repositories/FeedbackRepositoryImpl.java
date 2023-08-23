@@ -232,4 +232,22 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
 //        return result;
 //    }
 //}
+
+    @Override
+    public boolean hasUserRatedAnotherUser(int userId, int ratedUserId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery(
+                    "SELECT COUNT(f) FROM Feedback f " +
+                            "WHERE f.userByCreatedBy.id = :userId " +
+                            "AND f.ratedUser.id = :ratedUserId",
+                    Long.class
+            );
+            query.setParameter("userId", userId);
+            query.setParameter("ratedUserId", ratedUserId);
+
+            Long result = query.getSingleResult();
+            return result > 0;
+        }
+    }
+
 }

@@ -4,9 +4,12 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Feedback;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.FeedbackFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.FeedbackRepository;
 import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
+import com.telerikacademy.carpooling.services.interfaces.TripRequestService;
+import com.telerikacademy.carpooling.services.interfaces.TripService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.stereotype.Service;
 import com.telerikacademy.carpooling.models.TripRequest;
@@ -19,11 +22,15 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final UserService userService;
+    private final TripService tripService;
+    private final TripRequestService tripRequestService;
 
 
-    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserService userService) {
+    public FeedbackServiceImpl(FeedbackRepository feedbackRepository, UserService userService, TripService tripService, TripRequestService tripRequestService) {
         this.feedbackRepository = feedbackRepository;
         this.userService = userService;
+        this.tripService = tripService;
+        this.tripRequestService = tripRequestService;
     }
 
     @Override
@@ -84,54 +91,104 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public void createFeedbackForDriver(Feedback feedback, Trip trip, User votingUser) {
         User ratedUser = trip.getCreatedBy();
-        List<User> passengersInTrip = userService.showAllPassengersInTrip(trip.getTravelId());
-        boolean isVotingUserInPassengers = false;
-        for (User passenger : passengersInTrip) {
-            if (votingUser.equals(passenger)) {
-                isVotingUserInPassengers = true;
-                break;
-            } throw new UnauthorizedOperationException("You cannot vote as you have not participated in this rating");
+        List<User> passengersInTrip = userService.showAllPassengersInTrip(trip.getTripId());
+        if (hasUserRatedAnotherUser(votingUser.getId(), ratedUser.getId())) {
+            throw new UnauthorizedOperationException("You can rate this driver only once.");
         }
-
-        if (isVotingUserInPassengers) {
-            if (!(trip.getTripStatus().equals("FINISHED"))) {
-                throw new UnauthorizedOperationException("This trip has not finished yet.");
-            }
-            int feedbackRating = feedback.getRatingValue();
-            if (feedbackRating < 0 || feedbackRating > 5) {
-                throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
-            }
-            if (votingUser.equals(ratedUser)) {
-                throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
-            } else {
-                feedback.setUserByCreatedBy(votingUser);
-                feedback.setRatedUser(ratedUser);
-                feedbackRepository.create(feedback);
-            }
+        if (!isVotingUserInPassengers(passengersInTrip, votingUser)) {
+            throw new UnauthorizedOperationException("Passenger not part of this trip");
         }
-    }
-
-    public void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User passenger) {
-        Trip trip = tripRequest.getTrip();
-        User driver = trip.getCreatedBy();
+        validateTripStatus(trip);
         int feedbackRating = feedback.getRatingValue();
         if (feedbackRating < 0 || feedbackRating > 5) {
             throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
-        }
-
-        if (passenger.equals(driver)) {
+        } else if (!isCurrentTripPartOfFinishedTrips(trip)) {
+            throw new UnauthorizedOperationException("The current trip is not part of finished trips.");
+        } else if (votingUser.equals(ratedUser)) {
             throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
         } else {
-            feedback.setUserByCreatedBy(passenger);
-            feedback.setRatedUser(driver);
+            feedback.setUserByCreatedBy(votingUser);
+            feedback.setRatedUser(ratedUser);
             feedbackRepository.create(feedback);
         }
     }
-    //todo да може да се дава само един рейтиинг на ID
-    //todo да проверява дали този който дава рейтиг участва в трипа
+
+
+    public void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User driver) {
+        Trip trip = tripRequest.getTrip();
+        User passenger = tripRequest.getPassenger();
+        if (!isVotingUserTheSameDriver(driver,trip)) {
+            throw new UnauthorizedOperationException("You cannot create a feedback as you are not the creator of this trip");
+        }
+        List<User> passengers = userService.showAllPassengersInTrip(trip.getTripId());
+        if (!isPassengerInTrip(passengers, passenger)) {
+            throw new UnauthorizedOperationException("Passenger not part of this trip");
+        }
+        validateTripStatus(trip);
+        int feedbackRating = feedback.getRatingValue();
+        if (feedbackRating < 0 || feedbackRating > 5) {
+            throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
+        } else if (!isCurrentTripPartOfFinishedTrips(trip)) {
+            throw new UnauthorizedOperationException("The current trip is not part of finished trips.");
+        } else if (driver.equals(passenger)) {
+            throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
+        } else if (hasUserRatedAnotherUser(driver.getId(), passenger.getId())) {
+            throw new UnauthorizedOperationException("You can rate this passenger only once.");
+        }
+            feedback.setUserByCreatedBy(driver);
+            feedback.setRatedUser(passenger);
+            feedbackRepository.create(feedback);
+        }
+
+
+    @Override
+    public boolean hasUserRatedAnotherUser(int userId, int ratedUserId) {
+        return feedbackRepository.hasUserRatedAnotherUser(userId,ratedUserId);
+    }
+
+    //проверка дали този пасажер е част от трипа
+    public boolean isVotingUserInPassengers(List<User> passengersInTrip, User votingUser) {
+        int votingUserId = votingUser.getId();
+        for (User passenger : passengersInTrip) {
+            if (votingUserId == passenger.getId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //проверка дали трипа е със статус finished
+    public void validateTripStatus(Trip trip) {
+        if (!trip.getTripStatus().equals(TripStatus.FINISHED)) {
+            throw new UnauthorizedOperationException("This trip has not finished yet.");
+        }
+    }
+
+    //проверка дали сегашния трип е част от всички finished trips
+    public boolean isCurrentTripPartOfFinishedTrips(Trip currentTrip) {
+        List<Trip> finishedTrips = tripService.getAllCompletedTrips();
+
+        for (Trip finishedTrip : finishedTrips) {
+            if (finishedTrip.getTripId() == currentTrip.getTripId()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isVotingUserTheSameDriver(User votingUser, Trip trip) {
+        int votingUserId = votingUser.getId();
+        int driverId = trip.getCreatedBy().getId();
+            if (votingUserId == driverId) {
+                return true;
+            }
+        return false;
+    }
+
+    private boolean isPassengerInTrip(List<User> passengersInTrip, User passenger) {
+        return passengersInTrip.stream().anyMatch(p -> p.getId() == passenger.getId());
+    }
 }
-
-
 
 
 // todo feedback for driver and feedback for passenger

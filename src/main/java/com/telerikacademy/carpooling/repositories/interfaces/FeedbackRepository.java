@@ -27,6 +27,7 @@ public interface FeedbackRepository {
     List<Feedback> findAllFeedbacksByUser(int userId);
     List<Integer> getRatingValuesForUser(int userId);
     double getAverageRatingValueForUser(int userId);
+    boolean hasUserRatedAnotherUser(int userId, int ratedUserId);
 
     void delete(int id);
 

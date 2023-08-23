@@ -37,6 +37,8 @@ public class TripServiceImpl implements TripService {
         return tripRepository.getAllCompletedTrips();
     }
 
+
+
     @Override
     public void create(Trip trip, User user) {
         trip.setCreatedBy(user);
@@ -86,5 +88,4 @@ public class TripServiceImpl implements TripService {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
     }
-
 }

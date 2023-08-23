@@ -84,6 +84,7 @@ create table feedback_comments
         primary key,
     comment             varchar(2000) not null,
     feedback_id         int           not null,
+    user_id             int           not null
     constraint feedback_comments_feedbacks_feedback_id_fk
         foreign key (feedback_id) references feedbacks (feedback_id)
 );

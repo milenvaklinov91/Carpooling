@@ -146,11 +146,11 @@ public class FeedbackController {
     @PostMapping("/passenger-rating")
     public Feedback createPassengerRating(@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackDto feedbackDto) {
         try {
-            User passenger = authenticationHelper.tryGetUser(headers); // Assuming the passenger is the one providing the rating
+            User driver = authenticationHelper.tryGetUser(headers);
             Feedback feedback = feedbackMapper.fromFeedbackDto(feedbackDto);
             TripRequest tripRequest = tripRequestService.getTripRequestById(feedbackDto.getTripId());
 
-            feedbackService.createFeedbackForPassenger(feedback, tripRequest, passenger);
+            feedbackService.createFeedbackForPassenger(feedback, tripRequest, driver);
             return feedback;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -158,6 +158,7 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
 
     @PostMapping("/{id}/add-comments")
     public FeedbackComment addComment (@RequestHeader HttpHeaders headers, @PathVariable int id,
@@ -183,11 +184,29 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+    //todo тук да добавя за коментара методите
+    @PutMapping("/feedback-comments/{id}")
+    public FeedbackComment modifyComment(@RequestHeader HttpHeaders headers, @PathVariable int id,
+                                  @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            FeedbackComment feedbackComment = feedbackCommentMapper.fromFeedbackCommentDtoWithId(feedbackCommentDto, id);
+            feedbackCommentService.modify(feedbackComment, user);
+            return feedbackComment;
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/feedback-comments/{id}")
+    public void deleteComment(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        User user = authenticationHelper.tryGetUser(headers);
+        feedbackCommentService.delete(id, user);
+    }
+}
+
 
 //    @GetMapping("/{id}/comments")
 //    public List<FeedbackComment> getAllComments(@PathVariable int id) {
 //        return feedbackService.getAllFeedbackComments(id);
 //    }
-
-
-}

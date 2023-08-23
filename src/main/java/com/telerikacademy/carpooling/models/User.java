@@ -215,4 +215,5 @@ public class User {
     public void setFeedbackSet(Set<Feedback> feedbackSet) {
         this.feedbackSet = feedbackSet;
     }
+
 }

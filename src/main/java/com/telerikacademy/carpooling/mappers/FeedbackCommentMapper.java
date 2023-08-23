@@ -23,4 +23,11 @@ public class FeedbackCommentMapper {
         feedbackComment.setComment(feedbackCommentDto.getFeedbackComment());
         return feedbackComment;
     }
+    public FeedbackComment fromFeedbackCommentDtoWithId(FeedbackCommentDto feedbackCommentDto, int id){
+        FeedbackComment feedbackComment = fromFeedbackCommentDto(feedbackCommentDto);
+        feedbackComment.setFeedbackCommentId(id);
+        FeedbackComment repositoryFeedbackComment = feedbackCommentService.getFeedbackCommentById(id);
+        feedbackComment.setUserCreatedBy(repositoryFeedbackComment.getUserCreatedBy());
+        return feedbackComment;
+    }
 }

@@ -85,6 +85,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         setStatus(tripRequest, user, TripRequestStatus.REJECTED);
     }
 
+
     private void reduceAvailableSeats(Trip trip) {
         int currentAvailableSeats = trip.getAvailableSeats();
         if (currentAvailableSeats > 0) {
