@@ -12,6 +12,8 @@ import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FeedbackCommentServiceImpl implements FeedbackCommentService {
 
@@ -34,17 +36,31 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         return feedbackCommentRepository.getFeedbackCommentById(id);
     }
 
-    public void addCommentToFeedback(Feedback feedback, String commentText) {
-        FeedbackComment feedbackComment = new FeedbackComment();
-        /*feedbackComment.setFeedbackId(feedback.getFeedbackId());*/
-        feedbackComment.setComment(commentText);
-        feedbackCommentRepository.create(feedbackComment);
+    @Override
+    public List<FeedbackComment> findFeedbackCommentsByFeedbackId(int feedbackId) {
+        return feedbackCommentRepository.findFeedbackCommentsByFeedbackId(feedbackId);
     }
+
+//    public void addCommentToFeedback(Feedback feedback, String commentText) {
+//        FeedbackComment feedbackComment = new FeedbackComment();
+//        /*feedbackComment.setFeedbackId(feedback.getFeedbackId());*/
+//        feedbackComment.setComment(commentText);
+//        feedbackCommentRepository.create(feedbackComment);
+//    }
 
         @Override
     public void create(FeedbackComment feedbackComment,User user) {
             feedbackComment.setUserCreatedBy(user);
-            feedbackCommentRepository.create(feedbackComment);
+            if (feedbackComment.getUserCreatedBy().isBlocked()) {
+                throw new UnauthorizedOperationException("You`re blocked!");
+            }
+            List<FeedbackComment> existingComments = feedbackCommentRepository.findFeedbackCommentsByFeedbackId(feedbackComment.getFeedback().getFeedbackId());
+
+            for (FeedbackComment existingComment : existingComments) {
+                if (existingComment.getUserCreatedBy().getId() == user.getId()) {
+                    throw new UnauthorizedOperationException("You have already commented on this feedback.");
+                }
+            }feedbackCommentRepository.create(feedbackComment);
     }
 
     @Override

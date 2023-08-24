@@ -26,10 +26,6 @@ public class Feedback {
     @JoinColumn(name = "rated_by_user_id")
     private User userByCreatedBy;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "feedback", fetch = FetchType.EAGER)
-    private Set<FeedbackComment> comments;
-
     public Feedback() {
     }
 
@@ -74,13 +70,6 @@ public class Feedback {
         this.userByCreatedBy = userByCreatedBy;
     }
 
-    /*public List<FeedbackComment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<FeedbackComment> comments) {
-        this.comments = comments;
-    }*/
 }
 
 

@@ -73,6 +73,8 @@ public class FeedbackController {
         feedbackService.delete(id, user);
     }
 
+    //todo трябва да имам и modify feedback
+
 
 
 //    @GetMapping("/ratedUser/{userId}")

@@ -3,6 +3,7 @@ package com.telerikacademy.carpooling.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "feedback_comments")
@@ -24,6 +25,9 @@ public class FeedbackComment {
     @Column(name = "comment")
     private String comment;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "feedback", fetch = FetchType.EAGER)
+    private Set<FeedbackComment> comments;
     public FeedbackComment() {
     }
 
@@ -57,5 +61,13 @@ public class FeedbackComment {
 
     public void setUserCreatedBy(User userCreatedBy) {
         this.userCreatedBy = userCreatedBy;
+    }
+
+    public Set<FeedbackComment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<FeedbackComment> comments) {
+        this.comments = comments;
     }
 }
