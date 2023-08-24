@@ -122,6 +122,7 @@ public class UserServiceImpl implements UserService {
         }
         User deletedUser=userRepository.getUserById(id);
         deletedUser.setStatus(3);
+        deletedUser.setIsBlocked(true);
         userRepository.update(deletedUser);
     }
 
