@@ -86,9 +86,11 @@ create table feedback_comments
         primary key,
     comment             varchar(2000) not null,
     feedback_id         int           not null,
-    user_id             int           not null
+    user_id             int           not null,
     constraint feedback_comments_feedbacks_feedback_id_fk
-        foreign key (feedback_id) references feedbacks (feedback_id)
+        foreign key (feedback_id) references feedbacks (feedback_id),
+    constraint feedback_comments_users_user_id_fk
+        foreign key (user_id) references users (user_id)
 );
 
 create index rated_by_user_id
@@ -97,16 +99,16 @@ create index rated_by_user_id
 create index rated_user_id
     on feedbacks (rated_user_id);
 
-create table feedback_comments
+create table trip_requests
 (
-    feedback_comment_id int auto_increment
+    request_id int auto_increment
         primary key,
-    comment             varchar(2000) not null,
-    feedback_id         int           not null,
-    user_id             int           not null,
-    constraint feedback_comments_feedbacks_feedback_id_fk
-        foreign key (feedback_id) references feedbacks (feedback_id),
-    constraint feedback_comments_users_user_id_fk
+    trip_id    int      null,
+    user_id    int      null,
+    status     smallint not null,
+    constraint trip_requests_ibfk_1
+        foreign key (trip_id) references trips (trip_id),
+    constraint trip_requests_ibfk_2
         foreign key (user_id) references users (user_id)
 );
 
