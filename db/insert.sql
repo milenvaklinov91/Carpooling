@@ -4,11 +4,11 @@ INSERT INTO carpooling.status (status_id, status) VALUES (3, 'deleted');
 
 insert into users(username, password, email, first_name, last_name, profile_picture, registration_date, phone_number, is_driver, is_blocked, is_admin,conf_code, status)
 values
-    ('ledka', 'ledak123', 'ledka@gmail.com', 'Leda', 'Yovkova', 'url:pic', '2023-08-10 22:24:24', '031312312', 0, 0, 1, '1',1),
-    ('milen', 'milen1991', 'milen@gmail.com', 'Milen', 'Vaklinov', 'url:pic', '2023-08-09 10:11:22', '0888123456', 1, 0, 0, '2',1),
-    ('kalata', 'kaloyan91', 'kaloyan@gmail.com', 'Kaloyan', 'Stanev', 'url:pic', '2023-08-08 15:30:45', '0777123456', 0, 0, 0, '3',1),
-    ('petra', 'petra92', 'petra@gmail.com', 'Petra', 'Kovacheva', 'url:pic', '2023-08-07 18:12:59', '0899112233', 1, 0, 0, '4',1),
-    ('gosho', 'gosho93', 'gosho@gmail.com', 'Georgi', 'Marinov', 'url:pic', '2023-08-06 09:30:15', '0555123456', 0, 1, 0, '5',1);
+    ('ledka', 'ledak123', 'ledka@gmail.com', 'Leda', 'Yovkova', 'url:pic', '2023-08-10 22:24:24', '031312312', 0, 0, 1, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('milen', 'milen1991', 'milen@gmail.com', 'Milen', 'Vaklinov', 'url:pic', '2023-08-09 10:11:22', '0888123456', 1, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('kalata', 'kaloyan91', 'kaloyan@gmail.com', 'Kaloyan', 'Stanev', 'url:pic', '2023-08-08 15:30:45', '0777123456', 0, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('petra', 'petra92', 'petra@gmail.com', 'Petra', 'Kovacheva', 'url:pic', '2023-08-07 18:12:59', '0899112233', 1, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('gosho', 'gosho93', 'gosho@gmail.com', 'Georgi', 'Marinov', 'url:pic', '2023-08-06 09:30:15', '0555123456', 0, 1, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2);
 
 
 
@@ -23,11 +23,11 @@ values
 
 insert into trips(user_id, start_location, end_location, departure_datetime, cost_per_person, available_seats, description,status,duration,distance)
 values
-    (1, 'Sofia', 'Varna', '2023-08-15 08:00:00', '20', 3, 'Morning commute', 1,'test','test'),
-    (2, 'Plovdiv', 'Burgas', '2023-08-16 15:30:00', '15', 2, 'Afternoon ride', 2,'test','test'),
-    (3, 'Pleven', 'Sofia', '2023-08-17 11:00:00', '30', 4, 'Weekend getaway', 0,'test','test'),
-    (1, 'Blagoevgrad', 'Dupnica', '2023-08-18 09:15:00', '25', 1, 'Quick business trip', 1,'test','test'),
-    (2, 'Plovdiv', 'Haskovo', '2023-08-19 17:45:00', '10', 3, 'Evening hangout', 2,'test','test');
+    (1, 'Sofia', 'Varna', '2023-08-15 08:00:00', '20', 3, 'Morning commute', 1,'10000','123km'),
+    (2, 'Plovdiv', 'Burgas', '2023-08-16 15:30:00', '15', 2, 'Afternoon ride', 2,'10000','150km'),
+    (3, 'Pleven', 'Sofia', '2023-08-17 11:00:00', '30', 4, 'Weekend getaway', 0,'10000','140km'),
+    (1, 'Blagoevgrad', 'Dupnica', '2023-08-18 09:15:00', '25', 1, 'Quick business trip', 1,'10000','145km'),
+    (2, 'Plovdiv', 'Haskovo', '2023-08-19 17:45:00', '10', 3, 'Evening hangout', 2,'10000','300km');
 
 
 insert into feedbacks(rated_user_id, rated_by_user_id, trip_id, rating_value)
