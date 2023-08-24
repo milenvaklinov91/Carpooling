@@ -60,6 +60,8 @@ create table trips
     available_seats    int          not null,
     status             smallint     not null,
     description        varchar(45)  not null,
+    duration        varchar(45)  not null,
+    distance        varchar(45)  not null,
     constraint trips_ibfk_1
         foreign key (user_id) references users (user_id)
 );

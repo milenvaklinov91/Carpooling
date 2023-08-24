@@ -1,7 +1,5 @@
 package com.telerikacademy.carpooling.services;
 
-import com.telerikacademy.carpooling.exceptions.EmailExitsException;
-import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.Car;
 import com.telerikacademy.carpooling.models.User;
@@ -24,7 +22,7 @@ public class CarServiceImpl implements CarService {
         if (car.getUserCreatedBy().isBlocked()) {
             throw new UnauthorizedOperationException("You`re blocked!");
         }
-        if(!(user.isDriver())){
+        if (!(user.isDriver())) {
             throw new UnauthorizedOperationException("You are not authorized to perform this operation");
         }
         carRepository.create(car);
@@ -55,28 +53,38 @@ public class CarServiceImpl implements CarService {
     public Car getCarById(int id) {
         return carRepository.getCarById(id);
     }
-
+    @Override
     public Car extraStorage(int id, User user) {
         Car car = carRepository.getCarById(id);
-        if (user.getUsername().equals(car.getUserCreatedBy().getUsername()) ) {
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setExtraStorage(true);
             carRepository.update(car);
             return car;
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
+    @Override
     public Car notExtraStorage(int id, User user) {
         Car car = carRepository.getCarById(id);
-        if (user.getUsername().equals(car.getUserCreatedBy().getUsername()) ) {
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setExtraStorage(false);
             carRepository.update(car);
             return car;
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-    public Car noSmoke(int id, User user) {
+    @Override
+    public Car smoke(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setSmoke(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+    @Override
+    public Car notSmoke(int id, User user) {
         Car car = carRepository.getCarById(id);
         if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setSmoke(false);
@@ -85,8 +93,18 @@ public class CarServiceImpl implements CarService {
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-    public Car noAirConditioner(int id, User user) {
+    @Override
+    public Car airConditioner(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setAirConditioner(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+    @Override
+    public Car notAirConditioner(int id, User user) {
         Car car = carRepository.getCarById(id);
         if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setAirConditioner(false);
@@ -95,8 +113,18 @@ public class CarServiceImpl implements CarService {
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-    public Car noPetAvailable(int id, User user) {
+    @Override
+    public Car petAvailable(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setPetAvailable(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+    @Override
+    public Car notPetAvailable(int id, User user) {
         Car car = carRepository.getCarById(id);
         if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setPetAvailable(false);
@@ -105,8 +133,18 @@ public class CarServiceImpl implements CarService {
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-    public Car noConsumeFood(int id, User user) {
+    @Override
+    public Car consumeFood(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setConsumeFood(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+    @Override
+    public Car notConsumeFood(int id, User user) {
         Car car = carRepository.getCarById(id);
         if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setConsumeFood(false);
@@ -115,8 +153,18 @@ public class CarServiceImpl implements CarService {
         }
         throw new UnauthorizedOperationException("You're not authorized for this operation!");
     }
-
-    public Car noConsumeDrink(int id, User user) {
+    @Override
+    public Car consumeDrink(int id, User user) {
+        Car car = carRepository.getCarById(id);
+        if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
+            car.setConsumeDrink(true);
+            carRepository.update(car);
+            return car;
+        }
+        throw new UnauthorizedOperationException("You're not authorized for this operation!");
+    }
+    @Override
+    public Car notConsumeDrink(int id, User user) {
         Car car = carRepository.getCarById(id);
         if (user.getUsername().equals(car.getUserCreatedBy().getUsername())) {
             car.setConsumeDrink(false);
