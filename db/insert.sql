@@ -39,13 +39,13 @@ values
     (2, 3, 5, 5);
 
 
-insert into feedback_comments(comment, feedback_id)
+insert into feedback_comments(comment, feedback_id,user_id)
 values
-    ('Great experience!', 1),
-    ('Friendly driver', 2),
-    ('Smooth ride', 3),
-    ('Could be better', 4),
-    ('Excellent trip', 5);
+    ('Great experience!', 1, 1),
+    ('Friendly driver', 2, 2),
+    ('Smooth ride', 3, 3),
+    ('Could be better', 4, 4),
+    ('Excellent trip', 5, 5);
 
 
 insert into trip_requests(trip_id, user_id, status)
