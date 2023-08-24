@@ -6,7 +6,6 @@ import com.telerikacademy.carpooling.models.enums.TripStatus;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Table(name = "trips")
 public class Trip {
@@ -30,13 +29,17 @@ public class Trip {
     private int availableSeats;
     @Column(name = "description")
     private String description;
+    @Column(name = "duration")
+    private String duration;
+    @Column(name = "distance")
+    private String distance;
+
     @JsonIgnore
     @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)
     private List<TripRequest> tripRequest;
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "status")
     private TripStatus tripStatus;
-
 
     public Trip() {
     }
@@ -103,6 +106,22 @@ public class Trip {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
     public List<TripRequest> getTripRequest() {

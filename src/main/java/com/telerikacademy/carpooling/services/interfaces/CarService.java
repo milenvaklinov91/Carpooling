@@ -12,15 +12,27 @@ public interface CarService {
 
     Car getCarById(int id);
 
+    Car extraStorage(int id, User user);
+
     Car notExtraStorage(int id, User user);
 
-    Car noSmoke(int id, User user);
+    Car smoke(int id, User user);
 
-    Car noAirConditioner(int id, User user);
+    Car notSmoke(int id, User user);
 
-    Car noPetAvailable(int id, User user);
+    Car airConditioner(int id, User user);
 
-    Car noConsumeFood(int id, User user);
+    Car notAirConditioner(int id, User user);
 
-    Car noConsumeDrink(int id, User user);
+    Car petAvailable(int id, User user);
+
+    Car notPetAvailable(int id, User user);
+
+    Car consumeFood(int id, User user);
+
+    Car notConsumeFood(int id, User user);
+
+    Car consumeDrink(int id, User user);
+
+    Car notConsumeDrink(int id, User user);
 }

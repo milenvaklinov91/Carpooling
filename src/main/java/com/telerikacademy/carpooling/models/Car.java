@@ -26,7 +26,6 @@ public class Car {
     private String model;
     @Column(name = "car_capacity")
     private Integer capacity;
-    //todo махни capacity
     @Column(name = "car_color")
     private String colour;
     @Column(name = "car_year")

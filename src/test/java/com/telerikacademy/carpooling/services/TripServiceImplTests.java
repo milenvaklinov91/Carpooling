@@ -195,7 +195,7 @@ public class TripServiceImplTests {
     }
 
     @Test
-    public void inProgressTripStatus_ShouldUpdateStatus_WhenUserIsCreator() {
+    public void inProgressTripStatus_ShouldUpdateStatus_When_UserIsCreator() {
         User creatorUser = Helper.createMockUser();
         creatorUser.setIsBlocked(false);
         creatorUser.setAdmin(false);
@@ -210,7 +210,7 @@ public class TripServiceImplTests {
     }
 
     @Test
-    public void inProgressTripStatus_ShouldThrowException_WhenUserIsNotCreator() {
+    public void inProgressTripStatus_ShouldThrowException_When_UserIsNotCreator() {
         User regularUser = Helper.createMockUser();
         regularUser.setIsBlocked(false);
         regularUser.setAdmin(false);
@@ -227,7 +227,7 @@ public class TripServiceImplTests {
     }
 
     @Test
-    public void finishedTripStatus_ShouldUpdateStatus_WhenUserIsCreator() {
+    public void finishedTripStatus_ShouldUpdateStatus_When_UserIsCreator() {
         User mockUser = Helper.createMockUser();
         mockUser.setIsBlocked(false);
         mockUser.setAdmin(false);
@@ -242,7 +242,7 @@ public class TripServiceImplTests {
     }
 
     @Test
-    public void finishedTripStatus_ShouldThrowException_WhenUserIsNotCreator() {
+    public void finishedTripStatus_ShouldThrowException_When_UserIsNotCreator() {
         User mockUser = Helper.createMockUser();
         mockUser.setIsBlocked(false);
         mockUser.setAdmin(false);

@@ -65,7 +65,7 @@ public class TripController {
     public Trip create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TripDto tripDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Trip trip = tripMapper.fromTravelDto(tripDto);
+            Trip trip = tripMapper.fromTripDto(tripDto);
             tripService.create(trip, user);
             return trip;
         } catch (EntityNotFoundException e) {

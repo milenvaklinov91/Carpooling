@@ -1,5 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
+import com.telerikacademy.carpooling.models.Car;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.TripRequest;
 import com.telerikacademy.carpooling.models.User;
@@ -28,6 +29,7 @@ public class Helper {
         mockUser.setAdmin(true);
         mockUser.setIsBlocked(true);
         mockUser.setIsDriver(true);
+        mockUser.setCar(createMockCar());
         return mockUser;
     }
 
@@ -56,6 +58,24 @@ public class Helper {
                 );
     }
 
+    public static Car createMockCar(){
+        Car car = new Car();
+        car.setDriver_license("test");
+        car.setBrand("test");
+        car.setModel("test");
+        car.setCapacity(4);
+        car.setColour("test");
+        car.setYear(2000);
+        car.setDescription("test");
+        car.setExtraStorage(false);
+        car.setSmoke(false);
+        car.setAirConditioner(false);
+        car.setPetAvailable(false);
+        car.setConsumeFood(false);
+        car.setConsumeDrink(false);
+        return car;
+    }
+
     public static Trip createMockTrip() {
         var mockTrip = new Trip();
         mockTrip.setTripId(1);
@@ -66,6 +86,7 @@ public class Helper {
         mockTrip.setAvailableSeats(4);
         mockTrip.setDescription("MockDescription");
         mockTrip.setTripStatus(TripStatus.AWAITING);
+        mockTrip.setCreatedBy(createMockUser());
 
         return mockTrip;
     }

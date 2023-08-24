@@ -39,7 +39,7 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         /*feedbackComment.setFeedbackId(feedback.getFeedbackId());*/
         feedbackComment.setComment(commentText);
         feedbackCommentRepository.create(feedbackComment);
-    } //todo да се провери дали човека който добавя коментар е пасажер!!! И е шофьор!
+    }
 
         @Override
     public void create(FeedbackComment feedbackComment,User user) {

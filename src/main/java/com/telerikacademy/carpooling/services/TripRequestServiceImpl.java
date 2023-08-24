@@ -61,7 +61,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         tripRequestRepository.delete(id);
     }
 
-    private void setStatus(TripRequest tripRequest, User user, TripRequestStatus status) {
+    public void setStatus(TripRequest tripRequest, User user, TripRequestStatus status) {
         if (tripRequest.getTrip().getCreatedBy().getId() == user.getId()) {
             tripRequest.setTripRequestStatus(status);
             tripRequestRepository.modify(tripRequest);
@@ -85,8 +85,7 @@ public class TripRequestServiceImpl implements TripRequestService {
         setStatus(tripRequest, user, TripRequestStatus.REJECTED);
     }
 
-
-    private void reduceAvailableSeats(Trip trip) {
+    public void reduceAvailableSeats(Trip trip) {
         int currentAvailableSeats = trip.getAvailableSeats();
         if (currentAvailableSeats > 0) {
             trip.setAvailableSeats(currentAvailableSeats - 1);
