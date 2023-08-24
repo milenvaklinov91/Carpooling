@@ -1,11 +1,12 @@
 package com.telerikacademy.carpooling.models.dtos;
 
+import com.telerikacademy.carpooling.models.User;
+
 public class FeedbackDto {
 
     private int tripId;
     private int ratingValue;
     private String comment;
-
 
     public FeedbackDto() {
     }
@@ -33,5 +34,6 @@ public class FeedbackDto {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
 }
 

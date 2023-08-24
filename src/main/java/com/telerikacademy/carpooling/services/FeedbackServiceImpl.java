@@ -64,13 +64,6 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedbackRepository.getRatingValuesForUser(userId);
     }
 
-
-//    @Override
-//    public List<Feedback> getRatingOfUser(int userId) {
-//        return feedbackRepository.getRatingOfUser(userId);
-//    }
-
-
     @Override
     public List<Feedback> getAll(FeedbackFilterOptions feedbackFilterOptions) {
         return feedbackRepository.getAll(feedbackFilterOptions);
@@ -114,31 +107,31 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-    public void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User driver) {
-        Trip trip = tripRequest.getTrip();
-        User passenger = tripRequest.getPassenger();
-        if (!isVotingUserTheSameDriver(driver,trip)) {
-            throw new UnauthorizedOperationException("You cannot create a feedback as you are not the creator of this trip");
-        }
-        List<User> passengers = userService.showAllPassengersInTrip(trip.getTripId());
-        if (!isPassengerInTrip(passengers, passenger)) {
-            throw new UnauthorizedOperationException("Passenger not part of this trip");
-        }
-        validateTripStatus(trip);
-        int feedbackRating = feedback.getRatingValue();
-        if (feedbackRating < 0 || feedbackRating > 5) {
-            throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
-        } else if (!isCurrentTripPartOfFinishedTrips(trip)) {
-            throw new UnauthorizedOperationException("The current trip is not part of finished trips.");
-        } else if (driver.equals(passenger)) {
-            throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
-        } else if (hasUserRatedAnotherUser(driver.getId(), passenger.getId())) {
-            throw new UnauthorizedOperationException("You can rate this passenger only once.");
-        }
-            feedback.setUserByCreatedBy(driver);
-            feedback.setRatedUser(passenger);
-            feedbackRepository.create(feedback);
-        }
+        public void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User driver, int id) {
+            Trip trip = tripRequest.getTrip();
+            User passenger = userService.getById(id);
+            if (!isVotingUserTheSameDriver(driver,trip)) {
+                throw new UnauthorizedOperationException("You cannot create a feedback as you are not the creator of this trip");
+            }
+            List<User> passengers = userService.showAllPassengersInTrip(trip.getTripId());
+            if (!isPassengerInTrip(passengers, passenger)) {
+                throw new UnauthorizedOperationException("Passenger not part of this trip");
+            }
+            validateTripStatus(trip);
+            int feedbackRating = feedback.getRatingValue();
+            if (feedbackRating < 0 || feedbackRating > 5) {
+                throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
+            } else if (!isCurrentTripPartOfFinishedTrips(trip)) {
+                throw new UnauthorizedOperationException("The current trip is not part of finished trips.");
+            } else if (driver.equals(passenger)) {
+                throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
+            } else if (hasUserRatedAnotherUser(driver.getId(), passenger.getId())) {
+                throw new UnauthorizedOperationException("You can rate this passenger only once.");
+            }
+                feedback.setUserByCreatedBy(driver);
+                feedback.setRatedUser(passenger);
+                feedbackRepository.create(feedback);
+            }
 
 
     @Override
@@ -191,4 +184,3 @@ public class FeedbackServiceImpl implements FeedbackService {
 }
 
 
-// todo feedback for driver and feedback for passenger

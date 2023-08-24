@@ -9,10 +9,7 @@ import com.telerikacademy.carpooling.models.*;
 import com.telerikacademy.carpooling.models.dtos.FeedbackCommentDto;
 import com.telerikacademy.carpooling.models.dtos.FeedbackDto;
 import com.telerikacademy.carpooling.models.filterOptions.FeedbackFilterOptions;
-import com.telerikacademy.carpooling.services.interfaces.FeedbackCommentService;
-import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
-import com.telerikacademy.carpooling.services.interfaces.TripRequestService;
-import com.telerikacademy.carpooling.services.interfaces.TripService;
+import com.telerikacademy.carpooling.services.interfaces.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,19 +28,21 @@ public class FeedbackController {
     private final FeedbackCommentService feedbackCommentService;
     private final TripService tripService;
     private final TripRequestService tripRequestService;
+    private final UserService userService;
 
     private final FeedbackCommentMapper feedbackCommentMapper;
 
     public FeedbackController(FeedbackService feedbackService,
                               FeedbackMapper feedbackMapper,
                               AuthenticationHelper authenticationHelper,
-                              FeedbackCommentService feedbackCommentService, TripService tripService, TripRequestService tripRequestService, FeedbackCommentMapper feedbackCommentMapper) {
+                              FeedbackCommentService feedbackCommentService, TripService tripService, TripRequestService tripRequestService, UserService userService, FeedbackCommentMapper feedbackCommentMapper) {
         this.feedbackService = feedbackService;
         this.feedbackMapper = feedbackMapper;
         this.authenticationHelper = authenticationHelper;
         this.feedbackCommentService = feedbackCommentService;
         this.tripService = tripService;
         this.tripRequestService = tripRequestService;
+        this.userService = userService;
         this.feedbackCommentMapper = feedbackCommentMapper;
     }
 
@@ -67,6 +66,14 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteFeedback(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        User user = authenticationHelper.tryGetUser(headers);
+        feedbackService.delete(id, user);
+    }
+
+
 
 //    @GetMapping("/ratedUser/{userId}")
 //    public Feedback getRatingOfUser(@PathVariable int userId) {
@@ -143,14 +150,13 @@ public class FeedbackController {
         }
     }
 
-    @PostMapping("/passenger-rating")
-    public Feedback createPassengerRating(@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackDto feedbackDto) {
+    @PostMapping("/passenger-rating/{id}")
+    public Feedback createPassengerRating(@RequestHeader HttpHeaders headers,@PathVariable int id, @Valid @RequestBody FeedbackDto feedbackDto) {
         try {
             User driver = authenticationHelper.tryGetUser(headers);
-            Feedback feedback = feedbackMapper.fromFeedbackDto(feedbackDto);
+            Feedback feedback = feedbackMapper.fromFeedbackDtoWithId(feedbackDto, id);
             TripRequest tripRequest = tripRequestService.getTripRequestById(feedbackDto.getTripId());
-
-            feedbackService.createFeedbackForPassenger(feedback, tripRequest, driver);
+            feedbackService.createFeedbackForPassenger(feedback, tripRequest, driver, id);
             return feedback;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -184,7 +190,6 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-    //todo тук да добавя за коментара методите
     @PutMapping("/feedback-comments/{id}")
     public FeedbackComment modifyComment(@RequestHeader HttpHeaders headers, @PathVariable int id,
                                   @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {

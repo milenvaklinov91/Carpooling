@@ -26,7 +26,7 @@ public interface FeedbackService {
 
     void createFeedbackForDriver(Feedback feedback, Trip trip, User user);
 
-    void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User user);
+    void createFeedbackForPassenger(Feedback feedback, TripRequest tripRequest, User user, int id);
     boolean hasUserRatedAnotherUser(int userId, int ratedUserId);
     public boolean isVotingUserTheSameDriver(User votingUser, Trip trip);
 
