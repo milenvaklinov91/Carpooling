@@ -21,13 +21,13 @@ values
     (3, 'url:license2', 'BMW', 'X5', 'White', 2018, 'SUV', 1, 0, 1, 1, 0, 0, 5);
 
 
-insert into trips(user_id, start_location, end_location, departure_datetime, cost_per_person, available_seats, description,status,)
+insert into trips(user_id, start_location, end_location, departure_datetime, cost_per_person, available_seats, description,status,duration,distance)
 values
-    (1, 'Sofia', 'Varna', '2023-08-15 08:00:00', '20', 3, 'Morning commute', 1,'test'),
-    (2, 'Plovdiv', 'Burgas', '2023-08-16 15:30:00', '15', 2, 'Afternoon ride', 2,),
-    (3, 'Pleven', 'Sofia', '2023-08-17 11:00:00', '30', 4, 'Weekend getaway', 0,),
-    (1, 'Blagoevgrad', 'Dupnica', '2023-08-18 09:15:00', '25', 1, 'Quick business trip', 1,),
-    (2, 'Plovdiv', 'Haskovo', '2023-08-19 17:45:00', '10', 3, 'Evening hangout', 2,);
+    (1, 'Sofia', 'Varna', '2023-08-15 08:00:00', '20', 3, 'Morning commute', 1,'test','test'),
+    (2, 'Plovdiv', 'Burgas', '2023-08-16 15:30:00', '15', 2, 'Afternoon ride', 2,'test','test'),
+    (3, 'Pleven', 'Sofia', '2023-08-17 11:00:00', '30', 4, 'Weekend getaway', 0,'test','test'),
+    (1, 'Blagoevgrad', 'Dupnica', '2023-08-18 09:15:00', '25', 1, 'Quick business trip', 1,'test','test'),
+    (2, 'Plovdiv', 'Haskovo', '2023-08-19 17:45:00', '10', 3, 'Evening hangout', 2,'test','test');
 
 
 insert into feedbacks(rated_user_id, rated_by_user_id, trip_id, rating_value)
