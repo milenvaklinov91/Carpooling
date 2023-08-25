@@ -133,10 +133,6 @@ public class FeedbackController {
         }
     }
 
-
-
-
-
     @PostMapping("/driver-rating")
     public Feedback createDriverRating(@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackDto feedbackDto) {
         try {
@@ -168,12 +164,11 @@ public class FeedbackController {
     }
 
 
-    @PostMapping("/{id}/add-comments")
-    public FeedbackComment addComment (@RequestHeader HttpHeaders headers, @PathVariable int id,
-                           @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
+    @PostMapping("/comment")
+    public FeedbackComment addComment (@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            Feedback feedback = feedbackService.getFeedbackById(id);
+//            Feedback feedback = feedbackService.getFeedbackById(id);
             FeedbackComment feedbackComment = feedbackCommentMapper.fromFeedbackCommentDto(feedbackCommentDto);
             feedbackCommentService.create(feedbackComment,user);
             return feedbackComment;
@@ -192,7 +187,7 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-    @PutMapping("/feedback-comments/{id}")
+    @PutMapping("/modifyComment/{id}")
     public FeedbackComment modifyComment(@RequestHeader HttpHeaders headers, @PathVariable int id,
                                   @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
         try {
@@ -205,10 +200,10 @@ public class FeedbackController {
         }
     }
 
-    @DeleteMapping("/feedback-comments/{id}")
+    @DeleteMapping("/deleteComment/{id}")
     public void deleteComment(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         User user = authenticationHelper.tryGetUser(headers);
-        feedbackCommentService.delete(id, user);
+        feedbackCommentService.deleteComment(id, user);
     }
 }
 

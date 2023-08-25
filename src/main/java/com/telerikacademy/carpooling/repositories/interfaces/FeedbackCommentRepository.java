@@ -9,5 +9,5 @@ public interface FeedbackCommentRepository {
     List<FeedbackComment> findFeedbackCommentsByFeedbackId(int feedbackId);
     void create(FeedbackComment feedbackComment);
     void modify(FeedbackComment feedbackComment);
-    void delete(int id);
+    void deleteComment(int id);
 }
