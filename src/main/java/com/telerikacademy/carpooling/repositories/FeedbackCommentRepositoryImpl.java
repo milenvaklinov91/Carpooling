@@ -52,7 +52,7 @@ public class FeedbackCommentRepositoryImpl implements FeedbackCommentRepository 
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteComment(int id) {
         FeedbackComment feedbackToDelete = getFeedbackCommentById(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

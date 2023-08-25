@@ -10,5 +10,5 @@ public interface FeedbackCommentService {
     List<FeedbackComment> findFeedbackCommentsByFeedbackId(int feedbackId);
     void create(FeedbackComment feedbackComment, User user);
     void modify(FeedbackComment feedbackComment, User user);
-    void delete(int id, User user);
+    void deleteComment(int id, User user);
 }

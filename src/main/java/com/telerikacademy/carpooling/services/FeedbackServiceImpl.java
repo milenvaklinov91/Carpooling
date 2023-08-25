@@ -87,6 +87,9 @@ public class FeedbackServiceImpl implements FeedbackService {
         List<User> passengersInTrip = userService.showAllPassengersInTrip(trip.getTripId());
         if (hasUserRatedAnotherUser(votingUser.getId(), ratedUser.getId())) {
             throw new UnauthorizedOperationException("You can rate this driver only once.");
+        } else if (votingUser.getId() == (ratedUser.getId())) {
+            throw new UnauthorizedOperationException("You're not authorized to perform this operation as you are the" +
+                    " driver of this trip!");
         }
         if (!isVotingUserInPassengers(passengersInTrip, votingUser)) {
             throw new UnauthorizedOperationException("Passenger not part of this trip");
@@ -97,8 +100,6 @@ public class FeedbackServiceImpl implements FeedbackService {
             throw new IllegalArgumentException("Feedback rating must be between 0 and 5.");
         } else if (!isCurrentTripPartOfFinishedTrips(trip)) {
             throw new UnauthorizedOperationException("The current trip is not part of finished trips.");
-        } else if (votingUser.equals(ratedUser)) {
-            throw new UnauthorizedOperationException("You're not authorized to perform this operation!");
         } else {
             feedback.setUserByCreatedBy(votingUser);
             feedback.setRatedUser(ratedUser);
