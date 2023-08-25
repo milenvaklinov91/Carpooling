@@ -12,10 +12,12 @@ import com.telerikacademy.carpooling.models.dtos.TripDto;
 import com.telerikacademy.carpooling.models.dtos.TripFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -27,35 +29,42 @@ public class TripMvcController {
 
     private final TripService tripService;
     private final TripMapper tripMapper;
-    AuthenticationHelper authenticationHelper;
-    public TripMvcController(TripService tripService, TripMapper tripMapper) {
+    private final AuthenticationHelper authenticationHelper;
+
+    public TripMvcController(TripService tripService, TripMapper tripMapper, AuthenticationHelper authenticationHelper) {
         this.tripService = tripService;
         this.tripMapper = tripMapper;
+        this.authenticationHelper = authenticationHelper;
     }
 
     @GetMapping()
-    public String showAllTrips(@ModelAttribute("tripFilterOptions") TripFilterDto tripFilterDto, Model model, HttpSession session) {
+    public String showAllTrips(@ModelAttribute("filter") TripFilterDto filter, Model model, HttpSession session) {
         TripFilterOptions tripFilterOptions = new TripFilterOptions(
-                tripFilterDto.getStartLocation(),
-                tripFilterDto.getEndLocation(),
-                tripFilterDto.getDepartureTime(),
-                tripFilterDto.getCostPerPerson(),
-                tripFilterDto.getUsername(),
-                tripFilterDto.getSortBy(),
-                tripFilterDto.getSortOrder());
+                filter.getStartLocation(),
+                filter.getEndLocation(),
+                filter.getDepartureTime(),
+                filter.getCostPerPerson(),
+                filter.getUsername(),
+                filter.getSortBy(),
+                filter.getSortOrder());
 
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            List<Trip> trips = tripService.getAll(tripFilterOptions);
+            model.addAttribute("trips", trips);
+            model.addAttribute("filter", filter);
+            return "AllTripsView";
+        } catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/login";
+        }
 
-        List<Trip> trips = tripService.getAll(tripFilterOptions);
-        model.addAttribute("trips", trips);
-        model.addAttribute("tripFilterOptions", tripFilterOptions);
-        return "AllTripsView";
     }
 
     @GetMapping("/{id}")
     public String showSingleTrip(@PathVariable int id, Model model, HttpSession session) {
-        User user;
         try {
-            user = authenticationHelper.tryGetCurrentUser(session);
+          User user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
@@ -63,18 +72,18 @@ public class TripMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
-        return "post";
+        return "trip";
     }
 
     @GetMapping("/new")
     public String showNewTripPage(Model model, HttpSession session) {
-        TripDto trip = (TripDto) session.getAttribute("currentPost");
+        TripDto trip = (TripDto) session.getAttribute("currentTrip");
         try {
             authenticationHelper.tryGetCurrentUser(session);
             if (trip == null) {
                 trip = new TripDto();
             } else {
-                session.removeAttribute("currentPost");
+                session.removeAttribute("currentTrip");
             }
 
         } catch (AuthorizationException e) {
@@ -89,7 +98,7 @@ public class TripMvcController {
                              Model model, HttpSession session) {
         User user;
         try {
-            user = authenticationHelper.tryGetCurrentUser(session);
+           user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
         }
@@ -111,7 +120,6 @@ public class TripMvcController {
             return "AccessDeniedView";
         }
     }
-
 
     @GetMapping("/{id}/update")
     public String showEditTripPage(@PathVariable int id, Model model, HttpSession session) {
@@ -178,6 +186,36 @@ public class TripMvcController {
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/in-progress")
+    public String inProgressTripStatus(HttpSession session, @PathVariable int id, Model model) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            Trip trip = tripService.getTripById(id); //todo
+            model.addAttribute("trip", trip);
+            tripService.inProgressTripStatus(trip, user);
+            return "tripView";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
+        }
+    }
+
+    @GetMapping("/{id}/finished")
+    public String finishedTripStatus(HttpSession session, @PathVariable int id, Model model) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            Trip trip = tripService.getTripById(id); //todo
+            model.addAttribute("trip", trip);
+            tripService.finishedTripStatus(trip, user);
+            return "tripView";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
         }
     }
 

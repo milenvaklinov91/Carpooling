@@ -34,6 +34,19 @@ public class Map {
         }
     }
 
+    public String getDistance(String startLocation, String endLocation) {
+        try {
+            JSONObject jsonObject = getDistanceAndDuration(startLocation,endLocation);
+            /*jsonObject.*/
+            String string = "string";
+            return string;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
     public JSONObject getDistanceAndDuration(String startLocation, String endLocation) throws IOException {
         String startLocationCoords = getLocationCoords(startLocation);
         String endLocationCoords = getLocationCoords(endLocation);

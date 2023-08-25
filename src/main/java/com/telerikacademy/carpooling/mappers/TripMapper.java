@@ -29,8 +29,7 @@ public class TripMapper {
         trip.setDescription(tripDto.getDescription());
         trip.setTripStatus(TripStatus.AWAITING);
 
-
-        /*trip.setDuration(map.getDistanceAndDuration());*/
+        trip.setDistance(map.getDistance(tripDto.getStartLocation(),tripDto.getEndLocation()));
 
         return trip;
     }

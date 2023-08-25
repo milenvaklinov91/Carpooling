@@ -95,8 +95,8 @@ public class TripController {
         tripService.delete(id, user);
     }
 
-    @PutMapping("/{id}/inprogress")
-    public void approveTripRequest(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    @PutMapping("/{id}/in-progress")
+    public void inProgressTripStatus(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Trip trip = tripService.getTripById(id);
@@ -109,7 +109,7 @@ public class TripController {
     }
 
     @PutMapping("/{id}/finished")
-    public void rejectTripRequest(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public void finishedTripStatus(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Trip trip = tripService.getTripById(id);
