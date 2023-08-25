@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Portal</title>
+</head>
+<body>
+<header>
+  <h1>Welcome to the Admin Portal</h1>
+  <nav>
+    <ul>
+      <li><h3><a href="#" th:href="@{/users/admin}">See all users</a></h3></li>
+      <li><h3><a href="#" th:href="@{/feedbacks/admin}">See all feedbacks</a></h3></li>
+      <li><h3><a href="#" th:href="@{/trips/admin}" >See all trips</a></h3></li>
+      <li><h3><a href="#" th:href="@{/trip-requests/admin}" >See all trips requests</a></h3></li>
+    </ul>
+  </nav>
+</header>
+<footer>
+  <p>Admin Portal</p>
+</footer>
+</body>
+</html>

@@ -7,7 +7,7 @@ import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAll(UserFilterOptions userFilterOptions);
+    public List<User> getAll(UserFilterOptions userFilterOptions,User logUser);
 
 
     Long countAllUsers();
@@ -36,5 +36,5 @@ public interface UserService {
     User demoteAdmin(int id, User user);
     List<Trip> showTravelsByUser(int id);
     List<User> showAllPassengersInTrip(int id);
-
+    List<User> getAllApprovedUsers(User logUser);
 }

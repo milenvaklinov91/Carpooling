@@ -56,8 +56,7 @@ public class UserRepositoryImpl implements UserRepository {
             return query.list();
         }
     }
-/*
-    public List<User> getAllAccepted(){
+    public List<User> getAllAcceptedUsers(){
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery(
                     "from User user where user.status = 2", User.class);
@@ -68,7 +67,6 @@ public class UserRepositoryImpl implements UserRepository {
             return result;
         }
     }
-*/
 
     public Long countAllUsers() {
         try (Session session = sessionFactory.openSession()) {

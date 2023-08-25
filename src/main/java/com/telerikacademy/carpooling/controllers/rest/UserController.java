@@ -34,13 +34,21 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAll(@RequestParam(required = false) String username,
+    public List<User> getAll(@RequestHeader HttpHeaders headers,
+                             @RequestParam(required = false) String username,
                              @RequestParam(required = false) String firstName,
                              @RequestParam(required = false) String lastName,
                              @RequestParam(required = false) String sortBy,
                              @RequestParam(required = false) String sortOrder) {
         UserFilterOptions userFilterOptions = new UserFilterOptions(username, firstName, lastName, sortBy, sortOrder);
-        return service.getAll(userFilterOptions);
+        User user = authenticationHelper.tryGetUser(headers);
+        return service.getAll(userFilterOptions,user);
+    }
+
+    @GetMapping("/approved")
+    public List<User> getAllApprovedUsers(@RequestHeader HttpHeaders headers) {
+        User user = authenticationHelper.tryGetUser(headers);
+        return service.getAllApprovedUsers(user);
     }
 
     @GetMapping("/count")
@@ -58,7 +66,7 @@ public class UserController {
     }
 
     @GetMapping("/username")
-    public User getUserByUsername(@RequestHeader HttpHeaders headers, @RequestHeader String username) {
+    public User getUserByUsername(@RequestHeader String username) {
         try {
             return service.getByUsername(username);
         } catch (EntityNotFoundException e) {
@@ -67,7 +75,7 @@ public class UserController {
     }
 
     @GetMapping("/firstname")
-    public User getUserByFirstName(@RequestHeader HttpHeaders headers, @RequestHeader String firstName) {
+    public User getUserByFirstName(@RequestHeader String firstName) {
         try {
             return service.getByFirstName(firstName);
         } catch (EntityNotFoundException e) {
@@ -76,7 +84,7 @@ public class UserController {
     }
 
     @GetMapping("/lastname")
-    public User getUserByLastName(@RequestHeader HttpHeaders headers, @RequestHeader String lastName) {
+    public User getUserByLastName(@RequestHeader String lastName) {
         try {
             return service.getByLastName(lastName);
         } catch (EntityNotFoundException e) {
@@ -85,7 +93,7 @@ public class UserController {
     }
 
     @GetMapping("/email")
-    public User getUserByEmail(@RequestHeader HttpHeaders headers, @RequestHeader String email) {
+    public User getUserByEmail(@RequestHeader String email) {
         try {
             return service.getByEmail(email);
         } catch (EntityNotFoundException e) {
@@ -94,7 +102,7 @@ public class UserController {
     }
 
     @GetMapping("/phone")
-    public User getUserByPhoneNum(@RequestHeader HttpHeaders headers, @RequestHeader String phoneNum) {
+    public User getUserByPhoneNum(@RequestHeader String phoneNum) {
         try {
             return service.getByPhone(phoneNum);
         } catch (EntityNotFoundException e) {

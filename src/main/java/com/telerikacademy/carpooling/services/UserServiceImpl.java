@@ -26,7 +26,10 @@ public class UserServiceImpl implements UserService {
         this.tripRepository = tripRepository;
     }
 
-    public List<User> getAll(UserFilterOptions userFilterOptions) {
+    public List<User> getAll(UserFilterOptions userFilterOptions,User logUser) {
+        if (!(logUser.isAdmin())) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
         return userRepository.getAll(userFilterOptions);
     }
 
@@ -78,6 +81,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.getDriverByUsername(username);
     }
 
+    public List<User> getAllApprovedUsers(User logUser) {
+        if (!(logUser.isAdmin())) {
+            throw new UnauthorizedOperationException("You're not authorized for this operation");
+        }
+       return userRepository.getAllAcceptedUsers();
+
+    }
+
 
     public void create(User user) {
         isDuplicateUsername(user);
@@ -93,7 +104,7 @@ public class UserServiceImpl implements UserService {
     public void update(User user, User logUser) {
         try {
             User existUser = userRepository.getUserById(user.getId());
-            if (logUser.isBlocked()) {
+            if (!(logUser.isBlocked())) {
                 throw new UnauthorizedOperationException("You`re blocked!!!");
             }
             if (logUser.isAdmin() || existUser.getUsername().equals(logUser.getUsername())) {
@@ -106,7 +117,7 @@ public class UserServiceImpl implements UserService {
                 existUser.setIsDriver(user.isDriver());
                 existUser.setStatus(user.getStatus());
                 userRepository.update(existUser);
-            } else  {
+            } else {
                 throw new UnauthorizedOperationException("You're not authorized for this operation");
             }
         } catch (EntityNotFoundException e) {
@@ -120,7 +131,7 @@ public class UserServiceImpl implements UserService {
         if (!(logUser.isAdmin())) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
-        User deletedUser=userRepository.getUserById(id);
+        User deletedUser = userRepository.getUserById(id);
         deletedUser.setStatus(3);
         deletedUser.setIsBlocked(true);
         userRepository.update(deletedUser);
@@ -223,7 +234,7 @@ public class UserServiceImpl implements UserService {
         return tripRepository.findAllTravelsByUser(id);
     }
 
-    public List<User> showAllPassengersInTrip(int id){
+    public List<User> showAllPassengersInTrip(int id) {
         return userRepository.getAllPassengersbyTripId(id);
     }
 
