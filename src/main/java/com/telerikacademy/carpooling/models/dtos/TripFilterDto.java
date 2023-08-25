@@ -5,6 +5,7 @@ public class TripFilterDto {
     private String endLocation;
     private String departureTime;
     private String costPerPerson;
+    private String username;
     private String sortBy;
     private String sortOrder;
 
@@ -25,6 +26,14 @@ public class TripFilterDto {
 
     public void setEndLocation(String endLocation) {
         this.endLocation = endLocation;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getDepartureTime() {

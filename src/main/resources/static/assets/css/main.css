@@ -1681,7 +1681,6 @@ textarea {
 }
 
 
-
 .step-item__icon {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
@@ -3031,8 +3030,7 @@ textarea {
     background-color: #ff9b22;
     color: #ffffff;
     text-decoration: none;
-    border-color: #ff9b22;
-    ;
+    border-color: #ff9b22;;
 }
 
 .widjet-download {
