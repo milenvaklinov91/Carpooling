@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+
+</head>
+<body>
+<div class="main">
+      <input type="checkbox" id="chk" aria-hidden="true">
+
+      <div class="signup">
+          <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+
+              <label class="sign" for="chk" aria-hidden="true">Sign up</label>
+
+
+              <input type="text" th:field="*{username}" name="username"  placeholder="User name" required="" />
+              <input type="password" th:field="*{password}" placeholder="Password" required="" minlength="4"/>
+              <input type="text" th:field="*{firstName}" placeholder="First Name" required="" minlength="4" maxlength="32"/>
+              <input type="text" th:field="*{lastName}" placeholder="Last Name" required="" minlength="4" maxlength="32"/>
+              <input type="email" th:field="*{email}" placeholder="Email" required="">
+              <input type="text" th:field="*{phone_number}" placeholder="PhoneNumber" required="">
+
+              <label class="error" th:errors="*{username}">Username error placeholder.</label>
+              <label class="error" th:errors="*{password}">Password error placeholder.</label>
+              <label class="error" th:errors="*{firstName}">First name error placeholder</label>
+              <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+              <label class="error" th:errors="*{email}">Email error placeholder</label>
+              <label class="error" th:errors="*{phone_number}">PhoneNumber error placeholder</label>
+
+
+              <button>Sign up</button>
+          </form>
+      </div>
+
+</div>
+</body>
+</html>

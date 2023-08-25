@@ -1,6 +1,9 @@
 package com.telerikacademy.carpooling.controllers.mvc;
 
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
+import com.telerikacademy.carpooling.exceptions.AuthorizationException;
+import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
@@ -43,6 +47,87 @@ public class UserMvcController {
         model.addAttribute("users", users);
         model.addAttribute("filter", filter);
         return "AllUsersView";
+    }
+
+    @GetMapping("/{id}/block")
+    public String blockUser(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("Only admins can make this operation!");
+            }
+            service.blockUser(id, admin);
+            return "redirect:/users/admin";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/unblock")
+    public String unblockUser(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("Only admins can make this operation!");
+            }
+
+            service.unBlockUser(id, admin);
+            return "redirect:/users/admin";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/make-admin")
+    public String makeAdmin(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("Only admins can make this operation!");
+            }
+            service.makeAdmin(id, admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}/demote-admin")
+    public String demoteAdmin(@PathVariable int id, Model model, HttpSession session) {
+        try {
+            User admin = authenticationHelper.tryGetCurrentUser(session);
+            if (!admin.isAdmin()) {
+                throw new AuthorizationException("Only admins can make this operation!");
+            }
+            service.demoteAdmin(id, admin);
+            return "redirect:/users";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
     }
 
 }
