@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Trips</title>
+<!--  <link rel="stylesheet" href="assets/css/uikit.min.css">
+  <link rel="stylesheet" href="assets/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/datepicker.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">-->
+</head>
+<body>
+<h1>Trips</h1>
+<br>
+<section>
+  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
+    <input type="text" placeholder="Start Location" th:field="*{startLocation}" />
+    <input type="text" placeholder="End Location"  th:field="*{endLocation}"/>
+    <input type="text" placeholder="Username"  th:field="*{username}"/>
+    <select th:field="*{sortBy}">
+      <option value="">Default</option>>
+      <option value="Departure time">Departure Time</option>
+      <option value="Cost Per Person">Cost Per Person</option>
+
+    </select>
+    <select th:field="*{sortOrder}">
+      <option value="asc">Asc</option>
+      <option value="desc">Desc</option>
+    </select>
+
+    <input type="submit" value="Search" id="search">
+  </form>
+
+  <form action="#" th:action="@{/filters}" method="get">
+    <input type="submit" value="Reset" id="postmistress">
+    <br>
+  </form>
+
+  <div th:if="${trips.isEmpty()}">
+    <h2 th:text="No Trips">No Trips</h2>
+  </div>
+
+  <br>
+  <br>
+  <hr>
+</section>
+</body>
+</html>
