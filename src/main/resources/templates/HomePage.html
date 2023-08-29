@@ -59,7 +59,17 @@
                 </ul>
               </nav>
             </div>
-            <div class="page-header__phone"><a class="uk-button uk-button-danger" href="/auth/login"> <img src="assets/img/step-1.png" alt="call" data-uk-svg><span>Login</span></a></div>
+            <li class="page-header__phone">
+              <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/login}">Profile</a>
+            </li>
+
+            <li class="page-header__phone">
+              <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a>
+            </li>
+
+            <li class="page-header__phone">
+              <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
+            </li>
             <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
           </div>
         </div>

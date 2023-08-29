@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Portal</title>
+</head>
+<body>
+<header>
+  <h1>Welcome to the Admin Portal</h1>
+</header>
+<nav>
+  <ul>
+    <li><a href="#" th:href="@{/admin}">Admin portal</a></li>
+  </ul>
+</nav>
+<section>
+  <h2>Approved Users</h2>
+  <table>
+    <thead>
+    <tr>
+      <th class="black-text" >Username</th>
+      <th class="black-text">FirstName</th>
+      <th class="black-text">LastName</th>
+      <th class="black-text">Email</th>
+      <th class="black-text">Phone number</th>
+      <th class="black-text">Registration Date</th>
+      <th class="black-text">Profile Picture</th>
+      <th class="black-text">Status</th>
+      <th class="black-text">Driver</th>
+      <th class="black-text">Blocked</th>
+      <th class="black-text">Admin</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${approvedUsers}">
+      <td> <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a></td>
+      <td><div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getLastName}">LastName</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getEmail}">Email</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getPhone_number()}">Phone number</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getRegistrationDate()}">Registration Date</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getProfilePic()}">Profile Picture</div></td>
+      <td><div class="cellSingleUser" th:text="${user.getStatus()}">Status</div></td>
+      <td><div class="cellSingleUser" th:text="${user.isDriver()}">Driver</div></td>
+      <td>
+        <form th:if="${not user.isAdmin()}">
+          <form  class="buttons" th:action="@{/{id}/make-admin(id=${user.getId()})}" th:object="${user}" method="get">
+            <button type="submit">Make Admin</button>
+          </form>
+
+        </form>
+        <form th:if="${user.isAdmin()}">
+          <form  class="buttons" th:action="@{/{id}/demote-admin(id=${user.getId()})}" th:object="${user}" method="get">
+            <button type="submit">Demote Admin</button>
+          </form>
+
+        </form>
+      </td>
+      <td>
+        <form th:if="${not user.isBlocked()}">
+          <button type="submit" formaction="@{/{id}/block(id=${user.getId()})}" class="action-button" method="get">Block</button>
+        </form>
+        <form th:if="${user.isBlocked()}">
+          <button type="submit" formaction="@{/{id}/unblock(id=${user.getId()})}" class="action-button" method="get">Unblock</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</section>
+<footer>
+  <p>Admin Portal</p>
+</footer>
+</body>
+</html>

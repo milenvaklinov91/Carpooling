@@ -3,6 +3,8 @@ package com.telerikacademy.carpooling.controllers.mvc;
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
+import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/")
@@ -21,12 +24,15 @@ public class HomeMvcController {
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
 
+    private final FeedbackService feedbackService;
+
     @Autowired
     public HomeMvcController(TripService tripService, UserService userService,
-                             AuthenticationHelper authenticationHelper) {
+                             AuthenticationHelper authenticationHelper, FeedbackService feedbackService) {
         this.tripService = tripService;
         this.userService = userService;
         this.authenticationHelper= authenticationHelper;
+        this.feedbackService = feedbackService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -44,27 +50,23 @@ public class HomeMvcController {
         }
     }
 
-   /* @GetMapping
-    public String showHomePage(@ModelAttribute("filter") PostFilterDto filter,Model model) {
+    @GetMapping
+    public String showHomePage(@ModelAttribute("filter") UserFilterDto filter, Model model) {
 
-        List<Post> topCommentedPosts = postRepository.getMostCommented();
+        List<User> topUsers = feedbackService.getTopRatedUsers();
 
-        List<Post> latestPosts = postRepository.getLastTenCreatedPosts();
-
-        List<Post> mostLikedPost = postRepository.getMostLiked();
+        List<User> topPassengersUsers = feedbackService.getTopRatedPassengers();
 
 
         Long numberOfUsers = userService.countAllUsers();
-        Long numberOfPosts = postService.countAllPosts();
+      /*  Long numberOfPosts = tripService.countAllTrips();*/
 
-        model.addAttribute("topCommentedPosts", topCommentedPosts);
-        model.addAttribute("latestPosts", latestPosts);
-        model.addAttribute("mostLikedPost", mostLikedPost);
+        model.addAttribute("topUsers", topUsers);
+        model.addAttribute("topPassengersUsers", topPassengersUsers);
         model.addAttribute("numberOfUsers", numberOfUsers);
-        model.addAttribute("numberOfPosts", numberOfPosts);
 
-        return "homePage";
-    }*/
+        return "HomePage";
+    }
 
     @GetMapping("/admin")
     public String showAdminPortal(HttpSession session, Model model) {

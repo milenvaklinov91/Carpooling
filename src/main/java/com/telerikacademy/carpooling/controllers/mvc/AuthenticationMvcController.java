@@ -1,8 +1,7 @@
 package com.telerikacademy.carpooling.controllers.mvc;
 
 import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
-import com.telerikacademy.carpooling.exceptions.AuthorizationException;
-import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
+import com.telerikacademy.carpooling.exceptions.*;
 import com.telerikacademy.carpooling.mappers.UserMapper;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.LoginDto;
@@ -10,16 +9,21 @@ import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.services.emailServices.EmailService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/auth")
@@ -59,7 +63,7 @@ public class AuthenticationMvcController {
             return "redirect:/";
         } catch (AuthorizationException e) {
             bindingResult.rejectValue("username", "auth_error", e.getMessage());
-            return "userLoginView";
+            return "userLogin";
         }
     }
 
@@ -77,7 +81,8 @@ public class AuthenticationMvcController {
 
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") UserDto register,
-                                 BindingResult bindingResult) {
+                                 BindingResult bindingResult,
+                                 @RequestParam("profilePicture") MultipartFile profilePicture) {
         if (bindingResult.hasErrors()) {
             return "userRegister";
         }
@@ -89,13 +94,63 @@ public class AuthenticationMvcController {
         }
 
         try {
+            if (!profilePicture.isEmpty()) {
+                String profilePicFilename = saveProfilePicture(profilePicture);
+                register.setProfilePic(profilePicFilename);
+            }
+
             User user = userMapper.fromDto(register);
             emailService.sendConfirmationEmail(user.getEmail(), user.getConfirmationCode());
             userService.create(user);
-            return "redirect:/auth/login";
+            return "confirm";
         } catch (EntityNotFoundException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "userRegister";
+        } catch (EntityDuplicateException e) {
+                bindingResult.rejectValue("username", "username_error", e.getMessage());
+                return "userRegister";
+        } catch (EmailExitsException e) {
+            bindingResult.rejectValue("email", "email", e.getMessage());
+            return "userRegister";
+        } catch (InvalidPasswordException e) {
+            bindingResult.rejectValue("Password", e.getMessage());
+            return "userRegister";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String saveProfilePicture(MultipartFile profilePicture) throws IOException {
+        String uploadDir = "D:\\TelerikAcademy Proects JAva\\carpooling\\src\\main\\resources\\static\\images\\profile_pics";
+        String uniqueFilename = UUID.randomUUID().toString() + "_" + profilePicture.getOriginalFilename();
+        String filePath = Paths.get(uploadDir, uniqueFilename).toString();
+
+        try (OutputStream os = new FileOutputStream(filePath)) {
+            os.write(profilePicture.getBytes());
+        } catch (IOException e) {
+            throw new IOException("Could not save profile picture: " + e.getMessage());
+        }
+
+        return uniqueFilename;
+    }
+
+    @GetMapping("/confirm")
+    public String showConfirmationPage() {
+        return "confirm"; //
+    }
+
+    @PostMapping("/confirm")
+    public String confirmUser(HttpSession session, @RequestParam String email, @RequestParam String confirmationCode,Model model) {
+        User user = userService.getByEmail(email);
+        User logUser = authenticationHelper.tryGetCurrentUser(session);
+        if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
+            user.setStatus(2);
+            userService.update(user, logUser);
+            model.addAttribute("message", "User confirmed successfully.");
+            return "redirect:auth/login";
+        } else {
+            model.addAttribute("error", "Invalid confirmation code or email.");
+            return "confirm";
         }
     }
 

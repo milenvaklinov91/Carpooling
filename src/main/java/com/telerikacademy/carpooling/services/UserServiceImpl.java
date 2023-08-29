@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public User getById(int id) {
+
         return userRepository.getUserById(id);
     }
 
@@ -104,7 +105,7 @@ public class UserServiceImpl implements UserService {
     public void update(User user, User logUser) {
         try {
             User existUser = userRepository.getUserById(user.getId());
-            if (!(logUser.isBlocked())) {
+            if (logUser.isBlocked()) {
                 throw new UnauthorizedOperationException("You`re blocked!!!");
             }
             if (logUser.isAdmin() || existUser.getUsername().equals(logUser.getUsername())) {

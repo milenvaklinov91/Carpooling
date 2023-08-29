@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <meta content="TeamEleven" name="author">
+    <meta content="DriveTogether" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link rel="stylesheet" href="assets/css/uikit.min.css">
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/datepicker.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<div class="driver-card">
+    <div class="driver-card__media">
+        <img src="../static/assets/img/car-1.jpg" alt="car">
+    </div>
+    <div class="driver-card__body">
+        <div class="driver-card__user">
+            <img src="/static/images/profile.jpg" alt="driver-pic">
+        </div>
+        <div class="about">Username:</div>
+        <h2 class="text" th:text="${user.getUsername()}">Username</h2>
+        <div class="about">Full name:</div>
+        <h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
+        <div class="about">Email:</div>
+        <h2 class="text" th:text="${user.getEmail()}">Email</h2>
+        <div class="about">Phone number:</div>
+        <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
+        <div class="about">Email:</div>
+        <h2 class="text" th:text="${user.getRegistrationDate()}">Registration date</h2>
+    </div>
+</div>
+</body>
+</html>

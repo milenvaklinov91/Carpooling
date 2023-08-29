@@ -9,12 +9,10 @@ import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -48,6 +46,31 @@ public class UserMvcController {
         model.addAttribute("filter", filter);
         return "AllUsersView";
     }
+    @GetMapping("/approved")
+    public String getAllApprovedUsers(Model model, HttpSession session) {
+        User loggedInUser = authenticationHelper.tryGetCurrentUser(session);
+
+        try {
+            List<User> approvedUsers =service.getAllApprovedUsers(loggedInUser);
+            model.addAttribute("approvedUsers", approvedUsers);
+            return "approved-users";
+        } catch (UnauthorizedOperationException e) {
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("/{id}")
+    public String showSingleUser(@PathVariable int id, Model model) {
+        try {
+            User user = service.getById(id);
+            model.addAttribute("user", user);
+            return "UserProfile";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+
 
     @GetMapping("/{id}/block")
     public String blockUser(@PathVariable int id, Model model, HttpSession session) {

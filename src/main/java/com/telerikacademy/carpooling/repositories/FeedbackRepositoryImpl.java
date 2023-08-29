@@ -68,7 +68,6 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
         }
         return orderBy;
     }
-//това долу е topRatedDrivers, трябва да се оправи
     @Override
     public List<User> getTopRatedUsers() {
         try (Session session = sessionFactory.openSession()) {

@@ -1,40 +1,121 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Register</title>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <style>
+        .user-input-box {
+            margin-bottom: 20px;
+        }
 
+        .image-preview {
+            display: none;
+            margin-top: 10px;
+        }
 
+        .upload-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .upload-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
 <div class="main">
-      <input type="checkbox" id="chk" aria-hidden="true">
+    <input type="checkbox" id="chk" aria-hidden="true">
 
-      <div class="signup">
-          <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post">
+    <div class="signup">
+        <form action="#" th:action="@{/auth/register}" th:object="${register}" method="post" enctype="multipart/form-data">
 
-              <label class="sign" for="chk" aria-hidden="true">Sign up</label>
-
-
-              <input type="text" th:field="*{username}" name="username"  placeholder="User name" required="" />
-              <input type="password" th:field="*{password}" placeholder="Password" required="" minlength="4"/>
-              <input type="text" th:field="*{firstName}" placeholder="First Name" required="" minlength="4" maxlength="32"/>
-              <input type="text" th:field="*{lastName}" placeholder="Last Name" required="" minlength="4" maxlength="32"/>
-              <input type="email" th:field="*{email}" placeholder="Email" required="">
-              <input type="text" th:field="*{phone_number}" placeholder="PhoneNumber" required="">
-
-              <label class="error" th:errors="*{username}">Username error placeholder.</label>
-              <label class="error" th:errors="*{password}">Password error placeholder.</label>
-              <label class="error" th:errors="*{firstName}">First name error placeholder</label>
-              <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
-              <label class="error" th:errors="*{email}">Email error placeholder</label>
-              <label class="error" th:errors="*{phone_number}">PhoneNumber error placeholder</label>
-
-
-              <button>Sign up</button>
-          </form>
-      </div>
-
+            <div class="container">
+                <h1 class="form-title">Registration</h1>
+                <div class="main-user-info">
+                    <div class="user-input-box">
+                        <label for="Firstname">First Name</label>
+                        <input type="text" id="Firstname" th:field="*{firstName}" name="firstName" placeholder="Enter First Name"/>
+                        <label class="error" th:errors="*{firstName}">First name error placeholder</label>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="fullName">Last Name</label>
+                        <input type="text"
+                               id="fullName"
+                               th:field="*{lastName}"
+                               name="fullName"
+                               placeholder="Enter Last Name"/>
+                        <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="username">Username</label>
+                        <input type="text"
+                               id="username"
+                               th:field="*{username}"
+                               name="username"
+                               placeholder="Enter Username"/>
+                        <label class="error" th:errors="*{username}">Username error placeholder.</label>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="profilePicture">Profile Picture</label>
+                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display:none;"/>
+                        <label class="upload-btn" for="profilePicture">Upload Photo</label>
+                        <div class="image-preview">
+                            <img id="profileImagePreview" src="../static/images/profile.jpg" alt="Default Profile Image">
+                        </div>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="email">Email</label>
+                        <input type="email"
+                               id="email"
+                               th:field="*{email}"
+                               name="email"
+                               placeholder="Enter Email"/>
+                        <label class="error" th:errors="*{email}">Email error placeholder</label>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="phoneNumber">Phone Number</label>
+                        <input type="text"
+                               id="phoneNumber"
+                               th:field="*{phone_number}"
+                               name="phoneNumber"
+                               placeholder="Enter Phone Number"/>
+                        <label class="error" th:errors="*{phone_number}">PhoneNumber error placeholder</label>
+                    </div>
+                    <div class="user-input-box">
+                        <label for="password">Password</label>
+                        <input type="password"
+                               id="password"
+                               th:field="*{password}"
+                               name="password"
+                               placeholder="Enter Password"/>
+                        <label class="error" th:errors="*{password}">Password error placeholder.</label>
+                    </div>
+                </div>
+                <div class="form-submit-btn">
+                    <input type="submit" value="Register">
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
+<script>
+    const profilePictureInput = document.getElementById('profilePicture');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+
+    profilePictureInput.addEventListener('change', (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            const objectURL = URL.createObjectURL(selectedFile);
+            profileImagePreview.src = objectURL;
+            profileImagePreview.style.display = 'block';
+        }
+    });
+</script>
+
 </body>
 </html>
