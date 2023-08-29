@@ -94,6 +94,30 @@
                                placeholder="Enter Password"/>
                         <label class="error" th:errors="*{password}">Password error placeholder.</label>
                     </div>
+               <!--     <div class="user-input-box">
+                        <label for="isDriver">Are you a driver?</label>
+                        <input type="checkbox" id="isDriver" name="isDriver" th:field="*{isDriver}"/>
+                    </div>-->
+                 <!--   <div id="driverFields" style="display: none;">
+                        <div class="user-input-box">
+                            <label for="carModel">Car Model</label>
+                            <input type="text" id="carModel" name="carModel" th:field="*{car.carModel}" placeholder="Enter Car Model"/>
+                            <label class="error" th:errors="*{car.carModel}">Car Model error placeholder</label>
+                        </div>
+                    </div>-->
+
+            <!--        <script>
+                        const isDriverCheckbox = document.getElementById('isDriver');
+                        const driverFields = document.getElementById('driverFields');
+
+                        isDriverCheckbox.addEventListener('change', (event) => {
+                            if (event.target.checked) {
+                                driverFields.style.display = 'block';
+                            } else {
+                                driverFields.style.display = 'none';
+                            }
+                        });
+                    </script>-->
                 </div>
                 <div class="form-submit-btn">
                     <input type="submit" value="Register">

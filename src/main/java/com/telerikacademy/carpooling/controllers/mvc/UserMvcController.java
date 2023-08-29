@@ -9,7 +9,6 @@ import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

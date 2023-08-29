@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
         if (!password.matches(regex)) {
-            throw new InvalidPasswordException("Password must be at least 8 characters long and should contain at least one uppercase letter, one lowercase letter, one digit, and one special symbol");
+            throw new InvalidPasswordException();
         }
     }
 

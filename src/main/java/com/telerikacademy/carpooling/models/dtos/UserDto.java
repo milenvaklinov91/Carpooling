@@ -7,25 +7,26 @@ import javax.validation.constraints.*;
 public class UserDto {
     @NotNull(message = "Username can't be empty")
     @Size(min = 2, max = 20, message = "Username should be between 2 and 20 symbols")
-    @NotBlank
+    @NotBlank(message="Required field!")
     private String username;
-    @NotBlank
-    @Size(min = 8)
+    @NotBlank(message="Required field!")
+    @Size(min = 8, message="Password must be at least 8 characters long and should contain " +
+            "at least one uppercase letter, one lowercase letter, one digit, and one special symbol")
     private String password;
     @NotNull(message = "Name can't be empty")
     @Size(min = 2, max = 20, message = "Name should be between 2 and 20 symbols")
-    @NotBlank
+    @NotBlank(message="Required field!")
     private String firstName;
     @NotNull(message = "Last name can't be empty")
     @Size(min = 2, max = 20, message = "Last name should be between 2 and 20 symbols")
-    @NotBlank
+    @NotBlank(message="Required field!")
     private String lastName;
     @NotNull(message = "Email can't be empty")
     @Email(message = "Email is invalid")
-    @NotBlank
+    @NotBlank(message="Required field!")
     @Valid
     private String email;
-    @NotBlank
+    @NotBlank(message="Required field!")
     @NotNull(message = "You need to provide a valid phone number")
     private String phone_number;
 

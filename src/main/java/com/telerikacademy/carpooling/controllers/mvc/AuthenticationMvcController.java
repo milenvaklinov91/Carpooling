@@ -9,8 +9,6 @@ import com.telerikacademy.carpooling.models.dtos.UserDto;
 import com.telerikacademy.carpooling.services.emailServices.EmailService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -100,8 +98,8 @@ public class AuthenticationMvcController {
             }
 
             User user = userMapper.fromDto(register);
-            emailService.sendConfirmationEmail(user.getEmail(), user.getConfirmationCode());
             userService.create(user);
+            emailService.sendConfirmationEmail(user.getEmail(), user.getConfirmationCode());
             return "confirm";
         } catch (EntityNotFoundException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
@@ -113,7 +111,7 @@ public class AuthenticationMvcController {
             bindingResult.rejectValue("email", "email", e.getMessage());
             return "userRegister";
         } catch (InvalidPasswordException e) {
-            bindingResult.rejectValue("Password", e.getMessage());
+            bindingResult.rejectValue("Password", "password", e.getMessage());
             return "userRegister";
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -135,12 +133,16 @@ public class AuthenticationMvcController {
     }
 
     @GetMapping("/confirm")
-    public String showConfirmationPage() {
+    public String showConfirmationPage(Model model) {
+        model.addAttribute("confirm");
         return "confirm"; //
     }
 
     @PostMapping("/confirm")
-    public String confirmUser(HttpSession session, @RequestParam String email, @RequestParam String confirmationCode,Model model) {
+    public String confirmUser(@Valid @ModelAttribute("confirm") HttpSession session, @RequestParam String email, @RequestParam String confirmationCode,Model model) {
+        model.addAttribute("confirm");
+        model.addAttribute("email");
+        model.addAttribute("confirmationCode");
         User user = userService.getByEmail(email);
         User logUser = authenticationHelper.tryGetCurrentUser(session);
         if (user != null && user.getConfirmationCode().equals(confirmationCode)) {

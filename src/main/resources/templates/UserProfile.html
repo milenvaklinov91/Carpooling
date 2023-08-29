@@ -16,12 +16,9 @@
 </head>
 <body>
 <div class="driver-card">
-    <div class="driver-card__media">
-        <img src="../static/assets/img/car-1.jpg" alt="car">
-    </div>
     <div class="driver-card__body">
         <div class="driver-card__user">
-            <img src="/static/images/profile.jpg" alt="driver-pic">
+            <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}" alt="Profile Picture" style="width: 150px; height: 150px;">
         </div>
         <div class="about">Username:</div>
         <h2 class="text" th:text="${user.getUsername()}">Username</h2>
