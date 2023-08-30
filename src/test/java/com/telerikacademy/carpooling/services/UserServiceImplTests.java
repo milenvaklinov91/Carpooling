@@ -7,6 +7,8 @@ import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.repositories.UserRepositoryImpl;
+import com.telerikacademy.carpooling.repositories.interfaces.UserRepository;
+import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,13 +36,15 @@ public class UserServiceImplTests {
     @Test
     void getAllUsers_Should_Return_ListOfUsers(){
         // Arrange
+        User user=createMockUser();
+        user.setAdmin(true);
         List<User> expectedUsers = new ArrayList<>();
         UserFilterOptions filterOptions=Helper.createMockFilterOptions();
         when(userRepository.getAll(filterOptions))
                 .thenReturn(expectedUsers);
 
         // Act
-        List<User> result = userService.getAll(filterOptions);
+        List<User> result = userService.getAll(filterOptions,user);
 
         // Assert
         assertEquals(expectedUsers, result);
@@ -355,17 +359,18 @@ public class UserServiceImplTests {
   
     @Test
     void blockUser_Should_BlockUser_When_UserIsAdminAndUserIsNotBlocked() {
-        User mockUser = createMockUser();
-        User mockAdmin = Helper.createMockAdmin();
-        mockAdmin.setAdmin(true);
+        int userId = 1;
+        User user = new User();
+        user.setAdmin(true);
 
-        when(userRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
-        doNothing().when(userRepository).update(any());
+        User mockedUserFromRepository = new User();
+        mockedUserFromRepository.setIsBlocked(false);
+        when(userRepository.getUserById(userId)).thenReturn(mockedUserFromRepository);
 
-        userService.blockUser(mockUser.getId(), mockAdmin);
+        userService.blockUser(userId, user);
 
-        assertTrue(mockUser.isBlocked());
-        verify(userRepository, times(1)).update(mockUser);
+        assertTrue(mockedUserFromRepository.isBlocked());
+        verify(userRepository, times(1)).update(mockedUserFromRepository);
     }
 
     @Test
@@ -384,17 +389,19 @@ public class UserServiceImplTests {
 
     @Test
     void unblockUser_Should_UnblockUser_When_UserIsAdminAndUnblockedUserIsBlocked() {
-        User mockUser = createMockUser();
-        mockUser.setIsBlocked(true);
-        User mockAdmin = Helper.createMockAdmin();
+        int userId = 1;
+        User user = new User();
+        user.setAdmin(true);
 
-        when(userRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
-        doNothing().when(userRepository).update(any());
+        User mockedUserFromRepository = new User();
+        mockedUserFromRepository.setIsBlocked(true);
+        when(userRepository.getUserById(userId)).thenReturn(mockedUserFromRepository);
 
-        userService.unBlockUser(mockUser.getId(), mockAdmin);
+        userService.unBlockUser(userId, user);
 
-        assertFalse(mockUser.isBlocked());
-        verify(userRepository, times(1)).update(mockUser);
+        assertFalse(mockedUserFromRepository.isBlocked());
+        verify(userRepository, times(1)).update(mockedUserFromRepository);
+
     }
 
     @Test
@@ -426,37 +433,33 @@ public class UserServiceImplTests {
     }
 
     @Test
-    void makeAdmin_Should_MakeUserAdmin_When_UserIsAdminAndUserIsNotAdmin() {
-        User mockUser = createMockUser();
-        User mockAdmin = createMockUser();
-        mockAdmin.setAdmin(true);
+    public void testMakeAdmin_Success() {
+        int userId = 1;
+        User user = new User();
+        user.setAdmin(true);
 
-        when(userRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
-        doNothing().when(userRepository).update(any());
+        User mockedUserFromRepository = new User();
+        when(userRepository.getUserById(userId)).thenReturn(mockedUserFromRepository);
 
-        userService.makeAdmin(mockUser.getId(), mockAdmin);
+        userService.makeAdmin(userId, user);
 
-        assertTrue(mockUser.isAdmin());
-        verify(userRepository, times(1)).update(mockUser);
+        assertTrue(mockedUserFromRepository.isAdmin());
+        verify(userRepository, times(1)).update(mockedUserFromRepository);
     }
 
     @Test
-    void unMakeAdmin_Should_ThrowUnauthorizedOperationException_When_UserIsNotAdmin() {
-        User mockAdmin = createMockUser();
+    public void testDemoteAdmin_Unauthorized() {
+        int userId = 1;
+        User user = new User();
+        user.setAdmin(true);
 
-        User mockTargetUser = createMockUser();
+        User mockedUserFromRepository = new User();
+        when(userRepository.getUserById(userId)).thenReturn(mockedUserFromRepository);
 
-        Mockito.when(userRepository.getUserById(mockAdmin.getId())).thenReturn(mockAdmin);
-        Mockito.when(userRepository.getUserById(mockTargetUser.getId())).thenReturn(mockTargetUser);
+        assertThrows(UnauthorizedOperationException.class, () -> userService.demoteAdmin(userId, user));
 
-        Assertions.assertThrows(UnauthorizedOperationException.class, () -> {
-            userService.demoteAdmin(mockAdmin.getId(), mockTargetUser);
-        });
-
-        Mockito.verify(userRepository, times(1)).getUserById(mockAdmin.getId());
-        Mockito.verify(userRepository, times(1)).getUserById(mockTargetUser.getId());
-        Mockito.verify(userRepository, times(0)).update(any(User.class));
-        Mockito.verifyNoMoreInteractions(userRepository);
+        assertFalse(mockedUserFromRepository.isAdmin());
+        verify(userRepository, never()).update(any());
     }
 
     @Test
@@ -478,6 +481,7 @@ public class UserServiceImplTests {
     @Test
     void getUserDetails_Should_Return_UnauthorizedOperationException_When_UserIsNotAdmin() {
         User mockUser = createMockUser();
+        mockUser.setAdmin(false);
 
         Mockito.when(userRepository.getUserById(mockUser.getId())).thenReturn(mockUser);
 
