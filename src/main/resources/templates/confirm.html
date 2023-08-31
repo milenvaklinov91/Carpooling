@@ -39,9 +39,15 @@
 <div class="confirm-form">
   <h1>Confirm Registration</h1>
   <form th:action="@{/auth/confirm}" method="post">
-    <input type="email" class="confirm-input" th:name="email" placeholder="Email" required>
-    <input type="text" class="confirm-input" th:name="confirmationCode" placeholder="Confirmation Code" required>
-    <button type="submit" class="confirm-btn">Confirm</button>
+    <label for="Email">
+      <input type="email" id="email" class="confirm-input" th:name="email" placeholder="Email" required>
+    </label>
+    <label for="Confirmation code">
+      <input type="text" id="Confirmation code" class="confirm-input" th:name="confirmationCode" placeholder="Confirmation Code" required>
+    </label>
+    <div class="form-submit-btn">
+      <input type="submit" value="Confirm">
+    </div>
   </form>
   <p th:text="${error}" th:if="${error}" style="color: red;"></p>
   <p th:text="${message}" th:if="${message}" style="color: green;"></p>

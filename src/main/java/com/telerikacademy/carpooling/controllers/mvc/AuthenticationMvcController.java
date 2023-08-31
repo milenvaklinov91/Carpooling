@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.FileOutputStream;
@@ -101,12 +103,9 @@ public class AuthenticationMvcController {
             userService.create(user);
             emailService.sendConfirmationEmail(user.getEmail(), user.getConfirmationCode());
             return "confirm";
-        } catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException | EntityDuplicateException e) {
             bindingResult.rejectValue("username", "username_error", e.getMessage());
             return "userRegister";
-        } catch (EntityDuplicateException e) {
-                bindingResult.rejectValue("username", "username_error", e.getMessage());
-                return "userRegister";
         } catch (EmailExitsException e) {
             bindingResult.rejectValue("email", "email", e.getMessage());
             return "userRegister";
@@ -139,20 +138,20 @@ public class AuthenticationMvcController {
     }
 
     @PostMapping("/confirm")
-    public String confirmUser(@Valid @ModelAttribute("confirm") HttpSession session, @RequestParam String email, @RequestParam String confirmationCode,Model model) {
+    public RedirectView confirmUser(@Valid @ModelAttribute("confirm") @RequestParam String email,
+                                    @RequestParam String confirmationCode, Model model) {
         model.addAttribute("confirm");
         model.addAttribute("email");
         model.addAttribute("confirmationCode");
+
         User user = userService.getByEmail(email);
-        User logUser = authenticationHelper.tryGetCurrentUser(session);
         if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
             user.setStatus(2);
-            userService.update(user, logUser);
             model.addAttribute("message", "User confirmed successfully.");
-            return "redirect:auth/login";
+            return new RedirectView("/auth/login");
         } else {
             model.addAttribute("error", "Invalid confirmation code or email.");
-            return "confirm";
+            return new RedirectView("/auth/confirm");
         }
     }
 

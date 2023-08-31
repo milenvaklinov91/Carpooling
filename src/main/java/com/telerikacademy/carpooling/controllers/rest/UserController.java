@@ -182,12 +182,10 @@ public class UserController {
     }
 
     @PostMapping("/confirm")
-    public ResponseEntity<?> confirmUser(@RequestHeader HttpHeaders headers, @RequestParam String email, @RequestParam String confirmationCode) {
+    public ResponseEntity<?> confirmUser( @RequestParam String email, @RequestParam String confirmationCode) {
         User user = service.getByEmail(email);
-        User logUser = authenticationHelper.tryGetUser(headers);
         if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
             user.setStatus(2);
-            service.update(user, logUser);
             return ResponseEntity.ok("User confirmed successfully.");
         } else {
             return ResponseEntity.badRequest().body("Invalid confirmation code or email.");
