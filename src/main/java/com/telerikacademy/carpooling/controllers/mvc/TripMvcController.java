@@ -72,7 +72,7 @@ public class TripMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
-        return "trip";
+        return "singleTripView";
     }
 
     @GetMapping("/new")

@@ -3,45 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <title>Trips</title>
-<!--  <link rel="stylesheet" href="assets/css/uikit.min.css">
-  <link rel="stylesheet" href="assets/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/datepicker.min.css">
-  <link rel="stylesheet" href="assets/css/main.css">-->
+  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
+  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
+  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
+  <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
 </head>
-<body>
-<h1>Trips</h1>
-<br>
-<section>
-  <form action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
-    <input type="text" placeholder="Start Location" th:field="*{startLocation}" />
-    <input type="text" placeholder="End Location"  th:field="*{endLocation}"/>
-    <input type="text" placeholder="Username"  th:field="*{username}"/>
-    <select th:field="*{sortBy}">
-      <option value="">Default</option>>
-      <option value="Departure time">Departure Time</option>
-      <option value="Cost Per Person">Cost Per Person</option>
+<body class="body">
+<div class="container_but">
+  <div style="position: absolute; top: 20px; right: 50px;">
+    <a href="/" th:text="#{navigation.home}" style="background-color: transparent; padding: 10px; color: black; font-size: 20px;text-decoration: none; display: inline-block;">Home</a>
+    <!--<a href="#" th:href="@{/trips/new}" th:text="#{navigation.create-trip}" style="background-color: transparent; padding: 10px; color: black;font-size: 20px; text-decoration: none; display: inline-block;">Create a trip</a>-->
 
+  </div>
+</div>
+
+<div class="filter-banner-trips">
+  <form class="form-posts" action="#" th:action="@{__${#httpServletRequest.requestURI}__}" th:object="${filter}" method="get">
+    <input type="text" placeholder="Start" th:field="*{startLocation}" />
+    <input type="text" placeholder="End" th:field="*{endLocation}" />
+    <input type="text" placeholder="Username" th:field="*{username}" />
+
+
+    <select th:field="*{sortBy}">
+      <option value="">Default Sort</option>
+      <option value="departureTime">Departure Time</option>
+      <option value="costPerPerson">Cost</option>
     </select>
+
     <select th:field="*{sortOrder}">
       <option value="asc">Asc</option>
       <option value="desc">Desc</option>
     </select>
 
-    <input type="submit" value="Search" id="search">
+    <input type="submit" value="Search">
   </form>
 
-  <form action="#" th:action="@{/filters}" method="get">
-    <input type="submit" value="Reset" id="postmistress">
-    <br>
+  <form action="#" th:action="@{/trips}" method="get">
+    <input type="submit" value="Reset">
   </form>
+</div>
 
-  <div th:if="${trips.isEmpty()}">
-    <h2 th:text="No Trips">No Trips</h2>
-  </div>
+<div class="container">
+  <table>
+    <thead >
+     </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trip : ${trips}">
 
-  <br>
-  <br>
-  <hr>
-</section>
+      <td> <a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()()()})}" th:text="${trip.getStartLocation()}">Start</a></td>
+      <td> <a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}" th:text="${trip.getEndLocation()}">End</a></td>
+      <td> <a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}" th:text="${trip.getCreatedBy()}">CreatedBy</a></td>
+      <td> <a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}" th:text="${trip.getDepartureTime()}">Departure Time</a></td>
+      <td> <a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}" th:text="${trip.getCostPerPerson()}">Cost Per Person</a></td>
+      <!--<td><div class="cellSingleUser" th:text="${trip.getContent()}">Content</div></td>
+      <td><div class="cellSingleUser" th:text="${post.getTag().getType()}">Tag</div></td>
+      <td> <a th:href="@{/users/{userId}(userId=${post.getCreatedBy().getId()})}" th:text="${post.getCreatedBy().getUsername()}">Creator</a></td>
+      <td><div  class="cellSingleUser" th:text="${post.getCreateTime()}">Created Date</div></td>-->
+    </tr>
+    </tbody>
+  </table>
+</div>
+
 </body>
 </html>
