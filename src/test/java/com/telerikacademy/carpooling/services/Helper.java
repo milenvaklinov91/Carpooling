@@ -1,9 +1,6 @@
 package com.telerikacademy.carpooling.services;
 
-import com.telerikacademy.carpooling.models.Car;
-import com.telerikacademy.carpooling.models.Trip;
-import com.telerikacademy.carpooling.models.TripRequest;
-import com.telerikacademy.carpooling.models.User;
+import com.telerikacademy.carpooling.models.*;
 import com.telerikacademy.carpooling.models.enums.TripRequestStatus;
 import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
@@ -127,6 +124,25 @@ public class Helper {
         mockTripRequest.setTripRequestStatus(TripRequestStatus.REJECTED);
 
         return mockTripRequest;
+    }
+
+    public static Feedback createMockFeedback(){
+        var mockFeedback = new Feedback();
+        mockFeedback.setFeedbackId(1);
+        mockFeedback.setRatedUser(createMockUser());
+        mockFeedback.setUserByCreatedBy(createMockUser());
+        mockFeedback.setRatingValue(5);
+        mockFeedback.setTripId(1);
+        return mockFeedback;
+    }
+
+    public static FeedbackComment createFeedbackComment(){
+        var mockFeedbackComment = new FeedbackComment();
+        mockFeedbackComment.setFeedbackCommentId(1);
+        mockFeedbackComment.setComment("Comment");
+        mockFeedbackComment.setUserCreatedBy(createMockUser());
+        mockFeedbackComment.setFeedback(createMockFeedback());
+        return mockFeedbackComment;
     }
 
 }
