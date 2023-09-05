@@ -7596,7 +7596,7 @@ iframe.uk-cover {
 
 .uk-card-primary.uk-card-body .uk-totop:active, .uk-card-primary > :not([class*=uk-card-media]) .uk-totop:active, .uk-card-secondary.uk-card-body .uk-totop:active, .uk-card-secondary > :not([class*=uk-card-media]) .uk-totop:active, .uk-light .uk-totop:active, .uk-offcanvas-bar .uk-totop:active, .uk-overlay-primary .uk-totop:active, .uk-section-primary:not(.uk-preserve-color) .uk-totop:active, .uk-section-secondary:not(.uk-preserve-color) .uk-totop:active, .uk-tile-primary:not(.uk-preserve-color) .uk-totop:active, .uk-tile-secondary:not(.uk-preserve-color) .uk-totop:active {
     color: #fff
-}
+}¶
 
 .uk-card-primary.uk-card-body .uk-marker, .uk-card-primary > :not([class*=uk-card-media]) .uk-marker, .uk-card-secondary.uk-card-body .uk-marker, .uk-card-secondary > :not([class*=uk-card-media]) .uk-marker, .uk-light .uk-marker, .uk-offcanvas-bar .uk-marker, .uk-overlay-primary .uk-marker, .uk-section-primary:not(.uk-preserve-color) .uk-marker, .uk-section-secondary:not(.uk-preserve-color) .uk-marker, .uk-tile-primary:not(.uk-preserve-color) .uk-marker, .uk-tile-secondary:not(.uk-preserve-color) .uk-marker {
     background: #f8f8f8;

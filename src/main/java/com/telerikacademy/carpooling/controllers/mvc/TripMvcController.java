@@ -37,6 +37,11 @@ public class TripMvcController {
         this.authenticationHelper = authenticationHelper;
     }
 
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
+    }
+
     @GetMapping()
     public String showAllTrips(@ModelAttribute("filter") TripFilterDto filter, Model model, HttpSession session) {
         TripFilterOptions tripFilterOptions = new TripFilterOptions(
@@ -53,7 +58,7 @@ public class TripMvcController {
             List<Trip> trips = tripService.getAll(tripFilterOptions);
             model.addAttribute("trips", trips);
             model.addAttribute("filter", filter);
-            return "AllTripsView";
+            return "02-search-1";
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/login";
@@ -75,7 +80,7 @@ public class TripMvcController {
         return "singleTripView";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/new-trip")
     public String showNewTripPage(Model model, HttpSession session) {
         TripDto trip = (TripDto) session.getAttribute("currentTrip");
         try {
@@ -90,10 +95,10 @@ public class TripMvcController {
             return "redirect:auth/login";
         }
         model.addAttribute("trip", trip);
-        return "trip-new";
+        return "createTrip";
     }
 
-    @PostMapping("/new")
+    @PostMapping("/new-trip")
     public String createTrip(@Valid @ModelAttribute("trip") TripDto trip, BindingResult errors,
                              Model model, HttpSession session) {
         User user;
@@ -103,7 +108,7 @@ public class TripMvcController {
             return "redirect:auth/login";
         }
         if (errors.hasErrors()) {
-            return "trip-new";
+            return "createTrip";
         }
         try {
             Trip newTrip = tripMapper.fromTripDto(trip);
@@ -114,7 +119,7 @@ public class TripMvcController {
             return "not-found"; //todo
         } catch (EntityDuplicateException e) {
             errors.rejectValue("name", "duplicate_trip", e.getMessage());
-            return "trip-new"; //todo
+            return "createTrip"; //todo
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";

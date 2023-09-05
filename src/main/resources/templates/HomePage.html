@@ -10,13 +10,16 @@
   <meta name="HandheldFriendly" content="true">
   <meta name="format-detection" content="telephone=no">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link rel="stylesheet" href="assets/css/uikit.min.css">
-  <link rel="stylesheet" href="assets/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/datepicker.min.css">
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
+  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
+  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
+  <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
   <style>
     h3 p {
       color: white;
+    }
+    .page-header__phone {
+      list-style-type: none;
     }
   </style>
 </head>
@@ -31,45 +34,22 @@
         <div class="uk-container">
           <div class="page-header__inner">
             <div class="page-header__logo">
-              <div class="logo"><a class="logo__link" href="index.html"><img class="logo__img" src="assets/img/black.png" alt="DriveTogether"></a></div>
+              <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="assets/img/black.png" alt="DriveTogether"></a></div>
             </div>
             <div class="page-header__menu">
               <nav class="page-nav" data-uk-navbar="">
                 <ul class="uk-navbar-nav">
-                  <li><a href="02-search-1.html"> <img src="assets/img/search.svg" data-uk-svg alt="search">Find a Ride</a>
-                    <div class="uk-navbar-dropdown">
-                      <ul class="uk-nav uk-navbar-dropdown-nav">
-                        <li><a href="02-search-1.html">Find a Ride</a></li>
-                        <li><a href="02-search-2.html">Find a Ride Map</a></li>
-                        <li><a href="02-search-3.html">Find a Ride Result</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li><a href="07_typography.html"> <img src="assets/img/car.svg" data-uk-svg alt="car">Offer a Ride</a></li>
-                  <li><a href="03_blog-1.html"> <img src="assets/img/news-paper.svg" data-uk-svg alt="news-paper">News</a>
-                    <div class="uk-navbar-dropdown">
-                      <ul class="uk-nav uk-navbar-dropdown-nav">
-                        <li><a href="03_blog-1.html">Blog list</a></li>
-                        <li><a href="04_blog-2.html">Blog grid</a></li>
-                        <li><a href="05_blog-post.html">Blog post</a></li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li> <a href="06_contact.html"> <img src="assets/img/help2.svg" data-uk-svg alt="help2">Help</a></li>
+                  <li><a th:if="${isAuthenticated}" th:href="@{/trips}"> <img src="assets/img/search.svg" data-uk-svg alt="search">Show Trips</a></li>
+                  <li><a th:href="@{/about-us}"> <img src="assets/img/news-paper.svg" data-uk-svg alt="news-paper">About</a></li>
+                  <li><a th:href="@{/contact-us}"> <img src="assets/img/help2.svg" data-uk-svg alt="help2">Contact Us</a></li>
                 </ul>
               </nav>
             </div>
-            <li class="page-header__phone">
-              <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/login}">Profile</a>
-            </li>
 
-            <li class="page-header__phone">
-              <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a>
-            </li>
+            <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
+            <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/login}">Profile</a></li>
+            <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
 
-            <li class="page-header__phone">
-              <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
-            </li>
             <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
           </div>
         </div>
@@ -158,147 +138,8 @@
                     </div>
                   </div>
                 </div>
-                <div>
-                  <div class="driver-card">
-                    <div class="driver-card__media"><img src="assets/img/car-2.jpg" alt="car"></div>
-                    <div class="driver-card__body">
-                      <div class="driver-card__user"> <img src="assets/img/driver-2.png" alt="driver-pic"><span>Shane Michael</span></div>
-                      <div class="driver-card__info">
-                        <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                        <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                      </div>
-                      <div class="driver-card__services">
-                        <ul>
-                          <li><img src="assets/img/driver-service-1.png" alt="driver-service"><span>Max. 2 passengers in back seats</span></li>
-                          <li><img src="assets/img/driver-service-2.png" alt="driver-service"><span>Pets are not allowed in the Car</span></li>
-                          <li><img src="assets/img/driver-service-3.png" alt="driver-service"><span>Smoking is not allowed</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="driver-card">
-                    <div class="driver-card__media"><img src="assets/img/car-3.jpg" alt="car"></div>
-                    <div class="driver-card__body">
-                      <div class="driver-card__user"> <img src="assets/img/driver-3.png" alt="driver-pic"><span>John Matthew</span></div>
-                      <div class="driver-card__info">
-                        <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                        <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                      </div>
-                      <div class="driver-card__services">
-                        <ul>
-                          <li><img src="assets/img/driver-service-1.png" alt="driver-service"><span>Max. 2 passengers in back seats</span></li>
-                          <li><img src="assets/img/driver-service-2.png" alt="driver-service"><span>Pets are not allowed in the Car</span></li>
-                          <li><img src="assets/img/driver-service-3.png" alt="driver-service"><span>Smoking is not allowed</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="driver-card">
-                    <div class="driver-card__media"><img src="assets/img/car-4.jpg" alt="car"></div>
-                    <div class="driver-card__body">
-                      <div class="driver-card__user"> <img src="assets/img/driver-1.png" alt="driver-pic"><span>Ben Strokes</span></div>
-                      <div class="driver-card__info">
-                        <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                        <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                      </div>
-                      <div class="driver-card__services">
-                        <ul>
-                          <li><img src="assets/img/driver-service-1.png" alt="driver-service"><span>Max. 2 passengers in back seats</span></li>
-                          <li><img src="assets/img/driver-service-2.png" alt="driver-service"><span>Pets are not allowed in the Car</span></li>
-                          <li><img src="assets/img/driver-service-3.png" alt="driver-service"><span>Smoking is not allowed</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="driver-card">
-                    <div class="driver-card__media"><img src="assets/img/car-5.jpg" alt="car"></div>
-                    <div class="driver-card__body">
-                      <div class="driver-card__user"> <img src="assets/img/driver-2.png" alt="driver-pic"><span>Shane Michael</span></div>
-                      <div class="driver-card__info">
-                        <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                        <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                      </div>
-                      <div class="driver-card__services">
-                        <ul>
-                          <li><img src="assets/img/driver-service-1.png" alt="driver-service"><span>Max. 2 passengers in back seats</span></li>
-                          <li><img src="assets/img/driver-service-2.png" alt="driver-service"><span>Pets are not allowed in the Car</span></li>
-                          <li><img src="assets/img/driver-service-3.png" alt="driver-service"><span>Smoking is not allowed</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <div class="driver-card">
-                    <div class="driver-card__media"><img src="assets/img/car-6.jpg" alt="car"></div>
-                    <div class="driver-card__body">
-                      <div class="driver-card__user"> <img src="assets/img/driver-3.png" alt="driver-pic"><span>John Matthew</span></div>
-                      <div class="driver-card__info">
-                        <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                        <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                      </div>
-                      <div class="driver-card__services">
-                        <ul>
-                          <li><img src="assets/img/driver-service-1.png" alt="driver-service"><span>Max. 2 passengers in back seats</span></li>
-                          <li><img src="assets/img/driver-service-2.png" alt="driver-service"><span>Pets are not allowed in the Car</span></li>
-                          <li><img src="assets/img/driver-service-3.png" alt="driver-service"><span>Smoking is not allowed</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="section-about">
-        <div class="section-about__img"><img src="assets/img/car1.png" alt=""></div>
-        <div class="uk-section uk-container">
-          <div class="uk-grid uk-child-width-1-2@m" data-uk-grid>
-            <div>
-              <div class="section-title">
-                <div class="uk-h2">About GetRider</div>
-              </div>
-              <div class="section-content">
-                <ul class="about-list">
-                  <li>
-                    <div class="about-list-item">
-                      <div class="about-list-item__icon"><img src="assets/img/about-1.svg" alt="ico-about" data-uk-svg></div>
-                      <div class="about-list-item__desc">
-                        <div class="about-list-item__title">Millions Of Journeys</div>
-                        <div class="about-list-item__desc">Experience countless journeys as we take you where you need to go. Our platform connects you to many destinations.</div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="about-list-item">
-                      <div class="about-list-item__icon"><img src="assets/img/about-2.svg" alt="ico-about" data-uk-svg></div>
-                      <div class="about-list-item__desc">
-                        <div class="about-list-item__title">Largest Car Rider Service</div>
-                        <div class="about-list-item__desc">Join the largest community of car riders. Our extensive network ensures you'll always find a ride, no matter where you're headed.</div>
-                      </div>
-                    </div>
-                  </li>
-                  <li>
-                    <div class="about-list-item">
-                      <div class="about-list-item__icon"><img src="assets/img/about-3.svg" alt="ico-about" data-uk-svg></div>
-                      <div class="about-list-item__desc">
-                        <div class="about-list-item__title">Simple & Smart Riding</div>
-                        <div class="about-list-item__desc">Ride hassle-free with our intuitive platform. Smart features make booking, riding, and reaching your destination a seamless experience.</div>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div class="uk-visible@m"></div>
           </div>
         </div>
       </div>

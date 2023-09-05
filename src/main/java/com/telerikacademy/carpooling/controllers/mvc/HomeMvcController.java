@@ -23,7 +23,6 @@ public class HomeMvcController {
     private final TripService tripService;
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
-
     private final FeedbackService feedbackService;
 
     @Autowired
@@ -59,7 +58,7 @@ public class HomeMvcController {
 
 
         Long numberOfUsers = userService.countAllUsers();
-      /*  Long numberOfPosts = tripService.countAllTrips();*/
+        /*Long numberOfPosts = tripService.countAllTrips();*/
 
         model.addAttribute("topUsers", topUsers);
         model.addAttribute("topPassengersUsers", topPassengersUsers);
@@ -82,5 +81,16 @@ public class HomeMvcController {
 
         return "AdminPortalView";
     }
+
+    @GetMapping("/about-us")
+    public String showAboutUs(){
+        return "aboutUs";
+    }
+
+    @GetMapping("/contact-us")
+    public String showContactUs(HttpSession session){
+        return "contactUs";
+    }
+
 }
 

@@ -1,0 +1,363 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    color: #222222;
+    font-family: Work Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif;
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    font-weight: normal;
+    letter-spacing: -0.16px;
+    line-height: 1.63;
+}
+
+
+html {
+    box-sizing: border-box;
+}
+
+/**, *:before, *:after {*/
+/*    box-sizing: inherit;*/
+/*}*/
+
+.row{
+    margin-left: 27%;
+}
+
+.column {
+    float: left;
+    width: 20%;
+    margin-bottom: 5px;
+    padding: 0 8px;
+}
+
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 20px;
+    margin-top: 10px;
+}
+
+.about-section {
+    padding: 8px;
+    text-align: center;
+    background-color: #474e5d;
+    color: white;
+    margin-top: -10px;
+}
+
+.container {
+    text-align: center;
+    padding: 0 16px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.title {
+    color: grey;
+}
+
+.button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+}
+
+.button:hover {
+    background-color: #555;
+}
+
+@media screen and (max-width: 650px) {
+    .column {
+        width: 100%;
+        display: block;
+    }
+}
+
+#left {
+    margin-top: 25px;
+    color: white;
+    text-decoration: none;
+    margin-left: 15px;
+    background: #474e5d;
+
+}
+
+.back{
+    background: #474e5d;
+    width: 100%;
+}
+
+#our-team {
+    text-align:center;
+    margin: 5px;
+}
+
+#travel {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('travel.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 110%;
+}
+
+#access-denied {
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('access denied background.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 110%;
+}
+
+.text-not-found {
+    text-align: center;
+}
+
+.error {
+    text-align: center;
+}
+
+.logo {
+    text-decoration: none;
+    list-style: none;
+    font-size: 18px;
+    color: #181818;
+    margin-left: 25px;
+}
+
+
+.logo:hover {
+    color: #8c00ff;
+}
+
+.access-denied {
+    margin-left: 15%;
+    margin-top: 7%;
+}
+
+.error1 {
+    margin-left: 15%;
+}
+
+
+#profile{
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), url('emre-karatas-Ib2e4-Qy9mQ-unsplash.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 110%;
+}
+.container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-box{
+    margin-top: -50px;
+    background-color: hsla(284, 11%, 52%, 0.68);
+    text-align: center;
+    padding: 40px 90px;
+    color: #080808;
+    position: relative;
+    border-radius: 20px;
+}
+.profile-pic{
+    width: 200px;
+    border-radius: 50%;
+    background: #8365a2;
+    padding: 6px;
+    margin-bottom: 30px;
+}
+.car-box{
+    margin-top: -50px;
+    background-color: hsla(284, 11%, 52%, 0.68);
+    text-align: center;
+    padding: 40px 90px;
+    color: #080808;
+    position: relative;
+    border-radius: 20px;
+}
+.car-box div {
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* Apply basic styling to the container div */
+.car-data {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Style the label and input */
+.car-data label {
+    order: 1;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+.car-data input {
+    order: 2;
+    flex: 1;
+    padding: 5px;
+    margin-left: 100px;
+}
+
+
+.check {
+    margin-bottom: 10px;
+}
+
+/* Style the label and checkbox */
+.check label {
+    order: 1;
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.check input[type="checkbox"] {
+    order: 2;
+    margin-left: auto;
+    vertical-align: middle;
+}
+
+.check {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+.rate{
+    text-align: center;
+    font-size: 30px;
+}
+.rate .star {
+    text-align: center;
+    float: center;
+    height: 36px;
+    padding: 0 5px;
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.rate .star:before {
+    text-align: center;
+    content: '★ ';
+}
+
+.rate .star.filled {
+    color: #ffc700;
+}
+
+#formborder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*min-height: 100vh;*/
+    width: 550px;
+    height: 700px;
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 30px 40px;
+    background: transparent;
+    border: 2px solid #444343;
+    backdrop-filter: blur(3px);
+
+}
+
+#formborder h2 {
+    font-size: 36px;
+    text-align: center;
+}
+
+#formborder .input-box {
+    position: relative;
+    width: 100%;
+}
+
+.input-box input textarea {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 1px solid #444343;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #626060;
+    padding: 20px 45px 20px 20px;
+}
+
+.input-box input::placeholder {
+    color: #626060;
+}
+
+#formborder button {
+    width: 50%;
+    height: 45px;
+    background: white;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0, .1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #626060;
+    font-weight: 600;
+}
+
+#startCity, #endCity, #freeSeats, #pricePerPerson, #departureTime, #description, #select {
+    border-radius: 5px;
+    border: 1px solid #444343;
+}
+
+#startCity:focus {
+    border: 2px solid #8c00ff;
+}
+
+#endCity:focus {
+    border: 2px solid #8c00ff;
+}
+
+#freeSeats:focus {
+    border: 2px solid #8c00ff;
+}
+
+#pricePerPerson:focus {
+    border: 2px solid #8c00ff;
+}
+
+#departureTime:focus {
+    border: 2px solid #8c00ff;
+}
+
+
+#description:focus {
+    border: 2px solid #8c00ff;
+}
+
+#select:focus {
+    border: 2px solid #8c00ff;
+}
+
+#createTravel {
+    border-radius: 5px;
+    border: 1px solid #8c00ff;
+    width: 200px;
+}
+
+#heading1 {
+    text-align: center;
+
+}
