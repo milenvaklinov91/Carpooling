@@ -25,7 +25,7 @@ private UserRepository userRepository;
         if (userDto.getProfilePic() != null) {
             user.setProfilePic(userDto.getProfilePic());
         } else {
-            user.setProfilePic("profile.jpg");
+            user.setProfilePic("/images/profile_pics/profile.jpg");
         }
         user.setIsDriver(userDto.isDriver());
         String confirmationCode = ConfirmationCodeGenerator.generateCode();

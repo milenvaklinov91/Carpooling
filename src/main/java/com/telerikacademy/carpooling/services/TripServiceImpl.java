@@ -36,8 +36,10 @@ public class TripServiceImpl implements TripService {
     public List<Trip> getAllCompletedTrips() {
         return tripRepository.getAllCompletedTrips();
     }
-
-
+    @Override
+    public Long countAllCompletedTrips(){
+        return tripRepository.countAllCompletedTrips();
+    }
 
     @Override
     public void create(Trip trip, User user) {

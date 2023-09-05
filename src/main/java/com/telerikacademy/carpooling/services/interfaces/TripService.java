@@ -13,6 +13,8 @@ public interface TripService {
 
     List<Trip> getAllCompletedTrips();
 
+    public Long countAllCompletedTrips();
+
     void create(Trip trip, User user);
 
     void modify(Trip trip, User user);

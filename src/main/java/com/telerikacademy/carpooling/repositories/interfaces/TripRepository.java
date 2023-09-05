@@ -12,6 +12,8 @@ public interface TripRepository {
 
     List<Trip> getAllCompletedTrips();
 
+    public Long countAllCompletedTrips();
+
     void create(Trip trip);
 
     void modify(Trip trip);

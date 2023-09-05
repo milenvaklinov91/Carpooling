@@ -61,6 +61,11 @@ public class TripController {
         return tripService.getAllCompletedTrips();
     }
 
+    @GetMapping("/count")
+    public Long countAllUser() {
+        return tripService.countAllCompletedTrips();
+    }
+
     @PostMapping
     public Trip create(@RequestHeader HttpHeaders headers, @Valid @RequestBody TripDto tripDto) {
         try {

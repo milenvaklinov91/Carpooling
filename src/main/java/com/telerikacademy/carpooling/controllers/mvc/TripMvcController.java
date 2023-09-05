@@ -58,13 +58,13 @@ public class TripMvcController {
             List<Trip> trips = tripService.getAll(tripFilterOptions);
             model.addAttribute("trips", trips);
             model.addAttribute("filter", filter);
-            return "02-search-1";
+            return "AllTripsView";
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "redirect:/login";
         }
-
     }
+
 
     @GetMapping("/{id}")
     public String showSingleTrip(@PathVariable int id, Model model, HttpSession session) {

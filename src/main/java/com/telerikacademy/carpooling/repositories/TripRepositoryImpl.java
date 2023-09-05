@@ -90,6 +90,13 @@ public class TripRepositoryImpl implements TripRepository {
                     .list();
         }
     }
+    @Override
+    public Long countAllCompletedTrips() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Long> query = session.createQuery("select count(u) from Trip u where tripStatus = 2", Long.class);
+            return query.getSingleResult();
+        }
+    }
 
     @Override
     public void create(Trip trip) {

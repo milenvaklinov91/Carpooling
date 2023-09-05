@@ -172,7 +172,7 @@
                 <div class="location">
                     <div class="uk-grid uk-grid-small uk-child-width-1-2@m" data-uk-grid>
                         <div>
-                            <div class="location__title">We Have Now <b>2000</b> Finished Trips</div>
+                            <div class="location__title">We Have Now <b><li><span th:text="${completedTrips}"></span><span></span></li></b> Finished Trips</div>
                             <div class="location__text">Thank you for being a part of our journey and making it
                                 possible. Your trust in us drives us to keep providing exceptional service. Here's to
                                 many more trips ahead!
@@ -188,7 +188,7 @@
                             <div class="location__map"><img class="location__img" src="/assets/img/img-location-map.png"
                                                             alt="img-location-map">
                                 <ul class="location__numbers">
-                                  <li><span th:text="${numberOfUsers}"></span><span>Registered Users</span></li>
+                                    <li><span th:text="${numberOfUsers}"></span><span>Registered Users</span></li>
                                 </ul>
                             </div>
                         </div>
