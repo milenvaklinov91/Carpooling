@@ -90,4 +90,7 @@ public class TripServiceImpl implements TripService {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
     }
+   public Long countCompletedTripsByUser(int userId){
+       return tripRepository.countCompletedTripsByUser(userId);
+   }
 }

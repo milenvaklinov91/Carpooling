@@ -55,10 +55,10 @@
 
                     <li class="page-header__phone">
                         <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
-                                                      th:href="@{/auth/login}">Login</a>
+                           th:href="@{/auth/login}">Login</a>
                         <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a>
-                       <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
-                                                      th:href="@{/auth/logout}">Logout</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                           th:href="@{/auth/logout}">Logout</a>
                     </li>
 
                     <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
@@ -138,27 +138,26 @@
                     <div class="section-content">
                         <div class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m" data-uk-grid>
                             <div>
-                                <div class="driver-card">
-                                    <div class="driver-card__media"><img src="/assets/img/car-1.jpg" alt="car"></div>
+                                <div th:each="user, userIndex : ${topUsers}" class="driver-card">
+                                    <div class="driver-card__media"><img src="/assets/img/car-2.jpg" alt="car"></div>
                                     <div class="driver-card__body">
-                                        <div class="driver-card__user"><img src="/assets/img/driver-1.png"
-                                                                            alt="driver-pic"><span>Ben Strokes</span>
-                                        </div>
-                                        <div class="driver-card__info">
-                                            <div class="driver-card__date">Wed, 8 January<br> at 2:00 PM</div>
-                                            <div class="driver-card__price">For 1 Passenger <b>$19.50</b></div>
-                                        </div>
-                                        <div class="driver-card__services">
-                                            <ul>
-                                                <li><img src="/assets/img/driver-service-1.png"
-                                                         alt="driver-service"><span>Max. 1 passengers in back seats</span>
-                                                </li>
-                                                <li><img src="/assets/img/driver-service-2.png"
-                                                         alt="driver-service"><span>Pets are not allowed in the Car</span>
-                                                </li>
-                                                <li><img src="/assets/img/driver-service-3.png"
-                                                         alt="driver-service"><span>Smoking is not allowed</span></li>
-                                            </ul>
+                                        <div class="driver-card__body">
+                                            <div class="driver-card__user">
+                                                <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}" alt="driver-pic">
+                                                <span th:text="${user.getUsername()}"></span>
+                                                <span th:text="${topUsersRatings[userIndex.index]}"></span>
+
+                                            </div>
+                                            <div class="driver-card__info">
+                                                <div class="driver-card__date">
+                                                    Registration date:<span th:text="${user.getRegistrationDate()}"></span>
+                                                </div>
+                                            </div>
+                                                <div class="driver-card__date">
+                                                   Completed Trips:
+                                                    <span th:with="completedTripsCount=${completedTripsCounts[userIndex.index]}" th:text="${completedTripsCount}"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -173,9 +172,13 @@
                 <div class="location">
                     <div class="uk-grid uk-grid-small uk-child-width-1-2@m" data-uk-grid>
                         <div>
-                            <div class="location__title">We Have Now <b><li><span th:text="${completedTrips}"></span><span></span></li></b> Finished Trips</div>
+                            <div class="location__title">We Have Now <b>
+                                <li><span th:text="${completedTrips}"></span><span></span></li>
+                            </b> Finished Trips
+                            </div>
                             <div class="location__text">Thank you for being a part of our journey and making it
-                                possible. Your trust in us drives us to keep providing exceptional service. Here's to
+                                possible. Your trust in us drives us to keep providing exceptional service. Here's
+                                to
                                 many more trips ahead!
                             </div>
                             <div class="uk-grid uk-child-width-1-2" data-uk-grid>
@@ -186,7 +189,8 @@
                             </div>
                         </div>
                         <div>
-                            <div class="location__map"><img class="location__img" src="/assets/img/img-location-map.png"
+                            <div class="location__map"><img class="location__img"
+                                                            src="/assets/img/img-location-map.png"
                                                             alt="img-location-map">
                                 <ul class="location__numbers">
                                     <li><span th:text="${numberOfUsers}"></span><span>Registered Users</span></li>
@@ -197,24 +201,24 @@
                 </div>
             </div>
         </div>
-    </main>
-    <footer class="page-footer">
-        <div class="uk-container">
-            <div class="page-footer__inner">
-                <div class="page-footer__logo">
-                    <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
-                                                                                src="/assets/img/white.png"
-                                                                                alt="DriveTogether"></a></div>
-                </div>
-                <div class="page-footer__text">
-                    <h3><p>Let your unusual journey be a pleasure!</p></h3>
-                </div>
-                <div class="page-footer__social">
-                </div>
-                <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
+</main>
+<footer class="page-footer">
+    <div class="uk-container">
+        <div class="page-footer__inner">
+            <div class="page-footer__logo">
+                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                            src="/assets/img/white.png"
+                                                                            alt="DriveTogether"></a></div>
             </div>
+            <div class="page-footer__text">
+                <h3><p>Let your unusual journey be a pleasure!</p></h3>
+            </div>
+            <div class="page-footer__social">
+            </div>
+            <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
         </div>
-    </footer>
+    </div>
+</footer>
 </div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/uikit.min.js"></script>

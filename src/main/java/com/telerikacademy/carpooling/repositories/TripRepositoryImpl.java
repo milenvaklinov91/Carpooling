@@ -137,6 +137,15 @@ public class TripRepositoryImpl implements TripRepository {
             return allTrips;
         }
     }
+    public Long countCompletedTripsByUser(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            Query query = session.createQuery(
+                    "SELECT COUNT(*) FROM Trip WHERE createdBy.id = :user_id AND tripStatus = :completedStatus", Long.class);
+            query.setParameter("user_id", userId);
+            query.setParameter("completedStatus", FINISHED);
+            return (Long) query.uniqueResult();
+        }
+    }
 
     private String generateOrderBy(TripFilterOptions tripFilterOptions) {
         if (tripFilterOptions.getSortBy().isEmpty()) {

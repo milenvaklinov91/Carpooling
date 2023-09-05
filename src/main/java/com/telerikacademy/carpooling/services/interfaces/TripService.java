@@ -24,4 +24,5 @@ public interface TripService {
     void inProgressTripStatus(Trip trip, User user);
 
     void finishedTripStatus(Trip trip, User user);
+    Long countCompletedTripsByUser(int userId);
 }

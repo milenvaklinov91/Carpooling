@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -62,12 +63,28 @@ public class HomeMvcController {
         Long completedTrips = tripService.countAllCompletedTrips();
 
         Long numberOfUsers = userService.countAllUsers();
-        /*Long numberOfPosts = tripService.countAllTrips();*/
+
+        List<Double> topUsersRatings = new ArrayList<>();
+
+        for (User user : topUsers) {
+            Double userRating = feedbackService.getAverageRatingValueForUser(user.getId());
+            topUsersRatings.add(userRating);
+        }
+
+        List<Long> completedTripsCounts = new ArrayList<>();
+
+        for (User user : topUsers) {
+            int userId = user.getId();
+            Long completedTripsCount = tripService.countCompletedTripsByUser(userId);
+            completedTripsCounts.add(completedTripsCount);
+        }
 
         model.addAttribute("topUsers", topUsers);
         model.addAttribute("topPassengersUsers", topPassengersUsers);
         model.addAttribute("numberOfUsers", numberOfUsers);
         model.addAttribute("completedTrips", completedTrips);
+        model.addAttribute("topUsersRatings", topUsersRatings);
+        model.addAttribute("completedTripsCounts", completedTripsCounts);
 
         return "HomePage";
     }
