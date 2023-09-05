@@ -1,72 +1,157 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <title>My Profile</title>
-  <style>
-    #editForm {
-      display: none;
-    }
-  </style>
+    <meta charset="utf-8">
+    <title>My Profile</title>
+    <meta content="TeamEleven" name="author">
+    <meta content="DriveTogether" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
+    <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
+    <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
+    <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
+    <style>
+        h3 p {
+            color: white;
+        }
+        .page-header__phone {
+            list-style-type: none;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px;
+            background-color: orange;
+            color: white;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .text {
+            padding-left: 10px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px;
+        }
+
+        #editButton {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #editButton:hover {
+            background-color: #2980b9;
+        }
+        .about {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+
+        .text {
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
+<header class="page-header">
+    <div class="page-header__scroll" data-uk-sticky>
+        <div class="uk-container">
+            <div class="page-header__inner">
+                <div class="page-header__logo">
+                    <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/black.png" alt="DriveTogether"></a></div>
+                </div>
+                <li class="page-header__phone">
+                    <a class="uk-button uk-button-danger" th:href="@{/}" style="margin-right: 10px;">Home</a>
+                    <a class="uk-button uk-button-danger" th:href="@{/auth/logout}">Logout</a>
+                </li>
+                <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
+            </div>
+        </div>
+    </div>
+</header>
 <h1>My Profile</h1>
 
-<h2>User Information</h2>
-<div class="about">Username:</div>
-<h2 class="text" th:text="${user.getUsername()}">Username</h2>
-<div class="about">Full name:</div>
-<h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
-<div class="about">Email:</div>
-<h2 class="text" th:text="${user.getEmail()}">Email</h2>
-<div class="about">Phone number:</div>
-<h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
-<div class="driver-card__user">
-  <img th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
-</div>
-
-<button type="button" id="editButton">Edit</button>
-
-<form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
-      method="post">
-  <label for="username">Username:</label>
-  <input type="text" id="username" name="username" th:value="${user.username}" required>
-
-  <label for="firstname">First Name:</label>
-  <input type="text" id="firstname" name="firstName" th:value="${user.firstName}" required>
-
-  <label for="lastName">Last Name:</label>
-  <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" required>
-
-  <label for="email">Email:</label>
-  <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
-
-  <label for="phone_number">Phone number:</label>
-  <input type="text" id="phone_number" name="phone_number" th:value="${user.getPhone_number()}" required>
-
-  <div class="user-input-box">
-    <label for="profilePicture">Profile Picture:</label>
-    <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;"/>
-
-    <label class="upload-btn" for="profilePicture">Upload Photo</label>
-    <div class="image-preview">
-      <img id="profileImagePreview" th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
+        <h2 class="user-info">User Information</h2>
+<div class="user-info">
+    <div class="about">Username:</div>
+    <h2 class="text" th:text="${user.getUsername()}">Username</h2>
+    <div class="about">Full name:</div>
+    <h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
+    <div class="about">Email:</div>
+    <h2 class="text" th:text="${user.getEmail()}">Email</h2>
+    <div class="about">Phone number:</div>
+    <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
+    <div class="driver-card__user">
+        <img th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
     </div>
-  </div>
+</div>
+        <form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
+              method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" th:value="${user.username}" required>
 
-  <button type="submit">Save Changes</button>
-</form>
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstName" th:value="${user.firstName}" required>
 
-<script>
-  const editButton = document.getElementById("editButton");
-  const editForm = document.getElementById("editForm");
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" required>
 
-  editButton.addEventListener("click", function () {
-    editForm.style.display = "block";
-    editButton.style.display = "none";
-  });
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
 
-  const profilePictureInput = document.getElementById('profilePicture');
-  const profileImagePreview = document.getElementById('profileImagePreview');
+            <label for="phone_number">Phone number:</label>
+            <input type="text" id="phone_number" name="phone_number" th:value="${user.getPhone_number()}" required>
+
+            <div class="user-input-box">
+                <label for="profilePicture">Profile Picture:</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;"/>
+
+                <label class="upload-btn" for="profilePicture">Upload Photo</label>
+                <div class="image-preview">
+                    <img id="profileImagePreview" th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}"
+                         alt="Profile Picture" style="width: 150px; height: 150px;">
+                </div>
+            </div>
+
+            <button type="submit">Save Changes</button>
+        </form>
+
+    <script>
+        const editButton = document.getElementById("editButton");
+        const editForm = document.getElementById("editForm");
+
+        editButton.addEventListener("click", function () {
+            editForm.style.display = "block";
+            editButton.style.display = "none";
+        });
+
+        const profilePictureInput = document.getElementById('profilePicture');
+        const profileImagePreview = document.getElementById('profileImagePreview');
 
   profilePictureInput.addEventListener('change', (event) => {
     const selectedFile = event.target.files[0];

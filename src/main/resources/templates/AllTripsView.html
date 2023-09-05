@@ -54,10 +54,10 @@
 
                     <li class="page-header__phone"><a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
                                                       th:href="@{/auth/login}">Login</a></li>
-                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
-                                                      th:href="@{/auth/login}">Profile</a></li>
+                    <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a></li>
                     <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
                                                       th:href="@{/auth/logout}">Logout</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger"  th:href="@{/}">Home</a></li>
 
                     <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
                                                        data-uk-toggle data-uk-icon="menu"></a></div>
