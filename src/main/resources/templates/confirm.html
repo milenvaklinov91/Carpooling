@@ -1,56 +1,65 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Confirm Registration</title>
-  <style>
-    .confirm-form {
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    .confirm-input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+    <meta charset="UTF-8">
+    <title>Confirm Registration</title>
+    <style>
+        .confirm-form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
 
-    .confirm-btn {
-      background-color: #3498db;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        .confirm-input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
 
-    .confirm-btn:hover {
-      background-color: #2980b9;
-    }
-  </style>
+
+    </style>
 </head>
 <body>
-<div class="confirm-form">
-  <h1>Confirm Registration</h1>
-  <form th:action="@{/auth/confirm}" method="post">
-    <label for="Email">
-      <input type="email" id="email" class="confirm-input" th:name="email" placeholder="Email" required>
-    </label>
-    <label for="Confirmation code">
-      <input type="text" id="Confirmation code" class="confirm-input" th:name="confirmationCode" placeholder="Confirmation Code" required>
-    </label>
-    <div class="form-submit-btn">
-      <input type="submit" value="Confirm">
+<div class="section-banner">
+    <div class="section-banner__bg">
+        <div class="uk-cover-container"><img src="/assets/img/img-banner-blog-3.jpg" alt="img-banner" data-uk-cover>
+        </div>
+        <div class="section-banner__content uk-text-center">
+            <div class="uk-overlay uk-position-center-left uk-width-1-1">
+                <div class="section-banner__content uk-text-center">
+                    <div class="uk-overlay uk-position-center-left uk-width-1-1">
+                        <div class="uk-container uk-width-1-1">
+
+                                <div class="confirm-form">
+                                    <h1>Confirm Registration</h1>
+                                    <form th:fragment="confirm-form" action="#" th:action="@{/auth/confirm}" th:object="${confirm}"
+                                          method="post">
+                                        <label for="Email">
+                                            <input type="email" id="email" class="confirm-input" th:name="email"
+                                                   placeholder="Email" required>
+                                        </label>
+                                        <label for="Confirmation code">
+                                            <input type="text" id="Confirmation code" class="confirm-input"
+                                                   th:name="confirmationCode" placeholder="Confirmation Code" required>
+                                        </label>
+                                        <div class="form-submit-btn">
+                                            <input type="submit" value="Confirm">
+                                        </div>
+                                    </form>
+                                    <p th:text="${error}" style="color: red;"></p>
+                                    <p th:text="${message}" style="color: green;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
     </div>
-  </form>
-  <p th:text="${error}" th:if="${error}" style="color: red;"></p>
-  <p th:text="${message}" th:if="${message}" style="color: green;"></p>
-</div>
+    </div>
 </body>
 </html>

@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Portal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    header {
-      background-color: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-    nav ul {
-      list-style-type: none;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    nav ul li {
-      background-color: #f0f0f0;
-      padding: 20px;
-      border-radius: 5px;
-      text-align: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      flex: 1;
-    }
-    nav ul li a {
-      text-decoration: none;
-      color: #333;
-    }
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #333;
-      color: white;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Admin Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav ul li {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        .section-banner__bg img {
+            max-height: 300px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <header>
-  <h1>Welcome to the Admin Portal</h1>
+    <div class="section-banner">
+        <div class="section-banner__bg">
+            <div class="uk-cover-container"><img src="/assets/img/img-banner-blog.jpg" alt="img-banner" data-uk-cover>
+            </div>
+        </div>
+        <div class="section-banner__content uk-text-center">
+            <h1>Welcome to the Admin Portal</h1>
+        </div>
+    </div>
 </header>
 <nav>
-  <ul>
-    <li><a href="#" th:href="@{/users/admin}">See all users</a></li>
-    <li><a  href="#" th:href="@{/users/approved}">>View Approved Users</a></li>
-    <li><a href="#" th:href="@{/feedbacks/admin}">See all feedbacks</a></li>
-    <li><a href="#" th:href="@{/trips}">See all trips</a></li>
-    <li><a href="#" th:href="@{/trip-requests/admin}">See all trip requests</a></li>
-  </ul>
+    <ul>
+        <li><a href="#" th:href="@{/users/admin}">See all users</a></li>
+        <li><a href="#" th:href="@{/users/approved}">View Approved Users</a></li>
+        <li><a href="#" th:href="@{/feedbacks/admin}">See all feedbacks</a></li>
+        <li><a href="#" th:href="@{/trips}">See all trips</a></li>
+        <li><a href="#" th:href="@{/trip-requests/admin}">See all trip requests</a></li>
+    </ul>
 </nav>
 <footer>
-  <p>Admin Portal</p>
+    <p>Admin Portal</p>
 </footer>
 </body>
 </html>

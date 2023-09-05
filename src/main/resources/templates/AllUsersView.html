@@ -18,6 +18,9 @@
     h3 p {
       color: white;
     }
+    .page-header__phone {
+        list-style-type: none;
+      }
   </style>
 </head>
 
@@ -54,7 +57,31 @@
       </div>
     </div>
     <section>
-      <h2>All Users</h2>
+      <form th:action="@{/users}" th:object="${filter}" method="get">
+        <input type="text" placeholder="Username" th:field="*{username}" class="input-admin"/>
+        <input type="text" placeholder="First name" th:field="*{firstName}" class="input-admin"/>
+        <input type="text" placeholder="Last name" th:field="*{lastName}" class="input-admin"/>
+        <select th:field="*{sortBy}">
+          <option value="">Default Sort</option>
+          <option value="username">Username</option>
+          <option value="firstName">First name</option>
+          <option value="lastName">Last name</option>
+        </select>
+        <select th:field="*{sortOrder}">
+          <option value="asc">Asc</option>
+          <option value="desc">Desc</option>
+        </select>
+        <button type="submit" class="button-default-admin">Search</button>
+        <button type="reset" class="button-default-admin">Reset</button>
+      </form>
+    </section>
+        <div >
+          <h2 th:if="${users.isEmpty()}" th:text="'No Users'">No Users</h2>
+        </div>
+        <div th:unless="${users.isEmpty()}">
+
+
+        <h2>All Users</h2>
       <table>
         <thead>
         <tr>
@@ -107,6 +134,7 @@
         </tbody>
       </table>
     </section>
+          </div>
   </main>
   <footer class="page-footer">
     <div class="uk-container">

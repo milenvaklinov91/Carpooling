@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>My Profile</title>
+  <style>
+    #editForm {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<h1>My Profile</h1>
+
+<h2>User Information</h2>
+<div class="about">Username:</div>
+<h2 class="text" th:text="${user.getUsername()}">Username</h2>
+<div class="about">Full name:</div>
+<h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
+<div class="about">Email:</div>
+<h2 class="text" th:text="${user.getEmail()}">Email</h2>
+<div class="about">Phone number:</div>
+<h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
+<div class="driver-card__user">
+  <img th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
+</div>
+
+<button type="button" id="editButton">Edit</button>
+
+<form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
+      method="post">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" th:value="${user.username}" required>
+
+  <label for="firstname">First Name:</label>
+  <input type="text" id="firstname" name="firstName" th:value="${user.firstName}" required>
+
+  <label for="lastName">Last Name:</label>
+  <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" required>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
+
+  <label for="phone_number">Phone number:</label>
+  <input type="text" id="phone_number" name="phone_number" th:value="${user.getPhone_number()}" required>
+
+  <div class="user-input-box">
+    <label for="profilePicture">Profile Picture:</label>
+    <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;"/>
+
+    <label class="upload-btn" for="profilePicture">Upload Photo</label>
+    <div class="image-preview">
+      <img id="profileImagePreview" th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
+    </div>
+  </div>
+
+  <button type="submit">Save Changes</button>
+</form>
+
+<script>
+  const editButton = document.getElementById("editButton");
+  const editForm = document.getElementById("editForm");
+
+  editButton.addEventListener("click", function () {
+    editForm.style.display = "block";
+    editButton.style.display = "none";
+  });
+
+  const profilePictureInput = document.getElementById('profilePicture');
+  const profileImagePreview = document.getElementById('profileImagePreview');
+
+  profilePictureInput.addEventListener('change', (event) => {
+    const selectedFile = event.target.files[0];
+    if (selectedFile) {
+      const objectURL = URL.createObjectURL(selectedFile);
+      profileImagePreview.src = objectURL;
+      profileImagePreview.style.display = 'block';
+    }
+  });
+</script>
+</body>
+</html>

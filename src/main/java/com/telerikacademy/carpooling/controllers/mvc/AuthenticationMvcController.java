@@ -152,6 +152,7 @@ public class AuthenticationMvcController {
         User user = userService.getByEmail(email);
         if (user != null && user.getConfirmationCode().equals(confirmationCode)) {
             user.setStatus(2);
+            userService.update(user,user);
             model.addAttribute("message", "User confirmed successfully.");
             return new RedirectView("/auth/login");
         } else {

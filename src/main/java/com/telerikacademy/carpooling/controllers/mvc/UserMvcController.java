@@ -74,6 +74,19 @@ public class UserMvcController {
         }
     }
 
+    @PostMapping("/{id}/update")
+    public String updatePost(@PathVariable int id, @ModelAttribute("user") User updatedUser, HttpSession session, Model model) {
+        try {
+            User logUser = authenticationHelper.tryGetCurrentUser(session);
+            User existingUser = service.getById(id);
+            service.update(logUser, existingUser);
+            return "myProfileView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "not-found";
+        }
+    }
+
 
     @GetMapping("/{id}/block")
     public String blockUser(@PathVariable int id, Model model, HttpSession session) {
@@ -155,5 +168,6 @@ public class UserMvcController {
             return "AccessDeniedView";
         }
     }
+
 
 }
