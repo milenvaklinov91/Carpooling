@@ -2,26 +2,27 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="utf-8">
-  <title>About Us</title>
-  <meta content="TeamEleven" name="author">
-  <meta content="DriveTogether" name="description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="HandheldFriendly" content="true">
-  <meta name="format-detection" content="telephone=no">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
-  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
-  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
-  <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
-  <style>
-    h3 p {
-      color: white;
-    }
-    .page-header__phone {
-      list-style-type: none;
-    }
-  </style>
+    <meta charset="utf-8">
+    <title>About Us</title>
+    <meta content="TeamEleven" name="author">
+    <meta content="DriveTogether" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
+    <style>
+        h3 p {
+            color: white;
+        }
+
+        .page-header__phone {
+            list-style-type: none;
+        }
+    </style>
 </head>
 
 <body class="page-home">
@@ -29,97 +30,119 @@
 <div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div>
 
 <div class="page-wrapper">
-  <header class="page-header">
-    <div class="page-header__scroll" data-uk-sticky>
-      <div class="uk-container">
-        <div class="page-header__inner">
-          <div class="page-header__logo">
-            <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="assets/img/black.png" alt="DriveTogether"></a></div>
-          </div>
-          <div class="page-header__menu">
-            <nav class="page-nav" data-uk-navbar="">
-              <ul class="uk-navbar-nav">
-                <li><a th:href="@{/trips}"> <img src="assets/img/search.svg" data-uk-svg alt="search">Show Trips</a></li>
-                <li><a th:href="@{/about-us}"> <img src="assets/img/news-paper.svg" data-uk-svg alt="news-paper">About</a></li>
-                <li><a th:href="@{/contact-us}"> <img src="assets/img/help2.svg" data-uk-svg alt="help2">Contact Us</a></li>
-              </ul>
-            </nav>
-          </div>
+    <header class="page-header">
+        <div class="page-header__scroll" data-uk-sticky>
+            <div class="uk-container">
+                <div class="page-header__inner">
+                    <div class="page-header__logo">
+                        <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                                    src="assets/img/black.png"
+                                                                                    alt="DriveTogether"></a></div>
+                    </div>
+                    <div class="page-header__menu">
+                        <nav class="page-nav" data-uk-navbar="">
+                            <ul class="uk-navbar-nav">
+                                <li th:if="${isAuthenticated}"><a th:href="@{/trips}"> <img
+                                        th:src="@{/assets/img/search.svg}" data-uk-svg alt="search">Show Trips</a></li>
+                                <li><a th:href="@{/about-us}"> <img src="assets/img/news-paper.svg" data-uk-svg
+                                                                    alt="news-paper">About</a></li>
+                                <li><a th:href="@{/contact-us}"> <img src="assets/img/help2.svg" data-uk-svg
+                                                                      alt="help2">Contact Us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
 
-          <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
-          <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/login}">Profile</a></li>
-          <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+                                                      th:href="@{/auth/login}">Login</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                                                      th:href="@{/auth/login}">Profile</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                                                      th:href="@{/auth/logout}">Logout</a></li>
 
-          <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <main class="page-main">
-
-    <div class="section-about">
-      <div class="section-about__img"><img src="assets/img/car1.png" alt=""></div>
-      <div class="uk-section uk-container">
-        <div class="uk-grid uk-child-width-1-2@m" data-uk-grid>
-          <div>
-            <div class="section-title">
-              <div class="uk-h2">About DriveTogether</div>
+                    <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                                       data-uk-toggle data-uk-icon="menu"></a></div>
+                </div>
             </div>
-            <div class="section-content">
-              <ul class="about-list">
-                <li>
-                  <div class="about-list-item">
-                    <div class="about-list-item__icon"><img src="assets/img/about-1.svg" alt="ico-about" data-uk-svg></div>
-                    <div class="about-list-item__desc">
-                      <div class="about-list-item__title">Millions Of Journeys</div>
-                      <div class="about-list-item__desc">Experience countless journeys as we take you where you need to go. Our platform connects you to many destinations.</div>
+        </div>
+    </header>
+    <main class="page-main">
+
+        <div class="section-about">
+            <div class="section-about__img"><img src="assets/img/car1.png" alt=""></div>
+            <div class="uk-section uk-container">
+                <div class="uk-grid uk-child-width-1-2@m" data-uk-grid>
+                    <div>
+                        <div class="section-title">
+                            <div class="uk-h2">About DriveTogether</div>
+                        </div>
+                        <div class="section-content">
+                            <ul class="about-list">
+                                <li>
+                                    <div class="about-list-item">
+                                        <div class="about-list-item__icon"><img src="assets/img/about-1.svg"
+                                                                                alt="ico-about" data-uk-svg></div>
+                                        <div class="about-list-item__desc">
+                                            <div class="about-list-item__title">Millions Of Journeys</div>
+                                            <div class="about-list-item__desc">Experience countless journeys as we take
+                                                you where you need to go. Our platform connects you to many
+                                                destinations.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="about-list-item">
+                                        <div class="about-list-item__icon"><img src="assets/img/about-2.svg"
+                                                                                alt="ico-about" data-uk-svg></div>
+                                        <div class="about-list-item__desc">
+                                            <div class="about-list-item__title">Largest Car Rider Service</div>
+                                            <div class="about-list-item__desc">Join the largest community of car riders.
+                                                Our extensive network ensures you'll always find a ride, no matter where
+                                                you're headed.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="about-list-item">
+                                        <div class="about-list-item__icon"><img src="assets/img/about-3.svg"
+                                                                                alt="ico-about" data-uk-svg></div>
+                                        <div class="about-list-item__desc">
+                                            <div class="about-list-item__title">Simple & Smart Riding</div>
+                                            <div class="about-list-item__desc">Ride hassle-free with our intuitive
+                                                platform. Smart features make booking, riding, and reaching your
+                                                destination a seamless experience.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="about-list-item">
-                    <div class="about-list-item__icon"><img src="assets/img/about-2.svg" alt="ico-about" data-uk-svg></div>
-                    <div class="about-list-item__desc">
-                      <div class="about-list-item__title">Largest Car Rider Service</div>
-                      <div class="about-list-item__desc">Join the largest community of car riders. Our extensive network ensures you'll always find a ride, no matter where you're headed.</div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="about-list-item">
-                    <div class="about-list-item__icon"><img src="assets/img/about-3.svg" alt="ico-about" data-uk-svg></div>
-                    <div class="about-list-item__desc">
-                      <div class="about-list-item__title">Simple & Smart Riding</div>
-                      <div class="about-list-item__desc">Ride hassle-free with our intuitive platform. Smart features make booking, riding, and reaching your destination a seamless experience.</div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
+                    <div class="uk-visible@m"></div>
+                </div>
             </div>
-          </div>
-          <div class="uk-visible@m"></div>
         </div>
-      </div>
-    </div>
-  </main>
-  <footer class="page-footer">
-    <div class="uk-container">
-      <div class="page-footer__inner">
-        <div class="page-footer__logo">
-          <div class="logo"><a class="logo__link" href="/"><img class="logo__img" src="assets/img/white.png" alt="Drive Together"></a></div>
+    </main>
+    <footer class="page-footer">
+        <div class="uk-container">
+            <div class="page-footer__inner">
+                <div class="page-footer__logo">
+                    <div class="logo"><a class="logo__link" href="/"><img class="logo__img" src="assets/img/white.png"
+                                                                          alt="Drive Together"></a></div>
+                </div>
+                <div class="page-footer__text">
+                    <h3><p>Let your unusual journey be a pleasure!</p></h3>
+                </div>
+                <div class="page-footer__social">
+                </div>
+                <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
+            </div>
         </div>
-        <div class="page-footer__text">
-          <!--<p>Eorem ipsum dolor sit amet consectetur adipisicing elit edolore magna<br> aliqua ut enim ad minim veniam quis aliquip consequat</p>-->
-          <h3><p>Let your unusual journey be a pleasure!</p></h3>
-        </div>
-        <div class="page-footer__social">
-        </div>
-        <div class="page-footer__copy"> <span>(c) 2023 All rights reserved.</span></div>
-      </div>
-    </div><!-- Additional blocks-->
-  </footer>
+    </footer>
 </div>
-<script src="assets/js/jquery.min.js"></script>t
+<script src="assets/js/jquery.min.js"></script>
+t
 <script src="assets/js/uikit.min.js"></script>
 <script src="assets/js/uikit-icons.min.js"></script>
 <script src="assets/js/datepicker.min.js"></script>
