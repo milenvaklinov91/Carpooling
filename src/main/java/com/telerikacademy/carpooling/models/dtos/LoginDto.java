@@ -8,7 +8,7 @@ public class LoginDto {
     @NotEmpty(message = "Username can't be empty")
     private String username;
 
-    //@NotEmpty(message = "Password can't be empty")
+    @NotEmpty(message = "Password can't be empty")
     @Size(min = 8, message = "Password should be minimum 8 symbols")
     private String password;
 
