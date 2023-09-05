@@ -202,24 +202,22 @@
                     <td><div class="cellSingleUser" th:text="${user.isDriver()}">Driver</div></td>
                     <td>
                         <form th:if="${not user.isAdmin()}">
-                            <form  class="buttons" th:action="@{/{id}/make-admin(id=${user.getId()})}" th:object="${user}" method="get">
-                                <button type="submit">Make Admin</button>
-                            </form>
-
+                            <a  href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
+                                methods="get">MakeAdmin</a>
                         </form>
                         <form th:if="${user.isAdmin()}">
-                            <form  class="buttons" th:action="@{/{id}/demote-admin(id=${user.getId()})}" th:object="${user}" method="get">
-                                <button type="submit">Demote Admin</button>
-                            </form>
-
+                            <a href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
+                               methods="get">DemoteAdmin</a>
                         </form>
                     </td>
                     <td>
                         <form th:if="${not user.isBlocked()}">
-                            <button type="submit" formaction="@{/{id}/block(id=${user.getId()})}" class="action-button" method="get">Block</button>
+                            <a href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
+                               methods="get">Block</a>
                         </form>
                         <form th:if="${user.isBlocked()}">
-                            <button type="submit" formaction="@{/{id}/unblock(id=${user.getId()})}" class="action-button" method="get">Unblock</button>
+                            <a  href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
+                                methods="get">Unblock</a>
                         </form>
                     </td>
                 </tr>
