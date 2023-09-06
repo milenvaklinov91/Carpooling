@@ -37,4 +37,5 @@ public interface UserService {
     List<Trip> showTravelsByUser(int id);
     List<User> showAllPassengersInTrip(int id);
     List<User> getAllApprovedUsers(User logUser);
+    List<User> getAllRequestPassengersByTripId(int id);
 }

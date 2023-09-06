@@ -10,6 +10,7 @@ import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.UserServiceImpl;
 import com.telerikacademy.carpooling.services.interfaces.TripService;
+import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,17 +22,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/users")
 public class UserMvcController {
-    private final UserServiceImpl service;
+    private final UserService service;
     private final AuthenticationHelper authenticationHelper;
 
-    private final TripService tripService;
 
     @Autowired
-    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper ) {
+    public UserMvcController(UserService service, AuthenticationHelper authenticationHelper) {
 
         this.service = service;
         this.authenticationHelper = authenticationHelper;
-        this.tripService = tripService;
     }
 
     @ModelAttribute("isAuthenticated")

@@ -239,5 +239,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.getAllPassengersbyTripId(id);
     }
 
+    public  List<User> getAllRequestPassengersByTripId(int id){return userRepository.getAllRequestPassengersByTripId(id);}
+            
+
 
 }

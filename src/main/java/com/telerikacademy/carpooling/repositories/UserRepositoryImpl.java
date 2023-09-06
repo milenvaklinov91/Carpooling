@@ -222,6 +222,22 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    public  List<User> getAllRequestPassengersByTripId(int id){
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery(
+                    "SELECT tr.passenger FROM TripRequest tr " +
+                            "WHERE tr.tripRequestStatus = '0' AND tr.trip.id = :id",
+                    User.class
+            );
+            query.setParameter("id", id);
+            List<User> result = query.list();
+            if (result.size() == 0) {
+                throw new EntityNotFoundException("No passengers in this trip");
+            }
+            return result;
+        }
+    }
+
     public void create(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();

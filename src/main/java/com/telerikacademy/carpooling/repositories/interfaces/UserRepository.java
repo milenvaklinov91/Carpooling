@@ -29,4 +29,5 @@ public interface UserRepository {
     List<User> getPassengers();
     List<User> getAllPassengersbyTripId(int id);
     List<User> getAllAcceptedUsers();
+    List<User> getAllRequestPassengersByTripId(int id);
 }
