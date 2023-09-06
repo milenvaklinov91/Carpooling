@@ -4,12 +4,12 @@ import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.carpooling.models.Feedback;
 import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
-import com.telerikacademy.carpooling.services.UserServiceImpl;
-import com.telerikacademy.carpooling.services.interfaces.TripService;
+import com.telerikacademy.carpooling.services.interfaces.FeedbackService;
 import com.telerikacademy.carpooling.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,13 +24,15 @@ import java.util.List;
 public class UserMvcController {
     private final UserService service;
     private final AuthenticationHelper authenticationHelper;
+    private final FeedbackService feedbackService;
 
 
     @Autowired
-    public UserMvcController(UserService service, AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserService service, AuthenticationHelper authenticationHelper, FeedbackService feedbackService) {
 
         this.service = service;
         this.authenticationHelper = authenticationHelper;
+        this.feedbackService = feedbackService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -39,7 +41,7 @@ public class UserMvcController {
     }
 
     @GetMapping("/admin")
-    public String showAllUsers(@ModelAttribute("filter") UserFilterDto filter,@ModelAttribute("user") User admin, Model model, HttpSession session) {
+    public String showAllUsers(@ModelAttribute("filter") UserFilterDto filter, @ModelAttribute("user") User admin, Model model, HttpSession session) {
         UserFilterOptions filterOptions = new UserFilterOptions(
                 filter.getUsername(),
                 filter.getFirstName(),
@@ -64,7 +66,7 @@ public class UserMvcController {
         User loggedInUser = authenticationHelper.tryGetCurrentUser(session);
 
         try {
-            List<User> approvedUsers =service.getAllApprovedUsers(loggedInUser);
+            List<User> approvedUsers = service.getAllApprovedUsers(loggedInUser);
             model.addAttribute("approvedUsers", approvedUsers);
             return "approved-users";
         } catch (UnauthorizedOperationException e) {
@@ -77,6 +79,8 @@ public class UserMvcController {
         try {
             User user = service.getById(id);
             model.addAttribute("user", user);
+            Feedback feedback = feedbackService.getFeedbackById(id);
+            model.addAttribute("feedback", feedback);
             return "UserProfile";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
@@ -187,7 +191,9 @@ public class UserMvcController {
 
             if (logUser != null) {
                 List<Trip> userTrips = service.showTravelsByUser(logUser.getId());
+                List<User> request=service.getAllRequestPassengersByTripId(logUser.getId());
                 model.addAttribute("userTrips", userTrips);
+                model.addAttribute("request",request);
                 return "user-trips";
             } else {
                 return "redirect:/auth/login";
@@ -195,7 +201,12 @@ public class UserMvcController {
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
+        }catch (EntityNotFoundException e)
+        {
+            model.addAttribute("error", e.getMessage());
+            return "no-feedbackComments";
         }
     }
+
 
 }

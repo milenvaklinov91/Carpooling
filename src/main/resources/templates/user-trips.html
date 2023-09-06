@@ -89,6 +89,12 @@
       background-color: #fff;
       margin-top: 20px;
     }
+    #tripRequests {
+      display: none;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-in-out;
+    }
   </style>
 </head>
 <body>
@@ -112,6 +118,15 @@
 </header>
 <div class="trip-details">
   <h1>Trip Details</h1>
+  <button class="uk-button uk-button-danger" id="showTripRequestsButton" th:if="${!(user.isDriver)}">Show Trip Requests</button>
+  <div id="tripRequests" style="display: none;" th:if="${user.isDriver}">
+    <h2>Trip Requests:</h2>
+    <ul>
+      <li th:each="user : ${request}">
+        <p>Username: <span th:text="${user.username}"></span></p>
+      </li>
+    </ul>
+  </div>
   <ul>
     <li th:each="userTrip : ${userTrips}">
       <div class="detail-box">
@@ -159,6 +174,16 @@
 
       box.classList.toggle('active');
     });
+  });
+  const showTripRequestsButton = document.getElementById('showTripRequestsButton');
+  const tripRequests = document.getElementById('tripRequests');
+
+  showTripRequestsButton.addEventListener('click', () => {
+    if (tripRequests.style.display === 'none') {
+      tripRequests.style.display = 'block';
+    } else {
+      tripRequests.style.display = 'none';
+    }
   });
 </script>
 </html>

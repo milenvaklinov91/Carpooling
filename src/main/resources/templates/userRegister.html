@@ -169,6 +169,15 @@
                                                             placeholder.</label>
                                                     </div>
                                                     <div class="user-input-box">
+                                                        <label>Are you a driver?</label>
+                                                        <input type="radio" id="driverYes" name="isDriver" th:value="true"
+                                                               th:checked="*{isDriver}" th:onclick="setDriver(true)" />
+                                                        <label for="driverYes">Yes</label>
+                                                        <input type="radio" id="driverNo" name="isDriver" th:value="false"
+                                                               th:checked="*{!isDriver}" th:onclick="setDriver(false)" />
+                                                        <label for="driverNo">No</label>
+                                                    </div>
+                                                    <div class="user-input-box">
                                                         <label for="profilePicture">Profile Picture</label>
                                                         <input type="file" id="profilePicture" name="profilePicture"
                                                                accept="image/*" style="display:none;"/>
@@ -210,6 +219,17 @@
             profileImagePreview.style.display = 'block';
         }
     });
+
+    function setDriver (isDriver) {
+        if (isDriver) {
+            driverYes.checked = true;
+            driverNo.checked = false;
+        } else {
+            driverYes.checked = false;
+            driverNo.checked = true;
+        }
+    }
+
 </script>
 
 </body>

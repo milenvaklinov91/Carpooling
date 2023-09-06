@@ -88,19 +88,33 @@
         <div class="driver-card__user">
             <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}" alt="Profile Picture" style="width: 150px; height: 150px;">
         </div>
-        <div class="about">Username:</div>
-        <h2 class="text" th:text="${user.getUsername()}">Username</h2>
-        <div class="about">Full name:</div>
-        <h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
-        <div class="about">Email:</div>
-        <h2 class="text" th:text="${user.getEmail()}">Email</h2>
-        <div class="about">Phone number:</div>
-        <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
-        <div class="about">Registration Date:</div>
-        <h2 class="text" th:text="${user.getRegistrationDate()}">Registration date</h2>
-
+        <table>
+            <tr>
+                <td class="about">Username:</td>
+                <td class="text" th:text="${user.getUsername()}">Username</td>
+            </tr>
+            <tr>
+                <td class="about">Full name:</td>
+                <td class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}">Full name</td>
+            </tr>
+            <tr>
+                <td class="about">Email:</td>
+                <td class="text" th:text="${user.getEmail()}">Email</td>
+            </tr>
+            <tr>
+                <td class="about">Phone number:</td>
+                <td class="text" th:text="${user.getPhone_number()}">Phone number</td>
+            </tr>
+            <tr>
+                <td class="about">Registration Date:</td>
+                <td class="text" th:text="${user.getRegistrationDate()}">Registration date</td>
+            </tr>
+            <tr>
+                <td class="about">Rating:</td>
+                <td class="text" th:text="${feedback.getRatingValue()}">Rating</td>
+            </tr>
+        </table>
         <a th:href="@{/feedbacks/{userId}(userId=${user.id})}">View Feedbacks</a>
-
     </div>
     </div>
         </section>
@@ -127,5 +141,6 @@
 <script src="/assets/js/datepicker.min.js"></script>
 <script src="/assets/js/i18n/datepicker.en.js"></script>
 <script src="/assets/js/main.js"></script>
+
 </body>
 </html>

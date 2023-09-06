@@ -87,7 +87,8 @@ public class AuthenticationMvcController {
     @PostMapping("/register")
     public String handleRegister(@Valid @ModelAttribute("register") UserDto register,
                                  BindingResult bindingResult,
-                                 @RequestParam("profilePicture") MultipartFile profilePicture) {
+                                 @RequestParam("profilePicture") MultipartFile profilePicture,
+                                 @RequestParam(name = "isDriver", required = false) Boolean isDriver) {
         if (bindingResult.hasErrors()) {
             return "userRegister";
         }
@@ -96,6 +97,9 @@ public class AuthenticationMvcController {
             bindingResult.rejectValue("passwordConfirm", "password_error",
                     "Password confirmation should match password.");
             return "userRegister";
+        }
+        if (isDriver != null) {
+            register.setDriver(isDriver);
         }
 
         try {
