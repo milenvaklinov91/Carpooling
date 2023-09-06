@@ -20,7 +20,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Home page</title>
+    <title>User Profile</title>
     <meta content="TeamEleven" name="author">
     <meta content="DriveTogether" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,9 +63,11 @@
                         </nav>
                     </div>
 
-                    <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
-                    <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a></li>
-                    <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+                    <li class="page-header__phone">
+                        <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My Profile</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a>
+                    </li>
 
                     <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="/#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
                 </div>
@@ -94,6 +96,7 @@
         <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
         <div class="about">Registration Date:</div>
         <h2 class="text" th:text="${user.getRegistrationDate()}">Registration date</h2>
+        <a th:href="@{/feedbacks/{userId}(userId=${user.id})}">View Feedbacks</a>
     </div>
     </div>
         </section>
