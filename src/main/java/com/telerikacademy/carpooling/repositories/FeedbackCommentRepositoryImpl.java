@@ -28,7 +28,7 @@ public class FeedbackCommentRepositoryImpl implements FeedbackCommentRepository 
         try (Session session = sessionFactory.openSession()) {
             FeedbackComment feedbackComment = session.get(FeedbackComment.class, id);
             if (feedbackComment == null) {
-                throw new EntityNotFoundException("Travel", id);
+                throw new EntityNotFoundException("Feedback", id);
             }
             return feedbackComment;
         }

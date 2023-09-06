@@ -98,7 +98,9 @@
         <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
         <div class="about">Registration Date:</div>
         <h2 class="text" th:text="${user.getRegistrationDate()}">Registration date</h2>
+
         <a th:href="@{/feedbacks/{userId}(userId=${user.id})}">View Feedbacks</a>
+
     </div>
     </div>
         </section>

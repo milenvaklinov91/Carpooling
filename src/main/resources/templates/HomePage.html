@@ -148,9 +148,12 @@
                                             <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}"
                                                  alt="driver-pic">
 
-                                            <a href="#" th:href="@{/users/{id}(id=${user.getId()})}">
+                                            <a th:if="${isAuthenticated}" th:href="@{/users/{id}(id=${user.getId()})}">
                                                 <span th:text="${user.getUsername()}"></span>
                                             </a>
+                                            <span th:unless="${isAuthenticated}">
+                                             <span th:text="${user.getUsername()}"></span>
+                                            </span>
                                             <span th:text="${topUsersRatings[userIndex.index]}"></span>
 
                                         </div>

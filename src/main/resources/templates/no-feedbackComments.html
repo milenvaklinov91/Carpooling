@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>User Feedback</title>
+  <title>No feedback</title>
   <meta content="TeamEleven" name="author">
   <meta content="DriveTogether" name="description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,19 +26,6 @@
     h1 {
       font-weight: bold;
       color: orange;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-
-    li {
-      list-style-type: none;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    p {
-      color: white;
     }
   </style>
 </head>
@@ -81,16 +68,8 @@
     </div>
   </div>
 </header>
-<div style="background-image: url('/assets/img/yes-content.jpg'); background-size: cover; background-position: center; height: 100vh;">
-  <h1>User Feedback</h1>
-  <ul>
-    <li th:each="feedback : ${feedbackComment}">
-      <div>
-        <p>Comment by: <span th:text="${feedbackComment.getUserCreatedBy().getUsername()}"></span></p>
-        <p>Comment: <span th:text="${feedbackComment.getComment()}"></span></p>
-      </div>
-    </li>
-  </ul>
+<div style="background-image: url('/assets/img/new-no-content.jpg'); background-size: cover; background-position: center; height: 100vh;">
+<h1>No feedback found</h1>
 </div>
 </body>
 </html>

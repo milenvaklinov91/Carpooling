@@ -75,6 +75,11 @@
         .text {
             font-size: 16px;
         }
+        .separator {
+            height: 50px;
+            background-color: #fff;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -155,6 +160,22 @@
 
             <button type="submit">Save Changes</button>
         </form>
+<div class="separator"></div>
+<footer class="page-footer">
+    <div class="uk-container">
+        <div class="page-footer__inner">
+            <div class="page-footer__logo">
+                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/white.png" alt="DriveTogether"></a></div>
+            </div>
+            <div class="page-footer__text">
+                <h3><p>Let your unusual journey be a pleasure!</p></h3>
+            </div>
+            <div class="page-footer__social">
+            </div>
+            <div class="page-footer__copy"> <span><p>Trip details</p></span></div>
+        </div>
+    </div>
+</footer>
 
     <script>
         const editButton = document.getElementById("editButton");
