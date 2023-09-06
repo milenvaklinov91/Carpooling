@@ -1,189 +1,132 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-  <meta charset="utf-8">
-  <title>My Trips</title>
-  <meta content="TeamEleven" name="author">
-  <meta content="DriveTogether" name="description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="HandheldFriendly" content="true">
-  <meta name="format-detection" content="telephone=no">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
-  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
-  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
+  <title>Trips List</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.css"/>
+  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
   <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
+
   <style>
+    body {
+      padding: 50px;
+      font-family: Arial, sans-serif;
+    }
+    .table-hover tbody tr:hover {
+      background-color: #e8f0fe;
+    }
+
     h3 p {
       color: white;
     }
+
     .page-header__phone {
       list-style-type: none;
     }
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      margin: 0;
-      padding: 0;
-    }
 
-    h1 {
-      text-align: center;
-      padding: 20px;
-      background-color: orange;
+    .user-input-box label {
       color: white;
-    }
-
-    form {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      margin: 20px;
-    }
-    .trip-details {
-      text-align: center;
-    }
-
-    .detail-box {
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      margin-right: 20px;
-      display: inline-block;
-      vertical-align: top;
-      width: calc(50% - 20px);
-      box-sizing: border-box;
-    }
-
-    .created-by-box {
-      background-color: orange;
-      color: white;
-    }
-
-    .other-details-box {
-      padding: 10px;
-    }
-    .detail-box .content {
-      display: none;
-    }
-
-
-    .detail-box.active {
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      margin: 10px;
-      width: calc(50% - 20px);
-      box-sizing: border-box;
-    }
-
-    .detail-box.active .content {
-      display: block;
-    }
-    .separator {
-      height: 50px;
-      background-color: #fff;
-      margin-top: 20px;
-    }
-    #tripRequests {
-      display: none;
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease-in-out;
     }
   </style>
 </head>
-<body>
 <header class="page-header">
   <div class="page-header__scroll" data-uk-sticky>
     <div class="uk-container">
       <div class="page-header__inner">
         <div class="page-header__logo">
-          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/black.png" alt="DriveTogether"></a></div>
+          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                      src="/assets/img/black.png"
+                                                                      alt="DriveTogether"></a></div>
         </div>
+        <div class="page-header__menu">
+          <nav class="page-nav" data-uk-navbar="">
+            <ul class="uk-navbar-nav">
+              <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img
+                      src="/assets/img/search.svg"
+                      data-uk-svg alt="search">Create
+                Trip</a></li>
+              <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
+                                                  alt="news-paper">About</a></li>
+              <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
+                                                    alt="help2">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+
         <li class="page-header__phone">
-          <a class="uk-button uk-button-danger" th:href="@{/}" style="margin-right: 10px;">Home</a>
-          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My
-            Profile</a>
-          <a class="uk-button uk-button-danger" th:href="@{/auth/logout}">Logout</a>
-        </li>
-        <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
+          <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+             th:href="@{/auth/login}">Login</a>
+          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+             th:href="@{/my-profile}">Profile</a>
+          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+             th:href="@{/auth/logout}">Logout</a></li>
+
+        <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                           data-uk-toggle data-uk-icon="menu"></a></div>
       </div>
     </div>
   </div>
 </header>
-<div class="trip-details">
-  <h1>Trip Details</h1>
-  <button class="uk-button uk-button-danger" id="showTripRequestsButton" th:if="${!(user.isDriver)}">Show Trip Requests</button>
-  <div id="tripRequests" style="display: none;" th:if="${user.isDriver}">
-    <h2>Trip Requests:</h2>
-    <ul>
-      <li th:each="user : ${request}">
-        <p>Username: <span th:text="${user.username}"></span></p>
-      </li>
-    </ul>
-  </div>
-  <ul>
-    <li th:each="userTrip : ${userTrips}">
-      <div class="detail-box">
-        <div class="header">
-          <p><strong>Start Location:</strong> [[${userTrip.startLocation}]]</p>
-        </div>
-        <div class="content">
-          <p><strong>End Location:</strong> [[${userTrip.endLocation}]]</p>
-          <p><strong>Departure Time:</strong> [[${userTrip.departureTime}]]</p>
-          <p><strong>Cost Per Person:</strong> [[${userTrip.costPerPerson}]]</p>
-          <p><strong>Available Seats:</strong> [[${userTrip.availableSeats}]]</p>
-          <p><strong>Description:</strong> [[${userTrip.description}]]</p>
-          <p><strong>Duration:</strong> [[${userTrip.duration}]]</p>
-          <p><strong>Distance:</strong> [[${userTrip.distance}]]</p>
-          <p><strong>Status:</strong> [[${userTrip.tripStatus}]]</p>
-        </div>
-      </div>
-      <hr>
-    </li>
-  </ul>
+<hr class="separator">
+<div class="container">
+  <h2 class="mb-4">Trips List</h2>
+  <table id="tripsTable" class="table table-bordered table-striped table-hover">
+    <thead class="thead-dark">
+    <tr>
+      <th>Start</th>
+      <th>End</th>
+      <th>Departure</th>
+      <th>Price</th>
+      <th>AvailableSeats</th>
+      <th>Distance</th>
+      <th>Duration</th>
+      <th>Description</th>
+      <!-- Add more columns if necessary -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="trip : ${userTrips}">
+     <!--<a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}"> --><td th:text="${trip.startLocation}"></td>
+      <td th:text="${trip.endLocation}"></td>
+      <td th:text="${trip.departureTime}"></td>
+      <td th:text="${trip.costPerPerson}"></td>
+      <td th:text="${trip.availableSeats}"></td>
+      <td th:text="${trip.distance} + 'km'"></td>
+      <td th:text="${trip.duration} + 'min'"></td>
+      <td th:text="${trip.description}"></td> <!--<span th:text="${trip.startLocation()}"></span>--> </a>
+    </tr>
+    </tbody>
+  </table>
+
 </div>
-<div class="separator"></div>
-<footer class="page-footer">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.21/datatables.min.js"></script>
+
+<script>
+  $(document).ready(function() {
+    $('#tripsTable').DataTable();
+  });
+</script>
+
+<footer class="page-footer" style="position: fixed; left: 0; bottom: 0; width: 100%; z-index: 9999;">
   <div class="uk-container">
     <div class="page-footer__inner">
       <div class="page-footer__logo">
-        <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/white.png" alt="DriveTogether"></a></div>
+        <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                    src="/assets/img/white.png"
+                                                                    alt="DriveTogether"></a></div>
       </div>
       <div class="page-footer__text">
         <h3><p>Let your unusual journey be a pleasure!</p></h3>
       </div>
       <div class="page-footer__social">
       </div>
-      <div class="page-footer__copy"> <span><p>Trip details</p></span></div>
+      <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
     </div>
   </div>
 </footer>
-</body>
-<script>
-
-  const detailBoxes = document.querySelectorAll('.detail-box');
-
-  detailBoxes.forEach((box) => {
-    box.addEventListener('click', () => {
-
-      box.classList.toggle('active');
-    });
-  });
-  const showTripRequestsButton = document.getElementById('showTripRequestsButton');
-  const tripRequests = document.getElementById('tripRequests');
-
-  showTripRequestsButton.addEventListener('click', () => {
-    if (tripRequests.style.display === 'none') {
-      tripRequests.style.display = 'block';
-    } else {
-      tripRequests.style.display = 'none';
-    }
-  });
-</script>
-</html>

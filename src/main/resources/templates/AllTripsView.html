@@ -179,6 +179,9 @@
                                                 <div th:unless="${trip.getDescription() != null}"
                                                      th:text="'Description: No description'"></div>
                                             </div>
+                                            <span class="list-articles-item__price" href="#"
+                                                  th:text=" 'Status: ' + ${trip.getTripStatus()}" style="color: red;">Status</span>
+                                            <br>
                                             <br>
 
                                             <div class="driver-card__services">

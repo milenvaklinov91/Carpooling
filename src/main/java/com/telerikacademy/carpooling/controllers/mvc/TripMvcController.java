@@ -66,6 +66,7 @@ public class TripMvcController {
           User user = authenticationHelper.tryGetCurrentUser(session);
           Trip trip = tripService.getTripById(id);
           model.addAttribute("trip",trip);
+            return "singleTripView";
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
@@ -73,7 +74,7 @@ public class TripMvcController {
             model.addAttribute("error", e.getMessage());
             return "not-found";
         }
-        return "singleTripView";
+
     }
 
     @GetMapping("/new-trip")
@@ -219,5 +220,159 @@ public class TripMvcController {
             return "redirect:/login";
         }
     }
+
+    /*@GetMapping("/{travelId}/createFeedback/{recipientId}")
+    public String showFeedback(HttpSession session,
+                               @PathVariable int travelId, @PathVariable int recipientId,
+                               Model model) {
+        User loggedUser;
+        try {
+            loggedUser = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/";
+        }
+        try {
+            Travel travel = travelService.get(travelId);
+            User recipientFb = userService.get(recipientId);
+            model.addAttribute("travel", travel);
+            model.addAttribute("recipient", recipientFb);
+            model.addAttribute("feedback", new Feedback());
+            return "TravelView";
+
+        } catch (AuthorizationException | TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "NotFoundView";
+        }
+    }
+
+    @PostMapping("/{travelId}/createFeedback/{recipientId}")
+    public String createFeedback(HttpSession session,
+                                 @PathVariable int travelId, @PathVariable int recipientId,
+                                 @Valid @ModelAttribute("feedback") FeedbackDto feedback,
+                                 BindingResult bindingResult,
+                                 Model model) {
+        User loggedUser;
+        try {
+            loggedUser = authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/";
+        }
+        try {
+            Travel travel = travelService.get(travelId);
+            model.addAttribute("travel", travel);
+            if (bindingResult.hasErrors()) {
+                return "TravelView";
+            }
+            feedbackService.create(loggedUser, userService.get(recipientId), feedbackMapper.mapFromDto(feedback), travelId);
+            return "redirect:/travels/{travelId}";
+        } catch (AuthorizationException | TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        } catch (EntityNotFoundException e) {
+            model.addAttribute("error", e.getMessage());
+            return "NotFoundView";
+        }
+    }
+
+    @GetMapping("{id}/apply")
+    public String applyForTravel(HttpSession httpSession, Model model, @PathVariable int id) {
+        try {
+            User loggedUser = authenticationHelper.tryGetCurrentUser(httpSession);
+            Travel travel = travelService.get(id);
+            model.addAttribute("travel", travelMapper.mapToDto(travelService.get(id)));
+            travelService.applyForTravel(travel, loggedUser);
+            return "redirect:/travels/{id}";
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("{id}/cancel-apply")
+    public String cancelTravel(HttpSession httpSession, Model model, @PathVariable int id) {
+        try {
+            User loggedUser = authenticationHelper.tryGetCurrentUser(httpSession);
+            Travel travel = travelService.get(id);
+            model.addAttribute("travel", travelMapper.mapToDto(travelService.get(id)));
+            travelService.cancelForTravel(travel, loggedUser);
+            return "redirect:/travels/{id}";
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("{travelId}/accept-apply/{candidateId}")
+    public String acceptCandidate(HttpSession httpSession, Model model, @PathVariable int travelId, @PathVariable int candidateId) {
+        try {
+            User loggedUser = authenticationHelper.tryGetCurrentUser(httpSession);
+            User candidate = userService.get(candidateId);
+            Travel travel = travelService.get(travelId);
+            model.addAttribute("travel", travelMapper.mapToDto(travelService.get(travelId)));
+            travelService.acceptCandidate(travel, loggedUser, candidate);
+            return "redirect:/travels/{travelId}";
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+
+    @GetMapping("{travelId}/decline-apply/{passengerId}")
+    public String declinePassenger(HttpSession httpSession, Model model, @PathVariable int travelId, @PathVariable int passengerId) {
+        try {
+            User loggedUser = authenticationHelper.tryGetCurrentUser(httpSession);
+            User passenger = userService.get(passengerId);
+            Travel travel = travelService.get(travelId);
+            model.addAttribute("travel", travelMapper.mapToDto(travelService.get(travelId)));
+            travelService.declinePassenger(travel, loggedUser, passenger);
+            return "redirect:/travels/{travelId}";
+        } catch (AuthorizationException e) {
+            return "redirect:/login";
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (TravelException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
+    @GetMapping("/myTravels")
+    public String getMyTravels(@ModelAttribute("filter") FilterTravelDto filter, Model model, HttpSession httpSession) {
+        FilterOptionsTravels filterOptions = new FilterOptionsTravels(
+                filter.getStartCity(),
+                filter.getEndCity(),
+                filter.getDepartureTime(),
+                filter.getDescription(),
+                filter.getComplete(),
+                filter.getSortBy(),
+                filter.getSortOrder());
+        try {
+            User loggedUser = authenticationHelper.tryGetCurrentUser(httpSession);
+            List<TravelMyDto> travels = travelMapper.mapToMyDto(travelService.getMyTravels(filterOptions, loggedUser.getId()));
+            model.addAttribute("filter", filter);
+            model.addAttribute("travels", travels);
+            return "MyTravelsView";
+        } catch (AuthorizationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "redirect:/login";
+        }
+    }*/
+
 
 }
