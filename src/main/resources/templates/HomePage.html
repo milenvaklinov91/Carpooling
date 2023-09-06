@@ -58,6 +58,8 @@
                            th:href="@{/auth/login}">Login</a>
                         <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My
                             Profile</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/users/travels}">My
+                            Trips</a>
                         <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
                            th:href="@{/auth/logout}">Logout</a>
                     </li>

@@ -4,12 +4,12 @@ import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
-import com.telerikacademy.carpooling.models.FeedbackComment;
+import com.telerikacademy.carpooling.models.Trip;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.UserServiceImpl;
-import com.telerikacademy.carpooling.services.interfaces.FeedbackCommentService;
+import com.telerikacademy.carpooling.services.interfaces.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,18 +24,23 @@ public class UserMvcController {
     private final UserServiceImpl service;
     private final AuthenticationHelper authenticationHelper;
 
+    private final TripService tripService;
+
     @Autowired
-    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper ) {
+    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper, TripService tripService) {
 
         this.service = service;
         this.authenticationHelper = authenticationHelper;
+        this.tripService = tripService;
     }
+
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
     @GetMapping("/admin")
-    public String showAllUsers(@ModelAttribute("filter") UserFilterDto filter, Model model, HttpSession session) {
+    public String showAllUsers(@ModelAttribute("filter") UserFilterDto filter,@ModelAttribute("user") User admin, Model model, HttpSession session) {
         UserFilterOptions filterOptions = new UserFilterOptions(
                 filter.getUsername(),
                 filter.getFirstName(),
@@ -44,18 +49,24 @@ public class UserMvcController {
                 filter.getSortOrder());
 
 
-        User admin = authenticationHelper.tryGetCurrentUser(session);
-        List<User> users = service.getAll(filterOptions, admin);
-        model.addAttribute("users", users);
-        model.addAttribute("filter", filter);
-        return "AllUsersView";
+        admin = authenticationHelper.tryGetCurrentUser(session);
+        if (admin != null) {
+            List<User> users = service.getAll(filterOptions, admin);
+            model.addAttribute("users", users);
+            model.addAttribute("filter", filter);
+            return "AllUsersView";
+        } else {
+            return "redirect:/auth/login";
+        }
+
     }
+
     @GetMapping("/approved")
     public String getAllApprovedUsers(Model model, HttpSession session) {
         User loggedInUser = authenticationHelper.tryGetCurrentUser(session);
 
         try {
-            List<User> approvedUsers =service.getAllApprovedUsers(loggedInUser);
+            List<User> approvedUsers = service.getAllApprovedUsers(loggedInUser);
             model.addAttribute("approvedUsers", approvedUsers);
             return "approved-users";
         } catch (UnauthorizedOperationException e) {
@@ -171,6 +182,22 @@ public class UserMvcController {
     }
 
 
+    @GetMapping("/travels")
+    public String showTravelsByUser(@ModelAttribute("user") User logUser, HttpSession session, Model model) {
+        try {
+            logUser = authenticationHelper.tryGetCurrentUser(session);
 
+            if (logUser != null) {
+                List<Trip> userTrips = service.showTravelsByUser(logUser.getId());
+                model.addAttribute("userTrips", userTrips);
+                return "user-trips";
+            } else {
+                return "redirect:/auth/login";
+            }
+        } catch (UnauthorizedOperationException e) {
+            model.addAttribute("error", e.getMessage());
+            return "AccessDeniedView";
+        }
+    }
 
 }
