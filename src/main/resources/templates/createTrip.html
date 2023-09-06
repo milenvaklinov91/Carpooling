@@ -140,35 +140,35 @@
                                                             placeholder</label>
                                                     </div>
                                                     <div class="user-input-box">
-                                                        <label for="Duration Time">Duration Time</label>
+                                                        <label for="Departure Time">Departure Time</label>
                                                         <input type="text"
-                                                               id="Duration Time"
+                                                               id="Departure Time"
                                                                th:field="*{departureTime}"
-                                                               name="Duration Time"
-                                                               placeholder="Enter Duration Time"/>
-                                                        <label class="error" th:errors="*{departureTime}">Duration
+                                                               name="Departure Time"
+                                                               placeholder="Enter Departure Time"/>
+                                                        <label class="error" th:errors="*{departureTime}">Departure
                                                             Time error
                                                             placeholder.</label>
                                                     </div>
                                                     <div class="user-input-box">
-                                                        <label for="End Locations">End Location</label>
+                                                        <label for="Price per Person">Price per Person</label>
                                                         <input type="text"
-                                                               id="End Locations"
+                                                               id="Price per Person"
                                                                th:field="*{costPerPerson}"
-                                                               name="fullName"
-                                                               placeholder="Enter End Location"/>
-                                                        <label class="error" th:errors="*{costPerPerson}">End Location
+                                                               name="Price per Person"
+                                                               placeholder="Enter Price per Person"/>
+                                                        <label class="error" th:errors="*{costPerPerson}">Cost Per Person
                                                             error
                                                             placeholder</label>
                                                     </div>
                                                     <div class="user-input-box">
-                                                        <label for="Available Seats">End Location</label>
+                                                        <label for="Available Seats">Available Seats</label>
                                                         <input type="text"
                                                                id="Available Seats"
                                                                th:field="*{availableSeats}"
-                                                               name="fullName"
-                                                               placeholder="Enter End Location"/>
-                                                        <label class="error" th:errors="*{availableSeats}">End Location
+                                                               name="Available Seats"
+                                                               placeholder="Enter Available Seats"/>
+                                                        <label class="error" th:errors="*{availableSeats}">Available Seats
                                                             error
                                                             placeholder</label>
                                                     </div>
@@ -201,4 +201,21 @@
     </div>
 </div>
 </body>
+<footer class="page-footer">
+    <div class="uk-container">
+        <div class="page-footer__inner">
+            <div class="page-footer__logo">
+                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                            src="/assets/img/white.png"
+                                                                            alt="DriveTogether"></a></div>
+            </div>
+            <div class="page-footer__text">
+                <h3><p>Let your unusual journey be a pleasure!</p></h3>
+            </div>
+            <div class="page-footer__social">
+            </div>
+            <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
+        </div>
+    </div>
+</footer>
 </html>

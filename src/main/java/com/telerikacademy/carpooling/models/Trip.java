@@ -30,9 +30,9 @@ public class Trip {
     @Column(name = "description")
     private String description;
     @Column(name = "duration")
-    private String duration = "test";
+    private String duration = "90";
     @Column(name = "distance")
-    private String distance = "test";
+    private String distance = "127";
 
     @JsonIgnore
     @OneToMany(mappedBy = "trip", fetch = FetchType.EAGER)

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -45,7 +45,108 @@
         </div>
       </div>
     </div>
-  </header>
+  </header>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <meta content="TeamEleven" name="author">
+  <meta content="DriveTogether" name="description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="HandheldFriendly" content="true">
+  <meta name="format-detection" content="telephone=no">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
+  <style>
+    .user-input-box {
+      margin-bottom: 20px;
+    }
+
+    .image-preview {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .upload-btn {
+      background-color: #3498db;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .upload-btn:hover {
+      background-color: #2980b9;
+    }
+
+    h3 p {
+      color: white;
+    }
+
+    .page-header__phone {
+      list-style-type: none;
+    }
+
+    .user-input-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: white;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+
+    .user-input-box label {
+      color: white;
+    }
+  </style>
+</head>
+<body class="bg-gradient-primary">
+<header class="page-header">
+  <div class="page-header__scroll" data-uk-sticky>
+    <div class="uk-container">
+      <div class="page-header__inner">
+        <div class="page-header__logo">
+          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                      src="/assets/img/black.png"
+                                                                      alt="DriveTogether"></a></div>
+        </div>
+        <div class="page-header__menu">
+          <nav class="page-nav" data-uk-navbar="">
+            <ul class="uk-navbar-nav">
+              <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img
+                      src="/assets/img/search.svg"
+                      data-uk-svg alt="search">Create
+                Trip</a></li>
+              <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
+                                                  alt="news-paper">About</a></li>
+              <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
+                                                    alt="help2">Contact Us</a></li>
+            </ul>
+          </nav>
+        </div>
+
+        <li class="page-header__phone">
+          <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+             th:href="@{/auth/login}">Login</a>
+          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+             th:href="@{/my-profile}">Profile</a>
+          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+             th:href="@{/auth/logout}">Logout</a></li>
+
+        <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                           data-uk-toggle data-uk-icon="menu"></a></div>
+      </div>
+    </div>
+  </div>
+</header>
   <main class="page-main">
     <div class="section-banner">
       <div class="section-banner__bg">
@@ -147,12 +248,12 @@
     </div><!-- Additional blocks-->
   </footer>
 </div>
-<script src="/assets/js/jquery.min.js"></script>t
+<!--<script src="/assets/js/jquery.min.js"></script>t
 <script src="/assets/js/uikit.min.js"></script>
 <script src="/assets/js/uikit-icons.min.js"></script>
 <script src="/assets/js/datepicker.min.js"></script>
 <script src="/assets/js/i18n/datepicker.en.js"></script>
-<script src="/assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>-->
 </body>
 
 </html>
