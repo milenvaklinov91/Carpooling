@@ -1,142 +1,200 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-  <meta charset="utf-8">
-  <title>Home page</title>
+  <meta charset="UTF-8">
+  <title>Register</title>
   <meta content="TeamEleven" name="author">
   <meta content="DriveTogether" name="description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="HandheldFriendly" content="true">
   <meta name="format-detection" content="telephone=no">
   <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet" >
-  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel= "stylesheet">
-  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet" >
+  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
+  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
   <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
   <style>
+    .user-input-box {
+      margin-bottom: 20px;
+    }
+
+    .image-preview {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .upload-btn {
+      background-color: #3498db;
+      color: white;
+      padding: 5px 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .upload-btn:hover {
+      background-color: #2980b9;
+    }
+
     h3 p {
       color: white;
     }
+
     .page-header__phone {
       list-style-type: none;
     }
+
+    .user-input-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .error {
+      color: white;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+
+    .user-input-box label {
+      color: white;
+    }
   </style>
 </head>
-
-<body class="page-home">
-
-<div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div>
-
-<div class="page-wrapper">
-  <header class="page-header page-header--search">
-    <div class="uk-container uk-container-expand">
+<body class="bg-gradient-primary">
+<header class="page-header">
+  <div class="page-header__scroll" data-uk-sticky>
+    <div class="uk-container">
       <div class="page-header__inner">
         <div class="page-header__logo">
-          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" th:src="@{/assets/img/black.png}" alt="DriveTogether"></a></div>
+          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                      src="/assets/img/black.png"
+                                                                      alt="DriveTogether"></a></div>
         </div>
         <div class="page-header__menu">
           <nav class="page-nav" data-uk-navbar="">
             <ul class="uk-navbar-nav">
-              <li th:if="${isAuthenticated}"><a th:href="@{/trips}"> <img th:src="@{/assets/img/search.svg}" data-uk-svg alt="search">Show Trips</a></li>
-              <li><a th:href="@{/about-us}"> <img th:src="@{/assets/img/news-paper.svg}" data-uk-svg alt="news-paper">About</a></li>
-              <li><a th:href="@{/contact-us}"> <img th:src="@{/assets/img/help2.svg}" data-uk-svg alt="help2">Contact Us</a></li>
+              <li><a th:if="${isAuthenticated}" th:href="@{/trips}"> <img src="/assets/img/search.svg"
+                                                                          data-uk-svg alt="search">Show
+                Trips</a></li>
+              <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
+                                                  alt="news-paper">About</a></li>
+              <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
+                                                    alt="help2">Contact Us</a></li>
             </ul>
           </nav>
         </div>
-        <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}" th:href="@{/auth/login}">Login</a></li>
-        <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/login}">Profile</a></li>
-        <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/auth/logout}">Logout</a></li>
+
+        <li class="page-header__phone"><a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+                                          th:href="@{/auth/login}">Login</a></li>
+        <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a></li>
+        <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                                          th:href="@{/auth/logout}">Logout</a></li>
+
+        <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                           data-uk-toggle data-uk-icon="menu"></a></div>
       </div>
     </div>
-  </header>
-  <main class="page-main">
-    <div class="main-search-grid uk-grid uk-child-width-1-2@xl uk-grid-match uk-grid-collapse" data-uk-grid>
-      <div>
-        <div class="main-search-section main-search-section--left">
-          <div class="search-box">
-            <div class="search-box__title">Where do you want to go?</div>
-            <form id="myForm" th:action="@{/trips/new-trip}" th:object="${trip}" method="post">
-              <div class="search-form">
-                <div class="uk-grid uk-child-width-1-2@s uk-grid-collapse" data-uk-grid>
-                  <div>
-                    <div>
-                      <input class="input-user uk-input" type="text" th:field="*{startLocation}" placeholder="Start Location">
-                    </div>
-                  </div>
-                  <div>
-                    <input class="input-user uk-input" type="text" th:field="*{endLocation}" placeholder="End Location">
-                  </div>
-                  <div>
-                    <div>
-                      <input class="input-user uk-input" type="text" th:field="*{departureTime}" placeholder="Date / Time">
-                    </div>
-                  </div>
-                  <div>
-                    <input class="input-user uk-input" type="text" th:field="*{costPerPerson}" placeholder="Price per Person">
-                  </div>
-                  <div>
-                    <div>
-                      <input class="input-user uk-input" type="text" th:field="*{availableSeats}" placeholder="Available Seats">
-                    </div>
-                  </div>
-                  <div>
-                    <input class="input-user uk-input" type="text" th:field="*{description}" placeholder="Description">
-                  </div>
+  </div>
+</header>
+    <div class="main">
+        <div class="section-banner">
+            <div class="section-banner__bg">
+                <div class="uk-cover-container"><img src="/assets/img/img-banner.jpg" alt="img-banner" style="width: 100%; height: auto;" data-uk-cover>
                 </div>
-              </div>
-              <div class="search-form-btn">
-                <button class="uk-button uk-button-danger" type="submit">
-                  <span class="uk-margin-small-right" data-uk-icon="search"> </span>
-                  <span>Create</span>
-                </button>
-              </div>
-            </form>
-          </div>
-          <footer class="page-footer page-footer--search">
-            <div class="page-footer__inner">
-              <div class="page-footer__social">
-              </div>
-              <div class="page-footer__copy"> <span>(c) 2023 All rights reserved.</span></div>
+                <div class="section-banner__content uk-text-center">
+                    <div class="uk-overlay uk-position-center-left uk-width-1-1">
+                        <div class="section-banner__content uk-text-center">
+                            <div class="uk-overlay uk-position-center-left uk-width-1-1">
+                                <div class="uk-container uk-width-1-1">
+                                    <div class="section-banner__title">
+
+                                        <div class="signup">
+                                            <form action="#" th:action="@{/trips/new-trip}" th:object="${trip}"
+                                                  method="post" enctype="multipart/form-data">
+                                                <div class="container">
+                                                    <h1 class="form-title">Create Trip</h1>
+                                                    <div class="main-user-info">
+                                                        <div class="user-input-box">
+                                                            <label for="Start Location">Start Location</label>
+                                                            <input type="text" id="Start Location"
+                                                                   th:field="*{startLocation}"
+                                                                   name="Start Location"
+                                                                   placeholder="Enter Start Location"/>
+                                                            <label class="error" th:errors="*{startLocation}">Start
+                                                                Location error
+                                                                placeholder</label>
+                                                        </div>
+                                                        <div class="user-input-box">
+                                                            <label for="End Location">End Location</label>
+                                                            <input type="text"
+                                                                   id="End Location"
+                                                                   th:field="*{endLocation}"
+                                                                   name="fullName"
+                                                                   placeholder="Enter End Location"/>
+                                                            <label class="error" th:errors="*{endLocation}">End Location
+                                                                error
+                                                                placeholder</label>
+                                                        </div>
+                                                        <div class="user-input-box">
+                                                            <label for="Duration Time">Duration Time</label>
+                                                            <input type="text"
+                                                                   id="Duration Time"
+                                                                   th:field="*{departureTime}"
+                                                                   name="Duration Time"
+                                                                   placeholder="Enter Duration Time"/>
+                                                            <label class="error" th:errors="*{departureTime}">Duration
+                                                                Time error
+                                                                placeholder.</label>
+                                                        </div>
+                                                        <div class="user-input-box">
+                                                            <label for="End Locations">End Location</label>
+                                                            <input type="text"
+                                                                   id="End Locations"
+                                                                   th:field="*{costPerPerson}"
+                                                                   name="fullName"
+                                                                   placeholder="Enter End Location"/>
+                                                            <label class="error" th:errors="*{costPerPerson}">End Location
+                                                                error
+                                                                placeholder</label>
+                                                        </div>
+                                                        <div class="user-input-box">
+                                                            <label for="Available Seats">End Location</label>
+                                                            <input type="text"
+                                                                   id="Available Seats"
+                                                                   th:field="*{availableSeats}"
+                                                                   name="fullName"
+                                                                   placeholder="Enter End Location"/>
+                                                            <label class="error" th:errors="*{availableSeats}">End Location
+                                                                error
+                                                                placeholder</label>
+                                                        </div>
+                                                        <div class="user-input-box">
+                                                            <label for="Description">Description</label>
+                                                            <input type="Description"
+                                                                   id="Description"
+                                                                   th:field="*{description}"
+                                                                   name="Description"
+                                                                   placeholder="Enter Description"/>
+                                                            <label class="error" th:errors="*{description}">Description
+                                                                error
+                                                                placeholder.</label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-submit-btn">
+                                                        <input type="submit" value="Register">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </footer>
         </div>
-      </div>
-      <div class="uk-background-muted">
-        <div class="main-search-section">
-          <div class="main-search-slider" data-uk-slideshow="animation: scale; autoplay: true">
-            <div class="uk-position-relative" th:tabindex="-1">
-              <ul class="uk-slideshow-items" data-uk-height-viewport="min-height: 300">
-                <li><img th:src="@{/assets/img/img-search-slider.jpg}" alt="" data-uk-cover/></li>
-                <li><img th:src="@{/assets/img/img-search-slider.jpg}" alt="" data-uk-cover/></li>
-                <li><img th:src="@{/assets/img/img-search-slider.jpg}" alt="" data-uk-cover/></li>
-              </ul>
-              <div class="uk-position-large uk-position-bottom-right">
-                <ul class="uk-slideshow-nav uk-dotnav uk-dotnav-vertical"></ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-  </main>
-</div>
-<script>$(document).ready(function() {
-  $("#myForm").on("submit", function(event) {
-    event.preventDefault(); // stop the default form submit
-
-// Do any other validation or processing here...
-
-    $(this).submit(); // Submit the form manually
-  });
-});
-</script>
-<script th:src="@{/assets/js/jquery.min.js}"></script>
-<script th:src="@{/assets/js/uikit.min.js}"></script>
-<script th:src="@{/assets/js/uikit-icons.min.js}"></script>
-<script th:src="@{/assets/js/datepicker.min.js}"></script>
-<script th:src="@{/assets/js/i18n/datepicker.en.js}"></script>
-<script th:src="@{/assets/js/main.js}"></script>
 </body>
-
 </html>

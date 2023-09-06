@@ -232,7 +232,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<Trip> showTravelsByUser(int id) {
-        return tripRepository.findAllTravelsByUser(id);
+        return tripRepository.findAllTripsByUser(id);
     }
 
     public List<User> showAllPassengersInTrip(int id) {

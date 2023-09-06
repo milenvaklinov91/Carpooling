@@ -76,19 +76,19 @@ public class TripMvcController {
 
     @GetMapping("/new-trip")
     public String showNewTripPage(Model model, HttpSession session) {
-        TripDto trip = (TripDto) session.getAttribute("currentTrip");
+       /* TripDto trip = (TripDto) session.getAttribute("currentTrip");*/
         try {
             authenticationHelper.tryGetCurrentUser(session);
-            if (trip == null) {
-                trip = new TripDto();
-            } else {
-                session.removeAttribute("currentTrip");
-            }
+//            if (trip == null) {
+//                trip = new TripDto();
+//            } else {
+//                session.removeAttribute("currentTrip");
+//            }
 
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
         }
-        model.addAttribute("trip", trip);
+        model.addAttribute("trip", new TripDto());
         return "createTrip";
     }
 
@@ -107,7 +107,7 @@ public class TripMvcController {
         try {
             Trip newTrip = tripMapper.fromTripDto(trip);
             tripService.create(newTrip, user);
-            return "redirect:/AllTripsView"; //todo
+            return "redirect:/trips"; //todo
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found"; //todo

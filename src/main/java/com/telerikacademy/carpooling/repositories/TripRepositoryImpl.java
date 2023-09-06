@@ -2,7 +2,6 @@ package com.telerikacademy.carpooling.repositories;
 
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.models.Trip;
-import com.telerikacademy.carpooling.models.enums.TripStatus;
 import com.telerikacademy.carpooling.models.filterOptions.TripFilterOptions;
 import com.telerikacademy.carpooling.repositories.interfaces.TripRepository;
 import org.hibernate.Session;
@@ -32,7 +31,7 @@ public class TripRepositoryImpl implements TripRepository {
         try (Session session = sessionFactory.openSession()) {
             Trip trip = session.get(Trip.class, id);
             if (trip == null) {
-                throw new EntityNotFoundException("Travel", id);
+                throw new EntityNotFoundException("Trip", id);
             }
             return trip;
         }
@@ -45,12 +44,12 @@ public class TripRepositoryImpl implements TripRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            tripFilterOptions.getStartLocation().ifPresent(value -> {
+            tripFilterOptions.getStartLocation().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("p.startLocation LIKE :startLocation");
                 params.put("startLocation", String.format("%%%s%%", value));
             });
 
-            tripFilterOptions.getEndLocation().ifPresent(value -> {
+            tripFilterOptions.getEndLocation().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("p.endLocation LIKE :endLocation");
                 params.put("endLocation", String.format("%%%s%%", value));
             });
@@ -64,7 +63,7 @@ public class TripRepositoryImpl implements TripRepository {
                 filters.add("p.costPerPerson LIKE :costPerPerson");
                 params.put("costPerPerson", String.format("%%%s%%", value));
             });
-            tripFilterOptions.getUsername().ifPresent(value -> {
+            tripFilterOptions.getUsername().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("p.createdBy.username = :username");
                 params.put("username", value);
             });
@@ -125,14 +124,14 @@ public class TripRepositoryImpl implements TripRepository {
         }
     }
 
-    public List<Trip> findAllTravelsByUser(int userId) {
+    public List<Trip> findAllTripsByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
             Query query = session.createQuery(
                     "From Trip WHERE createdBy.id= :user_id", Trip.class);
             query.setParameter("user_id", userId);
             List<Trip> allTrips = query.list();
             if (allTrips.size() == 0) {
-                throw new EntityNotFoundException("This passenger don't have travels yet!");
+                throw new EntityNotFoundException("This passenger don't have trips yet!");
             }
             return allTrips;
         }
@@ -167,7 +166,7 @@ public class TripRepositoryImpl implements TripRepository {
                 orderBy = "p.costPerPerson";
                 break;
             default:
-                orderBy = "p.travelId";
+                orderBy = "p.tripId";
         }
 
         orderBy = String.format(" ORDER BY %s ", orderBy);

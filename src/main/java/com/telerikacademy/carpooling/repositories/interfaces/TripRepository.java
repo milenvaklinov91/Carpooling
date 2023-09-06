@@ -20,6 +20,6 @@ public interface TripRepository {
 
     void delete(int id);
 
-    List<Trip> findAllTravelsByUser(int userId);
+    List<Trip> findAllTripsByUser(int userId);
     Long countCompletedTripsByUser(int userId);
 }
