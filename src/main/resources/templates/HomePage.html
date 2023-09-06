@@ -144,15 +144,18 @@
                                         <div class="driver-card__body">
                                             <div class="driver-card__user">
                                                 <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}" alt="driver-pic">
-                                                <span th:text="${user.getUsername()}"></span>
+
+                                                <a href="#" th:href="@{/users/{id}(id=${user.getId()})}">
+                                                    <span th:text="${user.getUsername()}"></span>
+                                                </a>
                                                 <span th:text="${topUsersRatings[userIndex.index]}"></span>
 
                                             </div>
-                                            <div class="driver-card__info">
+                                           <!-- <div class="driver-card__info">
                                                 <div class="driver-card__date">
                                                     Registration date:<span th:text="${user.getRegistrationDate()}"></span>
                                                 </div>
-                                            </div>
+                                            </div>-->
                                                 <div class="driver-card__date">
                                                    Completed Trips:
                                                     <span th:with="completedTripsCount=${completedTripsCounts[userIndex.index]}" th:text="${completedTripsCount}"></span>
