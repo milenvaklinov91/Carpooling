@@ -4,9 +4,9 @@ INSERT INTO carpooling.status (status_id, status) VALUES (3, 'deleted');
 
 insert into users(username, password, email, first_name, last_name, profile_picture, registration_date, phone_number, is_driver, is_blocked, is_admin,conf_code, status)
 values
-    ('ledka', 'ledak123', 'ledka@gmail.com', 'Leda', 'Yovkova', '0e647a64-3cf3-44f6-901e-b33a4546db99_my_pic.jpg', '2023-08-10 22:24:24', '031312312', 0, 0, 1, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('ledka', 'ledak123', 'ledka@gmail.com', 'Leda', 'Yovkova', '0e647a64-3cf3-44f6-901e-b33a4546db99_my_pic.jpg', '2023-08-10 22:24:24', '031312312', 1, 0, 1, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
     ('milen', 'milen1991', 'milen@gmail.com', 'Milen', 'Vaklinov', '1.jpg', '2023-08-09 10:11:22', '0888123456', 1, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
-    ('kalata', 'kaloyan91', 'kaloyan@gmail.com', 'Kaloyan', 'Stanev', 'kaloyan.jpeg', '2023-08-08 15:30:45', '0777123456', 0, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
+    ('kalata', 'kaloyan91', 'kaloyan@gmail.com', 'Kaloyan', 'Stanev', 'kaloyan.jpeg', '2023-08-08 15:30:45', '0777123456', 1, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
     ('petra', 'petra92', 'petra@gmail.com', 'Petra', 'Kovacheva', 'profile.jpg', '2023-08-07 18:12:59', '0899112233', 1, 0, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
     ('gosho', 'gosho93', 'gosho@gmail.com', 'Georgi', 'Marinov', 'profile.jpg', '2023-08-06 09:30:15', '0555123456', 0, 1, 0, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66',2),
     ('anastasia', 'ana2000', 'anastasia@gmail.com', 'Anastasia', 'Ivanova', 'profile.jpg', '2023-08-11 14:55:30', '0876123456', 1, 0, 1, 'dbbe4e58-8e2e-4423-888f-91ab94a3aa66', 2),
