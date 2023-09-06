@@ -1879,9 +1879,17 @@ textarea {
     font-style: normal;
     font-weight: 400;
     letter-spacing: normal;
-    line-height: 23px;
+    line-height: 16px;
     top: -150px; /* Adjust the top value to move the text upward */
-    left: 700px;
+    left: 750px;
+}
+
+.car-info span {
+    display: block;
+}
+.car Details{
+    top: -175px; /* Adjust the top value to move the text upward */
+    left: 900px;
 }
 
 .driver-card__services ul li + li {

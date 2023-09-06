@@ -53,16 +53,10 @@ public class TripMvcController {
                 filter.getSortBy(),
                 filter.getSortOrder());
 
-        try {
-            User user = authenticationHelper.tryGetCurrentUser(session);
-            List<Trip> trips = tripService.getAll(tripFilterOptions);
-            model.addAttribute("trips", trips);
-            model.addAttribute("filter", filter);
-            return "AllTripsView";
-        } catch (AuthorizationException e) {
-            model.addAttribute("error", e.getMessage());
-            return "redirect:/login";
-        }
+        List<Trip> trips = tripService.getAll(tripFilterOptions);
+        model.addAttribute("trips", trips);
+        model.addAttribute("filter", filter);
+        return "AllTripsView";
     }
 
 
@@ -113,7 +107,7 @@ public class TripMvcController {
         try {
             Trip newTrip = tripMapper.fromTripDto(trip);
             tripService.create(newTrip, user);
-            return "redirect:/trips"; //todo
+            return "redirect:/AllTripsView"; //todo
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found"; //todo

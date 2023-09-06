@@ -43,7 +43,7 @@ public class TripRequestMvcController {
         }try {
             TripRequest trip = tripRequestService.getTripRequestById(id);
             model.addAttribute("tripRequests", trip);
-            return "tripView";
+            return "singleTripView";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
             return "not-found";
