@@ -56,7 +56,8 @@
                     <li class="page-header__phone">
                         <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
                            th:href="@{/auth/login}">Login</a>
-                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My Profile</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My
+                            Profile</a>
                         <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
                            th:href="@{/auth/logout}">Logout</a>
                     </li>
@@ -136,31 +137,30 @@
                         <div class="uk-h2">Our Best Drivers</div>
                     </div>
                     <div class="section-content">
-                        <div class="uk-grid uk-grid-medium uk-child-width-1-2@s uk-child-width-1-3@m" data-uk-grid>
-                            <div>
-                                <div th:each="user, userIndex : ${topUsers}" class="driver-card">
-                                    <div class="driver-card__media"><img src="/assets/img/car-2.jpg" alt="car"></div>
+                        <div class="uk-flex uk-flex-wrap uk-grid-small uk-child-width-1-3@m" data-uk-grid>
+                            <div th:each="user, userIndex : ${topUsers}" class="driver-card">
+                                <div class="driver-card__media"><img src="/assets/img/car-2.jpg" alt="car"></div>
+                                <div class="driver-card__body">
                                     <div class="driver-card__body">
-                                        <div class="driver-card__body">
-                                            <div class="driver-card__user">
-                                                <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}" alt="driver-pic">
+                                        <div class="driver-card__user">
+                                            <img th:src="@{/images/profile_pics/__${user.getProfilePic()}__}"
+                                                 alt="driver-pic">
 
-                                                <a href="#" th:href="@{/users/{id}(id=${user.getId()})}">
-                                                    <span th:text="${user.getUsername()}"></span>
-                                                </a>
-                                                <span th:text="${topUsersRatings[userIndex.index]}"></span>
+                                            <a href="#" th:href="@{/users/{id}(id=${user.getId()})}">
+                                                <span th:text="${user.getUsername()}"></span>
+                                            </a>
+                                            <span th:text="${topUsersRatings[userIndex.index]}"></span>
 
-                                            </div>
-                                           <!-- <div class="driver-card__info">
-                                                <div class="driver-card__date">
-                                                    Registration date:<span th:text="${user.getRegistrationDate()}"></span>
-                                                </div>
-                                            </div>-->
-                                                <div class="driver-card__date">
-                                                   Completed Trips:
-                                                    <span th:with="completedTripsCount=${completedTripsCounts[userIndex.index]}" th:text="${completedTripsCount}"></span>
-                                                </div>
-                                            </div>
+                                        </div>
+                                        <!-- <div class="driver-card__info">
+                                             <div class="driver-card__date">
+                                                 Registration date:<span th:text="${user.getRegistrationDate()}"></span>
+                                             </div>
+                                         </div>-->
+                                        <div class="driver-card__date">
+                                            Completed Trips:
+                                            <span th:with="completedTripsCount=${completedTripsCounts[userIndex.index]}"
+                                                  th:text="${completedTripsCount}"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -169,41 +169,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+</div>
+</div>
+</div>
 
-        <div class="section-location">
-            <div class="uk-section uk-container">
-                <div class="location">
-                    <div class="uk-grid uk-grid-small uk-child-width-1-2@m" data-uk-grid>
+<div class="section-location">
+    <div class="uk-section uk-container">
+        <div class="location">
+            <div class="uk-grid uk-grid-small uk-child-width-1-2@m" data-uk-grid>
+                <div>
+                    <div class="location__title">We Have Now <b>
+                        <li><span th:text="${completedTrips}"></span><span></span></li>
+                    </b> Finished Trips
+                    </div>
+                    <div class="location__text">Thank you for being a part of our journey and making it
+                        possible. Your trust in us drives us to keep providing exceptional service. Here's
+                        to
+                        many more trips ahead!
+                    </div>
+                    <div class="uk-grid uk-child-width-1-2" data-uk-grid>
                         <div>
-                            <div class="location__title">We Have Now <b>
-                                <li><span th:text="${completedTrips}"></span><span></span></li>
-                            </b> Finished Trips
-                            </div>
-                            <div class="location__text">Thank you for being a part of our journey and making it
-                                possible. Your trust in us drives us to keep providing exceptional service. Here's
-                                to
-                                many more trips ahead!
-                            </div>
-                            <div class="uk-grid uk-child-width-1-2" data-uk-grid>
-                                <div>
-                                    <div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="location__map"><img class="location__img"
-                                                            src="/assets/img/img-location-map.png"
-                                                            alt="img-location-map">
-                                <ul class="location__numbers">
-                                    <li><span th:text="${numberOfUsers}"></span><span>Registered Users</span></li>
-                                </ul>
+                            <div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <div class="location__map"><img class="location__img"
+                                                    src="/assets/img/img-location-map.png"
+                                                    alt="img-location-map">
+                        <ul class="location__numbers">
+                            <li><span th:text="${numberOfUsers}"></span><span>Registered Users</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 </main>
 <footer class="page-footer">
     <div class="uk-container">

@@ -98,17 +98,30 @@
 
         <h2 class="user-info">User Information</h2>
 <div class="user-info">
-    <div class="about">Username:</div>
-    <h2 class="text" th:text="${user.getUsername()}">Username</h2>
-    <div class="about">Full name:</div>
-    <h2 class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></h2>
-    <div class="about">Email:</div>
-    <h2 class="text" th:text="${user.getEmail()}">Email</h2>
-    <div class="about">Phone number:</div>
-    <h2 class="text" th:text="${user.getPhone_number()}">Phone number</h2>
-    <div class="driver-card__user">
-        <img th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
-    </div>
+    <table>
+        <tr>
+            <td class="profile-pic">
+                <img th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}" alt="Profile Picture" style="width: 150px; height: 150px;">
+            </td>
+            <td class="about">Username:</td>
+            <td class="text" th:text="${user.getUsername()}">Username</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="about">Full name:</td>
+            <td class="text" th:text="${user.getFirstName()} + ' ' + ${user.getLastName()}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="about">Email:</td>
+            <td class="text" th:text="${user.getEmail()}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="about">Phone number:</td>
+            <td class="text" th:text="${user.getPhone_number()}"></td>
+        </tr>
+    </table>
 </div>
         <form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
               method="post">

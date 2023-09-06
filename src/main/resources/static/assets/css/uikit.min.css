@@ -3280,7 +3280,7 @@ select.uk-form-width-xsmall {
 }
 
 * + .uk-grid-margin-small, .uk-grid + .uk-grid-row-small, .uk-grid + .uk-grid-small, .uk-grid-row-small > .uk-grid-margin, .uk-grid-small > .uk-grid-margin {
-    margin-top: 15px
+    margin-top: 0px
 }
 
 .uk-grid-column-medium, .uk-grid-medium {
@@ -3292,7 +3292,7 @@ select.uk-form-width-xsmall {
 }
 
 * + .uk-grid-margin-medium, .uk-grid + .uk-grid-medium, .uk-grid + .uk-grid-row-medium, .uk-grid-medium > .uk-grid-margin, .uk-grid-row-medium > .uk-grid-margin {
-    margin-top: 30px
+    margin-top: 0
 }
 
 .uk-grid-column-large, .uk-grid-large {
@@ -3304,7 +3304,7 @@ select.uk-form-width-xsmall {
 }
 
 * + .uk-grid-margin-large, .uk-grid + .uk-grid-large, .uk-grid + .uk-grid-row-large, .uk-grid-large > .uk-grid-margin, .uk-grid-row-large > .uk-grid-margin {
-    margin-top: 40px
+    margin-top: 0px
 }
 
 @media (min-width: 1200px) {
