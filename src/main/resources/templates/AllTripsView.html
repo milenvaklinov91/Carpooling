@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Register</title>
+    <meta charset="utf-8">
+    <title>All Trips</title>
     <meta content="TeamEleven" name="author">
     <meta content="DriveTogether" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,226 +15,147 @@
     <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
     <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
     <style>
-        .user-input-box {
-            margin-bottom: 20px;
-        }
-
-        .image-preview {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .upload-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .upload-btn:hover {
-            background-color: #2980b9;
-        }
-
         h3 p {
             color: white;
         }
-
         .page-header__phone {
             list-style-type: none;
         }
-
-        .user-input-box {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .error {
-            color: white;
-            position: absolute;
-            top: 100%;
-            left: 0;
-        }
-
-        .user-input-box label {
-            color: white;
-        }
     </style>
 </head>
-<body class="bg-gradient-primary">
-<header class="page-header">
-    <div class="page-header__scroll" data-uk-sticky>
-        <div class="uk-container">
-            <div class="page-header__inner">
-                <div class="page-header__logo">
-                    <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
-                                                                                src="/assets/img/black.png"
-                                                                                alt="DriveTogether"></a></div>
-                </div>
-                <div class="page-header__menu">
-                    <nav class="page-nav" data-uk-navbar="">
-                        <ul class="uk-navbar-nav">
-                            <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img src="/assets/img/search.svg"
-                                                                                        data-uk-svg alt="search">Create
-                                Trip</a></li>
-                            <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
-                                                                alt="news-paper">About</a></li>
-                            <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
-                                                                  alt="help2">Contact Us</a></li>
-                        </ul>
-                    </nav>
-                </div>
 
-                <li class="page-header__phone"><a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
-                                                  th:href="@{/auth/login}">Login</a></li>
-                <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a></li>
-                <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
-                                                  th:href="@{/auth/logout}">Logout</a></li>
+<body class="page-home">
 
-                <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
-                                                   data-uk-toggle data-uk-icon="menu"></a></div>
+<div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div>
+
+<div class="page-wrapper">
+    <header class="page-header">
+        <div class="page-header__scroll" data-uk-sticky>
+            <div class="uk-container">
+                <div class="page-header__inner">
+                    <div class="page-header__logo">
+                        <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                                    src="/assets/img/black.png"
+                                                                                    alt="DriveTogether"></a></div>
+                    </div>
+                    <div class="page-header__menu">
+                        <nav class="page-nav" data-uk-navbar="">
+                            <ul class="uk-navbar-nav">
+                                <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img src="/assets/img/search.svg"
+                                                                                            data-uk-svg alt="search">Create
+                                    Trip</a></li>
+                                <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
+                                                                    alt="news-paper">About</a></li>
+                                <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
+                                                                      alt="help2">Contact Us</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+                                                      th:href="@{/auth/login}">Login</a></li>
+                    <li class="page-header__phone"> <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My Profile</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                                                      th:href="@{/auth/logout}">Logout</a></li>
+                    <li class="page-header__phone"><a class="uk-button uk-button-danger"  th:href="@{/}">Home</a></li>
+
+                    <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                                       data-uk-toggle data-uk-icon="menu"></a></div>
+                </div>
             </div>
         </div>
-    </div>
-</header>
-    <section>
-        <div class="section-best-drivers">
-            <div class="uk-background-muted">
-                <div class="uk-section uk-container">
-                    <div class="section-title uk-text-center">
-                        <div class="uk-h2">Trips</div>
-                    </div>
-                    <form action="#" th:action="@{/trips}" th:object="${filter}" method="get">
-                        <input type="text" placeholder="Start Location" th:field="*{startLocation}"/>
-                        <input type="text" placeholder="End Location" th:field="*{endLocation}"/>
-                        <input type="text" placeholder="Username" th:field="*{username}"/>
+    </header>
+<section>
+    <div class="section-best-drivers">
+        <div class="uk-background-muted">
+            <div class="uk-section uk-container">
+                <div class="section-title uk-text-center">
+                    <div class="uk-h2">Trips</div>
+                    <!--<p>You can search for a trip or create one yourself</p>-->
+                </div>
+                <form action="#" th:action="@{/trips}" th:object="${filter}" method="get">
+                    <input type="text" placeholder="Start Location" th:field="*{startLocation}" class="input-travel"/>
+                    <input type="text" placeholder="End Location"  th:field="*{endLocation}" class="input-travel"/>
+                    <input type="text" placeholder="Username"  th:field="*{username}" class="input-travel"/>
 
-                        <select th:field="*{sortBy}">
-                            <option value="">Default</option>
-                            <option value="Cost Per Person">Price Per Person</option>
-                            <option value="Departure time">Departure Time</option>
-                        </select>
-                        <select th:field="*{sortOrder}">
-                            <option value="asc">Asc</option>
-                            <option value="desc">Desc</option>
-                        </select>
-                        <input type="submit" value="Search" id="search" class="button-default">
-                        <form action="#" th:action="@{/trips}" method="get">
-                            <input type="submit" value="Reset" id="reset" class="button-default">
-                            <br>
-                        </form>
+                    <select th:field="*{sortBy}">
+                        <option value="">Default</option>
+                        <option value="Cost Per Person">Price Per Person</option>
+                        <option value="Departure time">Departure Time</option>
+                    </select>
+                    <select th:field="*{sortOrder}">
+                        <option value="asc">Asc</option>
+                        <option value="desc">Desc</option>
+                    </select>
+                    <input type="submit" value="Search" id="search" class="button-default">
+                </form>
 
-                    </form>
-
+                <form action="#" th:action="@{/trips}" method="get">
+                    <input type="submit" value="Reset" id="reset" class="button-default">
                     <br>
-                    <div class="row" th:each="trip : ${trips}">
-                        <div class="section-content">
-                            <div class="column">
-                                <div class="card">
-                                    <div>
-                                        <div class="driver-card">
-                                            <div class="driver-card__body">
-                                                <div class="driver-card__user">
-                                                    <img th:src="@{${trip.getCreatedBy().getProfilePic()}}"/>
-                                                    <a href="#" th:href="@{/trip/{id}(id=${trip.getTripId()})}">
-                                                        <span th:text="'Created by ' + ${trip.getCreatedBy().getFirstName()} + ' ' + ${trip.getCreatedBy().getLastName()}">Ben Strokes</span>
-                                                    </a>
-                                                </div>
-                                                <div class="car-info">
-                                                    <br>
-                                                    <div class="car Details">
-                                                        <div class="uk-h4">Car Details</div>
-                                                    </div>
-                                                    <span th:text="'Car Brand: '+ ${trip.getCreatedBy().getCar().getBrand()}">Car Brand</span>
-                                                    <span th:text="'Car Model: '+ ${trip.getCreatedBy().getCar().getModel()}">Car Model</span>
-                                                    <span th:text="'Car Year: '+ ${trip.getCreatedBy().getCar().getYear()}">Car Model</span>
-                                                    <span th:text="'Car Colour: '+ ${trip.getCreatedBy().getCar().getColour()}">Car Colour</span>
-                                                    <br>
-                                                </div>
+                </form>
 
-                                                <div class="car Details">
-                                                    <div class="uk-h4">Trip Details</div>
-                                                </div>
+                <br>
+                <div class="row" th:each="trip : ${trips}">
+                    <div class="section-content">
+                        <div class="column">
+                            <div class="card">
+                                <div>
+                                    <div class="driver-card">
+                                        <!--<div class="driver-card__media">
+                                            &lt;!&ndash;<img th:if="${travel.getCarDto().getPhotoCar() != null}" th:src="${travel.getCarDto().getPhotoCar().getPhotoUrl()}"/>
+                                            <img th:unless="${travel.getCarDto().getPhotoCar() != null}" th:src="@{/assets/img/car-1.jpg}" />&ndash;&gt;
+                                        </div>-->
+                                        <div class="driver-card__body">
+                                            <div class="driver-card__user">
+                                                <img th:src="@{${trip.getCreatedBy().getProfilePic()}}"/>
+                                                <!--<img th:if="${trip.getCreatedBy().getProfilePic()!= null}" th:src="@{/images/default.jpg}" />-->
+                                                <a href="#" th:href="@{/trip/{id}(id=${trip.getTripId()})}">
+                                                    <span th:text="'Created by ' + ${trip.getCreatedBy().getFirstName()} + ' ' + ${trip.getCreatedBy().getLastName()}">Ben Strokes</span>
+                                                </a>
+                                            </div>
+                                            <div class="driver-card__info">
+                                                <div class="driver-card__date" th:text="'Departure Time: '+ ${trip.getDepartureTime()}">Departure Time</div>
+                                            </div>
+                                            <span class="list-articles-item__title" id="title" href="#"
+                                                  th:text="'From '+ ${trip.getStartLocation()} +' to '+ ${trip.getEndLocation()}">Trip</span>
+                                            <br>
+                                            <span class="list-articles-item__price" href="#"
+                                                  th:text="'Distance: '+ ${trip.getDistance()} + ' km'">Distance</span>
+                                            <br>
+                                            <span class="list-articles-item__price" href="#"
+                                                  th:text="'Duration: '+ ${trip.getDuration()} +' h'">Duration</span>
+                                            <br>
+                                            <span class="list-articles-item__price" href="#"
+                                                  th:text="'Price per person: ' + ${trip.getCostPerPerson()} + ' BGN'">Cost Per Person</span>
+                                            <div class="driver-card__info">
+                                                <div th:if="${trip.getDescription() != null}"  th:text="'Description: '+ ${trip.getDescription()}">Description</div>
+                                                <div th:unless="${trip.getDescription() != null}" th:text="'Description: No description'"></div>
+                                            </div>
 
-                                                <span class="list-articles-item__title" id="title" href="#"
-                                                      th:text="'From '+ ${trip.getStartLocation()} +' to '+ ${trip.getEndLocation()}">Trip</span>
-                                                <br>
-                                                <span class="list-articles-item__price" href="#"
-                                                      th:text="'Departure Time: '+ ${trip.getDepartureTime()}">Departure Time</span>
-                                                <br>
-                                                <span class="list-articles-item__price" href="#"
-                                                      th:text="'Distance: '+ ${trip.getDistance()} + ' km'">Distance</span>
-                                                <br>
-                                                <span class="list-articles-item__price" href="#"
-                                                      th:text="'Duration: '+ ${trip.getDuration()} +' h'">Duration</span>
-                                                <br>
-                                                <span class="list-articles-item__price" href="#"
-                                                      th:text="'Price per person: ' + ${trip.getCostPerPerson()} + ' BGN'">Cost Per Person</span>
-                                                <div class="driver-card__info">
-                                                    <div th:if="${trip.getDescription() != null}"
-                                                         th:text="'Description: '+ ${trip.getDescription()}">Description
-                                                    </div>
-                                                    <div th:unless="${trip.getDescription() != null}"
-                                                         th:text="'Description: No description'"></div>
-                                                </div>
-                                                <br>
 
-                                                <div class="driver-card__services">
-                                                    <ul>
-                                                        <li><img src="/assets/img/driver-service-1.png"
-                                                                 alt="driver-service"><span
-                                                                th:text="${trip.getAvailableSeats()} +' free seats'">Available Seats</span>
-                                                        </li>
+                                            <div class="driver-card__services">
+                                                <ul>
+                                                    <li><img src="/assets/img/driver-service-1.png" alt="driver-service"><span th:text="${trip.getAvailableSeats()} +' free seats'">Available Seats</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isExtraStorage() == true}"><img
-                                                                src="/assets/img/bag.png" alt="driver-service">Extra Storage is available</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isExtraStorage() == true}"><img
-                                                                    src="/assets/img/bag.png" alt="driver-service">Extra Storage is not available</span>
-                                                        </li>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isExtraStorage() == true}"><img src="/assets/img/bag.png" alt="driver-service">Extra Storage is available</span>
+                                                        <span th:unless="${trip.getCreatedBy().getCar().isExtraStorage() == true}"><img src="/assets/img/bag.png" alt="driver-service">Extra Storage is not available</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isSmoke() == true}"><img
-                                                                src="/assets/img/driver-service-3.png"
-                                                                alt="driver-service">Smoking is allowed</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isSmoke() == true}"><img
-                                                                    src="/assets/img/driver-service-3.png"
-                                                                    alt="driver-service">Smoking is not allowed</span>
-                                                        </li>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isSmoke() == true}"><img src="/assets/img/driver-service-3.png" alt="driver-service">Smoking is allowed</span>
+                                                        <span th:unless="${trip.getCreatedBy().getCar().isSmoke() == true}"><img src="/assets/img/driver-service-3.png" alt="driver-service">Smoking is not allowed</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isAirConditioner() == true}"><img
-                                                                src="/assets/img/airConditioner.png"
-                                                                alt="driver-service">AirConditioned is available</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isAirConditioner() == true}"><img
-                                                                    src="/assets/img/airConditioner.png"
-                                                                    alt="driver-service">AirConditioned is not available</span>
-                                                        </li>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isAirConditioner() == true}"><img src="/assets/img/airConditioner.png" alt="driver-service">AirConditioned is available</span>
+                                                        <span th:unless="${trip.getCreatedBy().getCar().isAirConditioner() == true}"><img src="/assets/img/airConditioner.png" alt="driver-service">AirConditioned is not available</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isPetAvailable() == true}"><img
-                                                                src="/assets/img/driver-service-2.png"
-                                                                alt="driver-service">Pets are allowed</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isPetAvailable() == true}"><img
-                                                                    src="/assets/img/driver-service-2.png"
-                                                                    alt="driver-service">Pets are not allowed</span>
-                                                        </li>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isPetAvailable() == true}"><img src="/assets/img/driver-service-2.png" alt="driver-service">Pets are allowed</span>
+                                                    <span th:unless="${trip.getCreatedBy().getCar().isPetAvailable() == true}"><img src="/assets/img/driver-service-2.png" alt="driver-service">Pets are not allowed</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isConsumeFood() == true}"><img
-                                                                src="/assets/img/food.png" alt="driver-service">Food consumption is allowed</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isConsumeFood() == true}"><img
-                                                                    src="/assets/img/food.png" alt="driver-service">Food consumption is not allowed</span>
-                                                        </li>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isConsumeFood() == true}"><img src="/assets/img/food.png" alt="driver-service">Food consumption is allowed</span>
+                                                        <span th:unless="${trip.getCreatedBy().getCar().isConsumeFood() == true}"><img src="/assets/img/food.png" alt="driver-service">Food consumption is not allowed</span></li>
 
-                                                        <li><span
-                                                                th:if="${trip.getCreatedBy().getCar().isConsumeDrink() == true}"><img
-                                                                src="/assets/img/drink.png" alt="driver-service">Drink consumption  is allowed</span>
-                                                            <span th:unless="${trip.getCreatedBy().getCar().isConsumeDrink() == true}"><img
-                                                                    src="/assets/img/drink.png" alt="driver-service">Drink consumption is not allowed</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
+                                                    <li><span th:if="${trip.getCreatedBy().getCar().isConsumeDrink() == true}"><img src="/assets/img/drink.png" alt="driver-service">Drink consumption  is allowed</span>
+                                                        <span th:unless="${trip.getCreatedBy().getCar().isConsumeDrink() == true}"><img src="/assets/img/drink.png" alt="driver-service">Drink consumption is not allowed</span></li>
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -244,25 +166,32 @@
                 </div>
             </div>
         </div>
-    </section>
-    <footer class="page-footer">
-        <div class="uk-container">
-            <div class="page-footer__inner">
-                <div class="page-footer__logo">
-                    <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
-                                                                                src="/assets/img/white.png"
-                                                                                alt="DriveTogether"></a></div>
-                </div>
-                <div class="page-footer__text">
-                    <h3><p>Let your unusual journey be a pleasure!</p></h3>
-                </div>
-                <div class="page-footer__social">
-                </div>
-                <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
+    </div>
+</section>
+<footer class="page-footer">
+    <div class="uk-container">
+        <div class="page-footer__inner">
+            <div class="page-footer__logo">
+                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                            src="/assets/img/white.png"
+                                                                            alt="DriveTogether"></a></div>
             </div>
+            <div class="page-footer__text">
+                <h3><p>Let your unusual journey be a pleasure!</p></h3>
+            </div>
+            <div class="page-footer__social">
+            </div>
+            <div class="page-footer__copy"><span>(c) 2023 All rights reserved.</span></div>
         </div>
-    </footer>
+    </div>
+</footer>
 </div>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/uikit.min.js"></script>
+<script src="/assets/js/uikit-icons.min.js"></script>
+<script src="/assets/js/datepicker.min.js"></script>
+<script src="/assets/js/i18n/datepicker.en.js"></script>
+<script src="/assets/js/main.js"></script>
 </body>
 
 </html>

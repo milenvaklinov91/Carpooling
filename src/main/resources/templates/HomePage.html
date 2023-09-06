@@ -56,7 +56,7 @@
                     <li class="page-header__phone">
                         <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
                            th:href="@{/auth/login}">Login</a>
-                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">Profile</a>
+                        <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/my-profile}">My Profile</a>
                         <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
                            th:href="@{/auth/logout}">Logout</a>
                     </li>
@@ -166,7 +166,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
         <div class="section-location">
             <div class="uk-section uk-container">
                 <div class="location">

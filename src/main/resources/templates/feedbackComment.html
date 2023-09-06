@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<h1>User Feedbacks</h1>
+<ul>
+  <li th:each="feedback : ${feedbackComment}">
+    <p>User: <span th:text="${feedbackComment.getUserCreatedBy().getUsername()}"></span></p>
+    <p>Comment: <span th:text="${feedbackComment.getComment()}"></span></p>
+  </li>
+</ul>
+</body>
+</html>

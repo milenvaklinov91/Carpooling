@@ -4,10 +4,12 @@ import com.telerikacademy.carpooling.controllers.AuthenticationHelper;
 import com.telerikacademy.carpooling.exceptions.AuthorizationException;
 import com.telerikacademy.carpooling.exceptions.EntityNotFoundException;
 import com.telerikacademy.carpooling.exceptions.UnauthorizedOperationException;
+import com.telerikacademy.carpooling.models.FeedbackComment;
 import com.telerikacademy.carpooling.models.User;
 import com.telerikacademy.carpooling.models.dtos.UserFilterDto;
 import com.telerikacademy.carpooling.models.filterOptions.UserFilterOptions;
 import com.telerikacademy.carpooling.services.UserServiceImpl;
+import com.telerikacademy.carpooling.services.interfaces.FeedbackCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +25,9 @@ public class UserMvcController {
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper) {
+    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper ) {
 
         this.service = service;
-
         this.authenticationHelper = authenticationHelper;
     }
     @ModelAttribute("isAuthenticated")
@@ -137,7 +138,7 @@ public class UserMvcController {
                 throw new AuthorizationException("Only admins can make this operation!");
             }
             service.makeAdmin(id, admin);
-            return "redirect:/users";
+            return "redirect:/users/admin";
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         } catch (EntityNotFoundException e) {
@@ -157,7 +158,7 @@ public class UserMvcController {
                 throw new AuthorizationException("Only admins can make this operation!");
             }
             service.demoteAdmin(id, admin);
-            return "redirect:/users";
+            return "redirect:/users/admin";
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         } catch (EntityNotFoundException e) {
@@ -168,6 +169,8 @@ public class UserMvcController {
             return "AccessDeniedView";
         }
     }
+
+
 
 
 }
