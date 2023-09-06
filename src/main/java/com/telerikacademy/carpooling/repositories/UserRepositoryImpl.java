@@ -31,15 +31,15 @@ public class UserRepositoryImpl implements UserRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptions.getUsername().ifPresent(value -> {
+            filterOptions.getUsername().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("u.username LIKE :username");
                 params.put("username", String.format("%%%s%%", value));
             });
-            filterOptions.getFirstName().ifPresent(value -> {
+            filterOptions.getFirstName().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("u.firstName like :firstName");
                 params.put("firstName", String.format("%%%s%%", value));
             });
-            filterOptions.getLastName().ifPresent(value -> {
+            filterOptions.getLastName().filter(startLocation ->!startLocation.isEmpty()).ifPresent(value -> {
                 filters.add("u.lastName like :lastName");
                 params.put("lastName", String.format("%%%s%%", value));
             });
@@ -266,7 +266,7 @@ public class UserRepositoryImpl implements UserRepository {
                 orderBy = "userTravels";
                 break;
             default:
-                orderBy = "u.user_id";
+                orderBy = "u.id";
         }
 
         orderBy = String.format(" ORDER BY %s ", orderBy);

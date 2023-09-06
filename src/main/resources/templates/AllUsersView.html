@@ -1,259 +1,224 @@
-<!--<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="utf-8">
-  <title>All users</title>
-  <meta content="TeamEleven" name="author">
-  <meta content="DriveTogether" name="description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="HandheldFriendly" content="true">
-  <meta name="format-detection" content="telephone=no">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link rel="stylesheet" href="/assets/css/uikit.min.css">
-  <link rel="stylesheet" href="/assets/css/all.min.css">
-  <link rel="stylesheet" href="/assets/css/datepicker.min.css">
-  <link rel="stylesheet" href="/assets/css/main.css">
-  <style>
-    h3 p {
-      color: white;
-    }
-    .page-header__phone {
-        list-style-type: none;
-      }
-  </style>
-</head>
-
-<body class="page-home">
-
-<div id="page-preloader"><span class="spinner border-t_second_b border-t_prim_a"></span></div>
-
-<div class="page-wrapper">
-  <header class="page-header">
-    <div class="page-header__scroll" data-uk-sticky>
-      <div class="uk-container">
-        <div class="page-header__inner">
-          <div class="page-header__logo">
-            <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/black.png" alt="DriveTogether"></a></div>
-          </div>
-          <li class="page-header__phone">
-            <a class="uk-button uk-button-danger"  th:href="@{/}">Home</a>
-            <a class="uk-button uk-button-danger"th:href="@{/admin}">Back to admin portal</a>
-            <a class="uk-button uk-button-danger"th:href="@{/auth/logout}">Logout</a>
-          </li>
-          <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
-        </div>
-      </div>
-    </div>
-  </header>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Register</title>
-  <meta content="TeamEleven" name="author">
-  <meta content="DriveTogether" name="description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="HandheldFriendly" content="true">
-  <meta name="format-detection" content="telephone=no">
-  <meta content="IE=edge" http-equiv="X-UA-Compatible">
-  <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
-  <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
-  <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
-  <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
-  <style>
-    .user-input-box {
-      margin-bottom: 20px;
-    }
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <meta content="TeamEleven" name="author">
+    <meta content="DriveTogether" name="description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="format-detection" content="telephone=no">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <link href="../static/assets/css/all.min.css" th:href="@{/assets/css/all.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/uikit.min.css" th:href="@{/assets/css/uikit.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
+    <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
+    <style>
+        .user-input-box {
+            margin-bottom: 20px;
+        }
 
-    .image-preview {
-      display: none;
-      margin-top: 10px;
-    }
+        .image-preview {
+            display: none;
+            margin-top: 10px;
+        }
 
-    .upload-btn {
-      background-color: #3498db;
-      color: white;
-      padding: 5px 10px;
-      border: none;
-      cursor: pointer;
-    }
+        .upload-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+        }
 
-    .upload-btn:hover {
-      background-color: #2980b9;
-    }
+        .upload-btn:hover {
+            background-color: #2980b9;
+        }
 
-    h3 p {
-      color: white;
-    }
+        h3 p {
+            color: white;
+        }
 
-    .page-header__phone {
-      list-style-type: none;
-    }
+        .page-header__phone {
+            list-style-type: none;
+        }
 
-    .user-input-box {
-      position: relative;
-      margin-bottom: 20px;
-    }
+        .user-input-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
 
-    .error {
-      color: white;
-      position: absolute;
-      top: 100%;
-      left: 0;
-    }
+        .error {
+            color: white;
+            position: absolute;
+            top: 100%;
+            left: 0;
+        }
 
-    .user-input-box label {
-      color: white;
-    }
-  </style>
+        .user-input-box label {
+            color: white;
+        }
+    </style>
 </head>
 <body class="bg-gradient-primary">
 <header class="page-header">
-  <div class="page-header__scroll" data-uk-sticky>
-    <div class="uk-container">
-      <div class="page-header__inner">
-        <div class="page-header__logo">
-          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
-                                                                      src="/assets/img/black.png"
-                                                                      alt="DriveTogether"></a></div>
-        </div>
-        <div class="page-header__menu">
-          <nav class="page-nav" data-uk-navbar="">
-            <ul class="uk-navbar-nav">
-              <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img
-                      src="/assets/img/search.svg"
-                      data-uk-svg alt="search">Create
-                Trip</a></li>
-              <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
-                                                  alt="news-paper">About</a></li>
-              <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
-                                                    alt="help2">Contact Us</a></li>
-            </ul>
-          </nav>
-        </div>
+    <div class="page-header__scroll" data-uk-sticky>
+        <div class="uk-container">
+            <div class="page-header__inner">
+                <div class="page-header__logo">
+                    <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                                src="/assets/img/black.png"
+                                                                                alt="DriveTogether"></a></div>
+                </div>
+                <div class="page-header__menu">
+                    <nav class="page-nav" data-uk-navbar="">
+                        <ul class="uk-navbar-nav">
+                            <li><a th:if="${isAuthenticated}" th:href="@{/trips/new-trip}"> <img
+                                    src="/assets/img/search.svg"
+                                    data-uk-svg alt="search">Create
+                                Trip</a></li>
+                            <li><a th:href="@{/about-us}"> <img src="/assets/img/news-paper.svg" data-uk-svg
+                                                                alt="news-paper">About</a></li>
+                            <li><a th:href="@{/contact-us}"> <img src="/assets/img/help2.svg" data-uk-svg
+                                                                  alt="help2">Contact Us</a></li>
+                        </ul>
+                    </nav>
+                </div>
 
-        <li class="page-header__phone">
-          <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
-             th:href="@{/auth/login}">Login</a>
-          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
-             th:href="@{/my-profile}">Profile</a>
-          <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
-             th:href="@{/auth/logout}">Logout</a></li>
+                <li class="page-header__phone">
+                    <a class="uk-button uk-button-danger" th:unless="${isAuthenticated}"
+                       th:href="@{/auth/login}">Login</a>
+                    <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                       th:href="@{/my-profile}">Profile</a>
+                    <a class="uk-button uk-button-danger" th:if="${isAuthenticated}"
+                       th:href="@{/auth/logout}">Logout</a></li>
 
-        <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
-                                           data-uk-toggle data-uk-icon="menu"></a></div>
-      </div>
+                <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas"
+                                                   data-uk-toggle data-uk-icon="menu"></a></div>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
-  <main class="page-main">
+<main class="page-main">
     <div class="section-banner">
-      <div class="section-banner__bg">
-        <div class="uk-cover-container"><img src="/assets/img/img-banner.jpg" alt="img-banner" data-uk-cover><canvas></canvas></div>
-      </div>
-    </div>
-    <section>
-      <form th:action="@{/users}" th:object="${filter}" method="get">
-        <input type="text" placeholder="Username" th:field="*{username}" class="input-admin"/>
-        <input type="text" placeholder="First name" th:field="*{firstName}" class="input-admin"/>
-        <input type="text" placeholder="Last name" th:field="*{lastName}" class="input-admin"/>
-        <select th:field="*{sortBy}">
-          <option value="">Default Sort</option>
-          <option value="username">Username</option>
-          <option value="firstName">First name</option>
-          <option value="lastName">Last name</option>
-        </select>
-        <select th:field="*{sortOrder}">
-          <option value="asc">Asc</option>
-          <option value="desc">Desc</option>
-        </select>
-        <button type="submit" class="button-default-admin">Search</button>
-        <button type="reset" class="button-default-admin">Reset</button>
-      </form>
-    </section>
-        <div >
-          <h2 th:if="${users.isEmpty()}" th:text="'No Users'">No Users</h2>
+        <div class="section-banner__bg">
+            <div class="uk-cover-container"><img src="/assets/img/img-banner.jpg" alt="img-banner"
+                                                 style="width: 100%;  height: auto;" data-uk-cover>
+            </div>
         </div>
-        <div th:unless="${users.isEmpty()}">
+        <section>
+            <form th:action="@{/users/admin}" th:object="${filter}" method="get">
+                <input type="text" placeholder="Username" th:field="*{username}" class="input-admin"/>
+                <input type="text" placeholder="First name" th:field="*{firstName}" class="input-admin"/>
+                <input type="text" placeholder="Last name" th:field="*{lastName}" class="input-admin"/>
 
+                <select th:field="*{sortBy}">
+                    <option value="">Default Sort</option>
+                    <option value="username">Username</option>
+                    <option value="firstName">First name</option>
+                    <option value="lastName">Last name</option>
+                </select>
+
+                <select th:field="*{sortOrder}">
+                    <option value="asc">Asc</option>
+                    <option value="desc">Desc</option>
+                </select>
+
+                <input type="submit" value="Search" id="search" class="button-default">
+                <form action="#" th:action="@{/users/admin}" method="get">
+                    <input type="submit" value="Reset" id="reset" class="button-default">
+                    <br>
+                </form>
+            </form>
+        </section>
 
         <h2>All Users</h2>
-      <table>
-        <thead>
-        <tr>
-          <th class="black-text" >Username</th>
-          <th class="black-text">FirstName</th>
-          <th class="black-text">LastName</th>
-          <th class="black-text">Email</th>
-          <th class="black-text">Phone number</th>
-          <th class="black-text">Registration Date</th>
-          <th class="black-text">Status</th>
-          <th class="black-text">Driver</th>
-          <th class="black-text">Blocked</th>
-          <th class="black-text">Admin</th>
+        <table>
+            <thead>
+            <tr>
+                <th class="black-text">Username</th>
+                <th class="black-text">FirstName</th>
+                <th class="black-text">LastName</th>
+                <th class="black-text">Email</th>
+                <th class="black-text">Phone number</th>
+                <th class="black-text">Registration Date</th>
+                <th class="black-text">Status</th>
+                <th class="black-text">Driver</th>
+                <th class="black-text">Blocked</th>
+                <th class="black-text">Admin</th>
 
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="user : ${users}">
-          <td> <a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a></td>
-          <td><div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div></td>
-          <td><div class="cellSingleUser" th:text="${user.getLastName}">LastName</div></td>
-          <td><div class="cellSingleUser" th:text="${user.getEmail}">Email</div></td>
-          <td><div class="cellSingleUser" th:text="${user.getPhone_number()}">Phone number</div></td>
-          <td><div class="cellSingleUser" th:text="${user.getRegistrationDate()}">Registration Date</div></td>
-          <td><div class="cellSingleUser" th:text="${user.getStatus()}">Status</div></td>
-          <td><div class="cellSingleUser" th:text="${user.isDriver()}">Driver</div></td>
-          <td>
-            <form th:if="${not user.isAdmin()}">
-              <a  href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
-                 methods="get">MakeAdmin</a>
-            </form>
-            <form th:if="${user.isAdmin()}">
-              <a href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
-                 methods="get">DemoteAdmin</a>
-            </form>
-          </td>
-          <td>
-            <form th:if="${not user.isBlocked()}">
-              <a href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
-                 methods="get">Block</a>
-            </form>
-            <form th:if="${user.isBlocked()}">
-              <a  href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
-                  methods="get">Unblock</a>
-            </form>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </section>
-          </div>
-  </main>
-  <footer class="page-footer">
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td><a href="#" th:href="@{/users/{id}(id=${user.getId()})}" th:text="${user.getUsername}">User</a>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getFirstName}">FirstName</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getLastName}">LastName</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getEmail}">Email</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getPhone_number()}">Phone number</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getRegistrationDate()}">Registration Date</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.getStatus()}">Status</div>
+                </td>
+                <td>
+                    <div class="cellSingleUser" th:text="${user.isDriver()}">Driver</div>
+                </td>
+                <td>
+                    <form th:if="${not user.isAdmin()}">
+                        <a href="#" th:href="@{/users/{id}/make-admin(id=${user.getId()})}" th:object="${user}"
+                           methods="get">MakeAdmin</a>
+                    </form>
+                    <form th:if="${user.isAdmin()}">
+                        <a href="#" th:href="@{/users/{id}/demote-admin(id=${user.getId()})}" th:object="${user}"
+                           methods="get">DemoteAdmin</a>
+                    </form>
+                </td>
+                <td>
+                    <form th:if="${not user.isBlocked()}">
+                        <a href="#" th:href="@{/users/{id}/block(id=${user.getId()})}" th:object="${user}"
+                           methods="get">Block</a>
+                    </form>
+                    <form th:if="${user.isBlocked()}">
+                        <a href="#" th:href="@{/users/{id}/unblock(id=${user.getId()})}" th:object="${user}"
+                           methods="get">Unblock</a>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </section>
+    </div>
+</main>
+<footer class="page-footer">
     <div class="uk-container">
-      <div class="page-footer__inner">
-        <div class="page-footer__logo">
-          <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/white.png" alt="Drive Together"></a></div>
+        <div class="page-footer__inner">
+            <div class="page-footer__logo">
+                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
+                                                                            src="/assets/img/white.png"
+                                                                            alt="Drive Together"></a></div>
+            </div>
+            <div class="page-footer__text">
+                <!--<p>Eorem ipsum dolor sit amet consectetur adipisicing elit edolore magna<br> aliqua ut enim ad minim veniam quis aliquip consequat</p>-->
+                <h3><p>Let your unusual journey be a pleasure!</p></h3>
+            </div>
+            <div class="page-footer__social">
+            </div>
+            <div class="page-footer__copy"><span><p>Admin Portal</p></span></div>
         </div>
-        <div class="page-footer__text">
-          <!--<p>Eorem ipsum dolor sit amet consectetur adipisicing elit edolore magna<br> aliqua ut enim ad minim veniam quis aliquip consequat</p>-->
-          <h3><p>Let your unusual journey be a pleasure!</p></h3>
-        </div>
-        <div class="page-footer__social">
-        </div>
-        <div class="page-footer__copy"> <span><p>Admin Portal</p></span></div>
-      </div>
     </div><!-- Additional blocks-->
-  </footer>
+</footer>
 </div>
-<!--<script src="/assets/js/jquery.min.js"></script>t
-<script src="/assets/js/uikit.min.js"></script>
-<script src="/assets/js/uikit-icons.min.js"></script>
-<script src="/assets/js/datepicker.min.js"></script>
-<script src="/assets/js/i18n/datepicker.en.js"></script>
-<script src="/assets/js/main.js"></script>-->
 </body>
 
 </html>

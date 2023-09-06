@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public List<User> getAll(UserFilterOptions userFilterOptions,User logUser) {
-        if (!(logUser.isAdmin())) {
+        if (!logUser.isAdmin()) {
             throw new UnauthorizedOperationException("You're not authorized for this operation");
         }
         return userRepository.getAll(userFilterOptions);

@@ -27,7 +27,7 @@ public class UserMvcController {
     private final TripService tripService;
 
     @Autowired
-    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper, TripService tripService) {
+    public UserMvcController(UserServiceImpl service, AuthenticationHelper authenticationHelper ) {
 
         this.service = service;
         this.authenticationHelper = authenticationHelper;
@@ -58,7 +58,6 @@ public class UserMvcController {
         } else {
             return "redirect:/auth/login";
         }
-
     }
 
     @GetMapping("/approved")
@@ -66,7 +65,7 @@ public class UserMvcController {
         User loggedInUser = authenticationHelper.tryGetCurrentUser(session);
 
         try {
-            List<User> approvedUsers = service.getAllApprovedUsers(loggedInUser);
+            List<User> approvedUsers =service.getAllApprovedUsers(loggedInUser);
             model.addAttribute("approvedUsers", approvedUsers);
             return "approved-users";
         } catch (UnauthorizedOperationException e) {

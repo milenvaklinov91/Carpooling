@@ -64,6 +64,8 @@ public class TripMvcController {
     public String showSingleTrip(@PathVariable int id, Model model, HttpSession session) {
         try {
           User user = authenticationHelper.tryGetCurrentUser(session);
+          Trip trip = tripService.getTripById(id);
+          model.addAttribute("trip",trip);
         } catch (AuthorizationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
@@ -195,7 +197,7 @@ public class TripMvcController {
             Trip trip = tripService.getTripById(id); //todo
             model.addAttribute("trip", trip);
             tripService.inProgressTripStatus(trip, user);
-            return "tripView";
+            return "singleTripView";
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
@@ -210,7 +212,7 @@ public class TripMvcController {
             Trip trip = tripService.getTripById(id); //todo
             model.addAttribute("trip", trip);
             tripService.finishedTripStatus(trip, user);
-            return "tripView";
+            return "singleTripView";
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
