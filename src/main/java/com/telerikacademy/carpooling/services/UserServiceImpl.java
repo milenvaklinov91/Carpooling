@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService {
             if (logUser.isAdmin() || existUser.getUsername().equals(logUser.getUsername())) {
                 existUser.setUsername(user.getUsername());
                 existUser.setLastName(user.getLastName());
-                user.setProfilePic(user.getProfilePic());
+                existUser.setProfilePic(user.getProfilePic());
                 existUser.setPhone_number(user.getPhone_number());
                 existUser.setEmail(user.getEmail());
                 existUser.setPassword(user.getPassword());

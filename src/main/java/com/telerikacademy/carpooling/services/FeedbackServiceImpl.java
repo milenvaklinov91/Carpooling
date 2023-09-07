@@ -65,10 +65,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-//    @Override
-//    public List<Feedback> getRatingOfUser(int userId) {
-//        return feedbackRepository.getRatingOfUser(userId);
-//    }
 
 
     @Override
@@ -144,7 +140,7 @@ public class FeedbackServiceImpl implements FeedbackService {
         return feedbackRepository.hasUserRatedAnotherUser(userId,ratedUserId);
     }
 
-    //проверка дали този пасажер е част от трипа
+
     public boolean isVotingUserInPassengers(List<User> passengersInTrip, User votingUser) {
         int votingUserId = votingUser.getId();
         for (User passenger : passengersInTrip) {
@@ -184,11 +180,6 @@ public class FeedbackServiceImpl implements FeedbackService {
     private boolean isPassengerInTrip(List<User> passengersInTrip, User passenger) {
         return passengersInTrip.stream().anyMatch(p -> p.getId() == passenger.getId());
     }
-    //todo да може да се дава само един рейтиинг на ID
-    //todo да проверява дали този който дава рейтиг участва в трипа
+
 }
 
-
-
-
-// todo feedback for driver and feedback for passenger

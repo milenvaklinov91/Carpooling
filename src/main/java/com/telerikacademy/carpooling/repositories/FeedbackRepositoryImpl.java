@@ -110,20 +110,6 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
         }
     }
 
-//    @Override
-//    public Feedback getFeedbackByRatedUser(int id) {
-//        return null;
-//    }
-
-//    @Override
-//    public List<Feedback> getRatingOfUser(int id) {
-//        try (Session session = sessionFactory.openSession()) {
-//            TypedQuery<Feedback> query = session.createQuery(
-//                    "SELECT r FROM Feedback r WHERE r.ratedUser.id = :userId", Feedback.class);
-//            query.setParameter("userId", id);
-//            return query.getResultList();
-//        }
-//    }
 
     public List<Feedback> findAllFeedbacksByUser(int userId) {
         try (Session session = sessionFactory.openSession()) {
@@ -184,53 +170,6 @@ public class FeedbackRepositoryImpl implements FeedbackRepository {
         }
     }
 
-//    public List<User> getTopRatedDrivers() {
-//        try (Session session = sessionFactory.openSession()) {
-//            Query<User> query = session.createQuery(
-//                    "SELECT u FROM User u " +
-//                            "JOIN Feedback f ON u.id = f.ratedUser.id " +
-//                            "WHERE u.isDriver = true " +
-//                            "GROUP BY u " +
-//                            "ORDER BY AVG(f.ratingValue) DESC", User.class);
-//            query.setMaxResults(10);
-//            List<User> result = query.getResultList();
-//            if (result.isEmpty()) {
-//                throw new EntityNotFoundException("Drivers", "driver");
-//            }
-//            return result;
-//        }
-//    }
-
-//    @Override
-//    public List<User> topPassengers() {
-//        try (Session session = sessionFactory.openSession()) {
-//            Query<User> query = session.createQuery(
-//                    "SELECT u FROM User u " +
-//                            "JOIN Feedback f ON u.id = f.ratedUser.id " +
-//                            "WHERE u.isDriver = false " +
-//                            "GROUP BY u " +
-//                            "ORDER BY AVG(f.ratingValue) DESC", User.class);
-//            query.setMaxResults(10);
-//            List<User> result = query.getResultList();
-//            if (result.isEmpty()) {
-//                throw new EntityNotFoundException("Passenger", "passenger");
-//            }
-//            return result;
-//        }
-//    }
-//
-//
-//}    public List<Post> getLastTenCreatedPosts() {
-//    try (Session session = sessionFactory.openSession()) {
-//        org.hibernate.query.Query<Post> query = session.createQuery("SELECT p FROM Post p ORDER BY p.postId DESC", Post.class);
-//        query.setMaxResults(10);
-//        List<Post> result = query.list();
-//        if (result.size() == 0) {
-//            throw new EntityNotFoundException("Posts", "post");
-//        }
-//        return result;
-//    }
-//}
 
     @Override
     public boolean hasUserRatedAnotherUser(int userId, int ratedUserId) {

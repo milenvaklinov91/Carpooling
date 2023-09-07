@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <title>All Users</title>
     <meta content="TeamEleven" name="author">
     <meta content="DriveTogether" name="description">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,26 +14,6 @@
     <link href="../static/assets/css/datepicker.min.css" th:href="@{/assets/css/datepicker.min.css}" rel="stylesheet">
     <link href="../static/assets/css/main.css" th:href="@{/assets/css/main.css}" rel="stylesheet">
     <style>
-        .user-input-box {
-            margin-bottom: 20px;
-        }
-
-        .image-preview {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .upload-btn {
-            background-color: #3498db;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .upload-btn:hover {
-            background-color: #2980b9;
-        }
 
         h3 p {
             color: white;
@@ -43,16 +23,10 @@
             list-style-type: none;
         }
 
-        .user-input-box {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .error {
-            color: white;
-            position: absolute;
-            top: 100%;
-            left: 0;
+        .separator {
+            height: 50px;
+            background-color: #fff;
+            margin-top: 20px;
         }
 
         .user-input-box label {
@@ -68,7 +42,7 @@
                 <div class="page-header__logo">
                     <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img"
                                                                                 src="/assets/img/black.png"
-                                                                       <!---->         alt="DriveTogether"></a></div>
+                                                                                alt="DriveTogether"></a></div>
                 </div>
                 <div class="page-header__menu">
                     <nav class="page-nav" data-uk-navbar="">
@@ -125,10 +99,10 @@
                 </select>
 
                 <input type="submit" value="Search" id="search" class="button-default">
-                <form action="#" th:action="@{/users/admin}" method="get">
-                    <input type="submit" value="Reset" id="reset" class="button-default">
-                    <br>
-                </form>
+            </form>
+            <form action="#" th:action="@{/users/admin}" method="get">
+                <input type="submit" value="Reset" id="reset" class="button-default">
+                <br>
             </form>
         </section>
 
@@ -195,10 +169,12 @@
                     </form>
                 </td>
             </tr>
+            </table>
             </tbody>
         </table>
         </section>
     </div>
+    <div class="separator"></div>
 </main>
 <footer class="page-footer">
     <div class="uk-container">
@@ -209,14 +185,13 @@
                                                                             alt="Drive Together"></a></div>
             </div>
             <div class="page-footer__text">
-                <!--<p>Eorem ipsum dolor sit amet consectetur adipisicing elit edolore magna<br> aliqua ut enim ad minim veniam quis aliquip consequat</p>-->
                 <h3><p>Let your unusual journey be a pleasure!</p></h3>
             </div>
             <div class="page-footer__social">
             </div>
             <div class="page-footer__copy"><span><p>Admin Portal</p></span></div>
         </div>
-    </div><!-- Additional blocks-->
+    </div>
 </footer>
 </div>
 </body>

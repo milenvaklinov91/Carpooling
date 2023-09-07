@@ -75,11 +75,6 @@
         .text {
             font-size: 16px;
         }
-        .separator {
-            height: 50px;
-            background-color: #fff;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -92,8 +87,6 @@
                 </div>
                 <li class="page-header__phone">
                     <a class="uk-button uk-button-danger" th:href="@{/}" style="margin-right: 10px;">Home</a>
-                    <a class="uk-button uk-button-danger" th:if="${isAuthenticated}" th:href="@{/users/travels}">My
-                        Trips</a>
                     <a class="uk-button uk-button-danger" th:href="@{/auth/logout}">Logout</a>
                 </li>
                 <div class="page-header__btn">> <a class="uk-button uk-button-danger" href="#offcanvas" data-uk-toggle data-uk-icon="menu"></a></div>
@@ -103,7 +96,7 @@
 </header>
 <h1>My Profile</h1>
 
-        <h2 class="user-info">User Information</h2>
+<h2 class="user-info">User Information</h2>
 <div class="user-info">
     <table>
         <tr>
@@ -130,73 +123,57 @@
         </tr>
     </table>
 </div>
-        <form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
-              method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" th:value="${user.username}" required>
+<form th:fragment="myprofile-form" action="#" th:action="@{/my-profile}"
+      method="post" >
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" th:value="${user.username}" required>
 
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstName" th:value="${user.firstName}" required>
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" name="firstName" th:value="${user.firstName}" required>
 
-            <label for="lastName">Last Name:</label>
-            <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" required>
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" th:value="${user.getLastName()}" required>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" th:value="${user.getEmail()}" required>
 
-            <label for="phone_number">Phone number:</label>
-            <input type="text" id="phone_number" name="phone_number" th:value="${user.getPhone_number()}" required>
+    <label for="phone_number">Phone number:</label>
+    <input type="text" id="phone_number" name="phone_number" th:value="${user.getPhone_number()}" required>
 
-            <div class="user-input-box">
-                <label for="profilePicture">Profile Picture:</label>
-                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display: none;"/>
-
-                <label class="upload-btn" for="profilePicture">Upload Photo</label>
-                <div class="image-preview">
-                    <img id="profileImagePreview" th:src="@{'/images/profile_pics/' + ${user.getProfilePic()}}"
-                         alt="Profile Picture" style="width: 150px; height: 150px;">
-                </div>
-            </div>
-
-            <button type="submit">Save Changes</button>
-        </form>
-<div class="separator"></div>
-<footer class="page-footer">
-    <div class="uk-container">
-        <div class="page-footer__inner">
-            <div class="page-footer__logo">
-                <div class="logo"><a class="logo__link" th:href="@{/}"><img class="logo__img" src="/assets/img/white.png" alt="DriveTogether"></a></div>
-            </div>
-            <div class="page-footer__text">
-                <h3><p>Let your unusual journey be a pleasure!</p></h3>
-            </div>
-            <div class="page-footer__social">
-            </div>
-            <div class="page-footer__copy"> <span><p>My Profile</p></span></div>
+    <div class="user-input-box">
+        <label for="profilePicture">Profile Picture</label>
+        <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display:none;"/>
+        <label class="upload-btn" for="profilePicture">Upload Photo</label>
+        <div class="image-preview">
+            <img id="profileImagePreview" src="../static/images/profile_pics/profile.jpg" alt="Default Profile Image" style="width: 150px; height: 150px;">
         </div>
     </div>
-</footer>
 
-    <script>
-        const editButton = document.getElementById("editButton");
-        const editForm = document.getElementById("editForm");
+    <button type="submit">Save Changes</button>
+</form>
 
-        editButton.addEventListener("click", function () {
-            editForm.style.display = "block";
-            editButton.style.display = "none";
-        });
+<script>
+    const editButton = document.getElementById("editButton");
+    const editForm = document.getElementById("editForm");
 
-        const profilePictureInput = document.getElementById('profilePicture');
-        const profileImagePreview = document.getElementById('profileImagePreview');
+    editButton.addEventListener("click", function () {
+        editForm.style.display = "block";
+        editButton.style.display = "none";
+    });
 
-  profilePictureInput.addEventListener('change', (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      const objectURL = URL.createObjectURL(selectedFile);
-      profileImagePreview.src = objectURL;
-      profileImagePreview.style.display = 'block';
-    }
-  });
+    const profilePictureInput = document.getElementById('profilePicture');
+    const profileImagePreview = document.getElementById('profileImagePreview');
+
+    profilePictureInput.addEventListener('change', (event) => {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) {
+            const objectURL = URL.createObjectURL(selectedFile);
+            profileImagePreview.src = objectURL;
+            profileImagePreview.style.display = 'block';
+        }
+    });
+
+
 </script>
 </body>
 </html>

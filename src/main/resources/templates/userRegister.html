@@ -179,17 +179,12 @@
                                                     </div>
                                                     <div class="user-input-box">
                                                         <label for="profilePicture">Profile Picture</label>
-                                                        <input type="file" id="profilePicture" name="profilePicture"
-                                                               accept="image/*" style="display:none;"/>
-                                                        <label class="upload-btn" for="profilePicture">Upload
-                                                            Photo</label>
+                                                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display:none;"/>
+                                                        <label class="upload-btn" for="profilePicture">Upload Photo</label>
                                                         <div class="image-preview">
-                                                            <img id="profileImagePreview"
-                                                                 src="../static/images/profile.jpg"
-                                                                 alt="Default Profile Image">
+                                                            <img id="profileImagePreview" src="../static/images/profile_pics/profile.jpg" alt="Default Profile Image">
                                                         </div>
                                                     </div>
-
                                                 </div>
                                                 <div class="form-submit-btn">
                                                     <input type="submit" value="Register">
@@ -220,15 +215,7 @@
         }
     });
 
-    function setDriver (isDriver) {
-        if (isDriver) {
-            driverYes.checked = true;
-            driverNo.checked = false;
-        } else {
-            driverYes.checked = false;
-            driverNo.checked = true;
-        }
-    }
+
 
 </script>
 

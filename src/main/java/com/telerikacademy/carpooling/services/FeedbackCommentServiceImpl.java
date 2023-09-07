@@ -41,12 +41,6 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
         return feedbackCommentRepository.findFeedbackCommentsByFeedbackId(feedbackId);
     }
 
-//    public void addCommentToFeedback(Feedback feedback, String commentText) {
-//        FeedbackComment feedbackComment = new FeedbackComment();
-//        /*feedbackComment.setFeedbackId(feedback.getFeedbackId());*/
-//        feedbackComment.setComment(commentText);
-//        feedbackCommentRepository.create(feedbackComment);
-//    }
 
         @Override
     public void create(FeedbackComment feedbackComment,User user) {
@@ -54,13 +48,7 @@ public class FeedbackCommentServiceImpl implements FeedbackCommentService {
             if (feedbackComment.getUserCreatedBy().isBlocked()) {
                 throw new UnauthorizedOperationException("You`re blocked!");
             }
-//            List<FeedbackComment> existingComments = feedbackCommentRepository.findFeedbackCommentsByFeedbackId(feedbackComment.getFeedback().getFeedbackId());
-//
-//            for (FeedbackComment existingComment : existingComments) {
-//                if (existingComment.getUserCreatedBy().getId() == user.getId()) {
-//                    throw new UnauthorizedOperationException("You have already commented on this feedback.");
-//                }
-//            }
+
             feedbackCommentRepository.create(feedbackComment);
     }
 

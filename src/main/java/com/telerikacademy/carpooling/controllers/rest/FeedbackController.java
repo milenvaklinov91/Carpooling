@@ -57,6 +57,7 @@ public class FeedbackController {
         return feedbackService.getAll(feedbackFilterOptions);
     }
 
+
     @GetMapping("/{id}")
     public Feedback getFeedbackById(@PathVariable int id) {
         try {
@@ -72,31 +73,7 @@ public class FeedbackController {
         feedbackService.delete(id, user);
     }
 
-//    @GetMapping("/ratedUser/{userId}")
-//    public Feedback getRatingOfUser(@PathVariable int userId) {
-//        try {
-//            return feedbackService.getRatingOfUser(userId);
-//        } catch (EntityNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-//        }
-//    }
 
-//    @GetMapping("/ratedUser/{userId}/rating")
-//    public int getRatingValueOfUser(@PathVariable int userId) {
-//        try {
-//            List<Feedback> feedbackList = feedbackService.findAllFeedbacksByUser(userId);
-//            if (!feedbackList.isEmpty()) {
-//                int totalRating = feedbackList.stream()
-//                        .mapToInt(Feedback::getRatingValue)
-//                        .sum();
-//                return totalRating / feedbackList.size();
-//            } else {
-//                return 0;
-//            }
-//        } catch (EntityNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-//        }
-//    }
 
     @GetMapping("/ratedUser/{id}/ratings")
     public List<Integer> getRatingValuesForUser(@PathVariable int id) {
@@ -134,7 +111,7 @@ public class FeedbackController {
             User user = authenticationHelper.tryGetUser(headers);
             Feedback feedback = feedbackMapper.fromFeedbackDto(feedbackDto);
             Trip trip = tripService.getTripById(feedback.getTripId());
-            feedbackService.createFeedbackForDriver(feedback, trip, user);
+            feedbackService.createFeedbackForDriver(feedback,trip, user);
             return feedback;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
@@ -144,7 +121,7 @@ public class FeedbackController {
     }
 
     @PostMapping("/passenger-rating/{id}")
-    public Feedback createPassengerRating(@RequestHeader HttpHeaders headers, @PathVariable int id, @Valid @RequestBody FeedbackDto feedbackDto) {
+    public Feedback createPassengerRating(@RequestHeader HttpHeaders headers,@PathVariable int id, @Valid @RequestBody FeedbackDto feedbackDto) {
         try {
             User driver = authenticationHelper.tryGetUser(headers);
             Feedback feedback = feedbackMapper.fromFeedbackDtoWithId(feedbackDto, id);
@@ -158,13 +135,14 @@ public class FeedbackController {
         }
     }
 
+
     @PostMapping("/comment")
-    public FeedbackComment addComment(@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
+    public FeedbackComment addComment (@RequestHeader HttpHeaders headers, @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
 //            Feedback feedback = feedbackService.getFeedbackById(id);
             FeedbackComment feedbackComment = feedbackCommentMapper.fromFeedbackCommentDto(feedbackCommentDto);
-            feedbackCommentService.create(feedbackComment, user);
+            feedbackCommentService.create(feedbackComment,user);
             return feedbackComment;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.FOUND, e.getMessage());
@@ -181,10 +159,9 @@ public class FeedbackController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-
     @PutMapping("/modifyComment/{id}")
     public FeedbackComment modifyComment(@RequestHeader HttpHeaders headers, @PathVariable int id,
-                                         @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
+                                  @Valid @RequestBody FeedbackCommentDto feedbackCommentDto) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             FeedbackComment feedbackComment = feedbackCommentMapper.fromFeedbackCommentDtoWithId(feedbackCommentDto, id);
@@ -202,7 +179,4 @@ public class FeedbackController {
     }
 }
 
-//    @GetMapping("/{id}/comments")
-//    public List<FeedbackComment> getAllComments(@PathVariable int id) {
-//        return feedbackService.getAllFeedbackComments(id);
-//    }
+
