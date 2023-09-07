@@ -36,7 +36,7 @@ public class Map {
 
     public String getDistance(String startLocation, String endLocation) {
         try {
-            JSONObject jsonObject = getDistanceAndDuration(startLocation,endLocation);
+            JSONObject jsonObject = getDistanceAndDuration(startLocation, endLocation);
             /*jsonObject.*/
             String string = "string";
             return string;
@@ -45,7 +45,6 @@ public class Map {
         }
 
     }
-
 
     public JSONObject getDistanceAndDuration(String startLocation, String endLocation) throws IOException {
         String startLocationCoords = getLocationCoords(startLocation);
@@ -58,7 +57,7 @@ public class Map {
                 "&key=" + API_KEY;
 
         JSONObject jsonResponse = getJSON(link);
-        JSONObject result = new JSONObject(); //todo
+        JSONObject result = new JSONObject();
         if (jsonResponse != null) {
             JSONArray resourceSets = jsonResponse.getJSONArray("resourceSets");
             if (resourceSets.length() > 0) {
@@ -119,8 +118,8 @@ public class Map {
             if (resources.length() > 0) {
                 JSONObject point = resources.getJSONObject(0).getJSONObject("point");
                 JSONArray coordinates = point.getJSONArray("coordinates");
-                 latitude = coordinates.getDouble(0);
-                 longitude = coordinates.getDouble(1);
+                latitude = coordinates.getDouble(0);
+                longitude = coordinates.getDouble(1);
 
                 /*return latitude + "," + longitude;*/
             }

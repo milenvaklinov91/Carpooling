@@ -31,7 +31,6 @@ public class TripRequestServiceImplTests {
     @InjectMocks
     TripRequestServiceImpl tripRequestService;
 
-
     @Test
     public void getTripRequestById_Should_ReturnTripRequest_When_MatchExist() {
         TripRequest mockTripRequest = Helper.createMockTripRequest();
@@ -77,7 +76,7 @@ public class TripRequestServiceImplTests {
         verify(tripRequestRepository, never()).create(any(TripRequest.class));
     }
 
-    @Test       //todo
+    @Test
     public void delete_Should_DeleteTripRequest_When_UserIsAdmin() {
         User mockUser = Helper.createMockUser();
         mockUser.setIsBlocked(false);
@@ -103,7 +102,6 @@ public class TripRequestServiceImplTests {
             tripRequestService.delete(mockTripRequest.getTripRequestId(), mockUser);
         });
     }
-
 
     @Test
     public void delete_Should_ThrowUnauthorizedException_When_RequestIsNotApproved() {

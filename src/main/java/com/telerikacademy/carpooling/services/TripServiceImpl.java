@@ -36,8 +36,9 @@ public class TripServiceImpl implements TripService {
     public List<Trip> getAllCompletedTrips() {
         return tripRepository.getAllCompletedTrips();
     }
+
     @Override
-    public Long countAllCompletedTrips(){
+    public Long countAllCompletedTrips() {
         return tripRepository.countAllCompletedTrips();
     }
 
@@ -90,7 +91,8 @@ public class TripServiceImpl implements TripService {
             throw new UnauthorizedOperationException("You're not authorized for this operation!");
         }
     }
-   public Long countCompletedTripsByUser(int userId){
-       return tripRepository.countCompletedTripsByUser(userId);
-   }
+
+    public Long countCompletedTripsByUser(int userId) {
+        return tripRepository.countCompletedTripsByUser(userId);
+    }
 }

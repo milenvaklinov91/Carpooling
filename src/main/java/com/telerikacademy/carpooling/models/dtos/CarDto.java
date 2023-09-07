@@ -15,7 +15,8 @@ public class CarDto {
     private String model;
     @NotNull(message = "Initial car capacity can't be empty")
     @Min(value = 1, message = "The car should have at least 1 space.")
-    @Max(value = 7, message = "The car should have utmost 7 spaces.")    private Integer capacity;
+    @Max(value = 7, message = "The car should have utmost 7 spaces.")
+    private Integer capacity;
     @NotNull(message = "Color can't be empty")
     @Size(min = 2, max = 20, message = "The color of the car should be between 2 and 20 symbols")
     @NotBlank
@@ -138,4 +139,3 @@ public class CarDto {
         this.driver_license = driver_license;
     }
 }
-//todo add easter eggs

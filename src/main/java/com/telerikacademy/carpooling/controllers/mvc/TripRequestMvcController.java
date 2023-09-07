@@ -28,6 +28,7 @@ public class TripRequestMvcController {
     private final AuthenticationHelper authenticationHelper;
 
     private final TripRequestMapper tripRequestMapper;
+
     public TripRequestMvcController(TripRequestService tripRequestService, AuthenticationHelper authenticationHelper, TripRequestMapper tripRequestMapper) {
         this.tripRequestService = tripRequestService;
         this.authenticationHelper = authenticationHelper;
@@ -35,12 +36,13 @@ public class TripRequestMvcController {
     }
 
     @GetMapping("/{id}")
-    public String  showSingleTripRequest(HttpSession session, Model model, @PathVariable int id) {
+    public String showSingleTripRequest(HttpSession session, Model model, @PathVariable int id) {
         try {
             authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:/";
-        }try {
+        }
+        try {
             TripRequest trip = tripRequestService.getTripRequestById(id);
             model.addAttribute("tripRequests", trip);
             return "singleTripView";
@@ -54,7 +56,7 @@ public class TripRequestMvcController {
     public String showAllTripRequest(Model model) {
         List<TripRequest> tripRequests = tripRequestService.getAll();
         model.addAttribute("tripRequests", tripRequests);
-        return "allTripRequests"; //todo
+        return "allTripRequests";
     }
 
     @GetMapping("/new")
@@ -72,12 +74,12 @@ public class TripRequestMvcController {
             return "redirect:auth/login";
         }
         model.addAttribute("tripRequest", tripRequest);
-        return "trip-request-new"; //todo
+        return "trip-request-new";
     }
 
     @PostMapping("/new")
     public String createTripRequest(@Valid @ModelAttribute("tripRequest") TripRequestDto tripRequest, BindingResult errors,
-                             Model model, HttpSession session) {
+                                    Model model, HttpSession session) {
         User user;
         try {
             user = authenticationHelper.tryGetCurrentUser(session);
@@ -90,13 +92,13 @@ public class TripRequestMvcController {
         try {
             TripRequest newTripRequest = tripRequestMapper.fromTripRequestDto(tripRequest);
             tripRequestService.create(newTripRequest, user);
-            return "redirect:/trip-requests"; //todo
+            return "redirect:/trip-requests";
         } catch (EntityNotFoundException e) {
             model.addAttribute("error", e.getMessage());
-            return "not-found"; //todo
+            return "not-found";
         } catch (EntityDuplicateException e) {
             errors.rejectValue("name", "duplicate_tripRequest", e.getMessage());
-            return "trip-request-new"; //todo
+            return "trip-request-new";
         } catch (UnauthorizedOperationException e) {
             model.addAttribute("error", e.getMessage());
             return "AccessDeniedView";
@@ -107,7 +109,7 @@ public class TripRequestMvcController {
     public String deleteTripRequest(@PathVariable int id, Model model, HttpSession session) {
         User user;
         try {
-           user = authenticationHelper.tryGetCurrentUser(session);
+            user = authenticationHelper.tryGetCurrentUser(session);
         } catch (AuthorizationException e) {
             return "redirect:auth/login";
         }
@@ -137,6 +139,7 @@ public class TripRequestMvcController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @GetMapping("{id}/reject")
     public String rejectTripRequest(HttpSession httpSession, Model model, @PathVariable int id) {
         try {
@@ -144,7 +147,7 @@ public class TripRequestMvcController {
             TripRequest tripRequest = tripRequestService.getTripRequestById(id);
             model.addAttribute("tripRequest", tripRequestService.getTripRequestById(id));
             tripRequestService.rejectTripRequest(tripRequest, user);
-            return "trip-requestView"; //todo
+            return "trip-requestView";
         } catch (AuthorizationException e) {
             return "redirect:/login";
         } catch (EntityNotFoundException e) {

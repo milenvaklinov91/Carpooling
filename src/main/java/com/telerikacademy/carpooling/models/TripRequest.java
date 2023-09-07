@@ -25,7 +25,6 @@ public class TripRequest {
     @Column(name = "status")
     private TripRequestStatus tripRequestStatus;
 
-
     public TripRequest() {
     }
 
