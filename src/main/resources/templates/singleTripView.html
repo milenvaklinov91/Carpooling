@@ -227,7 +227,6 @@
                                         <a th:if="${trip.getTripStatus().toString() == 'INPROGRESS'}" th:href="@{'/trips/' + ${trip.getTripId()} + 'finished'}">
                                             <button class="btn btn-sm btn-primary">Change to Finished Status</button>
                                         </a>
-                                        <!--<a th:href="@{'/trip-details/' + ${trip.id}}" class="btn btn-sm btn-primary">Details</a>-->
                                     </div>
                                 </div>
                             </div>
