@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class TripServiceImpl implements TripService {
 
-    private TripRepositoryImpl tripRepository;
+    private final TripRepositoryImpl tripRepository;
 
     @Autowired
     public TripServiceImpl(TripRepositoryImpl tripRepository) {

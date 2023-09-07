@@ -17,8 +17,8 @@ import java.util.List;
 @Service
 public class TripRequestServiceImpl implements TripRequestService {
 
-    private TripRequestRepository tripRequestRepository;
-    private TripRepositoryImpl tripRepository;
+    private final TripRequestRepository tripRequestRepository;
+    private final TripRepositoryImpl tripRepository;
 
     @Autowired
     public TripRequestServiceImpl(TripRequestRepository tripRequestRepository, TripRepositoryImpl tripRepository) {
