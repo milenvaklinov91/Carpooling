@@ -221,12 +221,13 @@
                                         </div>
                                     </div>
                                     <div class="add-btn me-2" style="display: flex; justify-content: center;">
-                                        <a th:action="${trip.getTripStatus().toString() == 'AWAITING'}" th:href="@{/trips/{id}/in-progress(id=${trip.getTripId()})}">
-                                            <button class="btn btn-primary">Change to InProgress Status</button>
+                                        <a th:if="${trip.getTripStatus().toString() == 'AWAITING'}" th:href="@{'/trips/' + ${trip.getTripId()} + 'in-progress'}">
+                                            <button class="btn btn-sm btn-primary">Change to InProgress Status</button>
                                         </a>
-                                        <a th:if="${trip.getTripStatus().toString() == 'INPROGRESS'}" th:href="@{/trips/{id}/finished(id=${trip.getTripId()})}">
-                                            <button class="btn btn-primary">Change to Finished Status</button>
+                                        <a th:if="${trip.getTripStatus().toString() == 'INPROGRESS'}" th:href="@{'/trips/' + ${trip.getTripId()} + 'finished'}">
+                                            <button class="btn btn-sm btn-primary">Change to Finished Status</button>
                                         </a>
+                                        <!--<a th:href="@{'/trip-details/' + ${trip.id}}" class="btn btn-sm btn-primary">Details</a>-->
                                     </div>
                                 </div>
                             </div>
@@ -238,17 +239,6 @@
     </div>
 </section>
     <br>
-   <!--<form th:action="@{/trips/{id}/finished(id=${trip.getTripId()})}"
-          method="get"
-          th:if="${isAuthenticated and trip.getCreatedBy()}">
-        <div th:unless="${trip.getTripStatus().FINISHED}">
-            <button type="submit">COMPLETE</button>
-        </div>
-    </form>
-<div class="add-btn me-2">
-    <a th:href="@{/recurring-transactions/transactions/{transactionId}/new(transactionId=${transactionId})}">
-        <button class="btn btn-primary">Create Recurrent Transaction</button>
-    </a>-->
 
 </body>
 </html>

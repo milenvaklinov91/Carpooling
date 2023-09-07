@@ -82,19 +82,25 @@
       <th>Distance</th>
       <th>Duration</th>
       <th>Description</th>
-      <!-- Add more columns if necessary -->
+      <th>Status</th>
+      <th>Details</th>
+
     </tr>
     </thead>
     <tbody>
     <tr th:each="trip : ${userTrips}">
-     <!--<a href="#" th:href="@{/trips/{id}(id=${trip.getTripId()})}"> --><td th:text="${trip.startLocation}"></td>
+      <td th:text="${trip.startLocation}"></td>
       <td th:text="${trip.endLocation}"></td>
       <td th:text="${trip.departureTime}"></td>
       <td th:text="${trip.costPerPerson}"></td>
       <td th:text="${trip.availableSeats}"></td>
       <td th:text="${trip.distance} + 'km'"></td>
       <td th:text="${trip.duration} + 'min'"></td>
-      <td th:text="${trip.description}"></td> <!--<span th:text="${trip.startLocation()}"></span>--> </a>
+      <td th:text="${trip.description}"></td>
+      <td th:text="${trip.getTripStatus()}"></td>
+      <td>
+        <a th:href="@{'/trips/' + ${trip.getTripId()}}" class="btn btn-sm btn-primary">Details</a>
+      </td>
     </tr>
     </tbody>
   </table>
